@@ -1,0 +1,39 @@
+appId: ${APP_ID}
+---
+- launchApp
+- assertVisible: "Demo Checkout"
+- tapOn: "CHECKOUT"
+- extendedWaitUntil:
+    visible: "Or pay with card"
+    timeout: 150000
+- tapOn: 
+    text: "Card number"
+- inputText: "4111111111112002"
+- tapOn: 
+    text: "Name on card"
+- inputText: "ABC"
+- hideKeyboard
+- tapOn: 
+    text: "MM/YY"
+- inputText: "0125"
+- tapOn: 
+    text: "CVV"
+- inputText: "123"
+- tapOn:
+    text: "Or pay with card"
+- scrollUntilVisible:
+    element:
+      id: "pay-button"
+    direction: DOWN
+- tapOn:
+    id: "pay-button"
+- extendedWaitUntil:
+    visible: "Enter Your Authentication Data"
+    timeout: 150000
+- tapOn: 
+    text: "Cancel"
+- extendedWaitUntil:
+    visible: "ErrorType: PAYMENT_FAILED" 
+    timeout: 150000 
+- assertVisible: "ErrorCode: THREED_SECURE_FAILED"
+- assertVisible: "ErrorMessage: Payment failed"

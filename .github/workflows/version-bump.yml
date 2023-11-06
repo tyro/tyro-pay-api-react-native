@@ -1,0 +1,48 @@
+name: 'Bump Version'
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  bump-version:
+    name: 'Bump Version on master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: 'Checkout source code'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 'cat package.json'
+        run: cat ./package.json
+
+      - name: 'Automated Version Bump'
+        id: version-bump
+        uses: 'phips28/gh-action-bump-version@master'
+        with:
+          # TODO: uncomment below when doing public release
+          # minor-wording:  'add,Add,adds,Adds,new,feat,feature,minor,change,changed'
+          # major-wording:  'MAJOR,major,cut-major,BREAKING,breaking,Breaking'
+          # patch-wording:  'patch,Patch,fix,Fix,fixes,Fixes'
+          # TODO: Remove version-type, preid, default set to patch
+          version-type: 'prerelease'
+          default: prerelease
+          preid: 'alpha'
+          commit-message: 'CI: bumps version to {{version}} [skip ci]'
+          skip-tag: 'true'
+          target-branch: 'version-bump'
+          ref: ${{ github.ref }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 'cat package.json'
+        run: cat ./package.json
+        
+      - name: 'Output Step'
+        env:
+          NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
+        run: echo "new tag $NEW_TAG"

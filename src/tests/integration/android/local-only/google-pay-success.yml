@@ -1,0 +1,20 @@
+appId: ${APP_ID}
+---
+- launchApp
+- assertVisible: "Demo Checkout"
+- tapOn: "CHECKOUT"
+- extendedWaitUntil:
+    visible: "Or pay with card"
+    timeout: 150000
+- tapOn: 
+    id: "google-pay-button"
+- extendedWaitUntil:
+    visible: "Complete your purchase"
+    timeout: 150000
+- assertVisible:
+    text: ".*@gmail.com"
+- tapOn:
+    text: "Continue"
+- extendedWaitUntil:
+    visible: "Pay Request Status: SUCCESS"
+    timeout: 150000

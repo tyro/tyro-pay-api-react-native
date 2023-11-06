@@ -1,0 +1,57 @@
+
+def androidExclusion = [
+        '**/R.*',
+        '**/R$*.*',
+        '**/BuildConfig.*',
+        '**/Manifest*.*',
+        '**/*Fragment*.*',
+        '**/*Activity*.*',
+        '**/constants/**',
+        '**/model/**',
+        '**/LoggerUtil.**'
+]
+
+// make coverage work with robolectric
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+}
+
+jacoco {
+    toolVersion = '0.8.10'
+}
+
+task getCoverage(type: JacocoReport, dependsOn: 'connectedDebugAndroidTest') {
+    group = "Reporting"
+    description = "Generate Jacoco coverage reports after running tests."
+    reports {
+        html.required = true
+        xml.required = true
+        csv.required = false
+    }
+    getClassDirectories().setFrom(fileTree(
+            dir: 'build/tmp/kotlin-classes/debug',
+            excludes: androidExclusion
+
+    ))
+    getSourceDirectories().setFrom(files('src/main/java'))
+    getExecutionData().setFrom(files('build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec'))
+}
+
+// task for coverage rule
+task checkTestCoverage(type: JacocoCoverageVerification, dependsOn: 'getCoverage') {
+    getClassDirectories().setFrom(fileTree(
+            dir: 'build/tmp/kotlin-classes/debug',
+            excludes: androidExclusion
+    ))
+    getSourceDirectories().setFrom(files('src/main/java'))
+    getExecutionData().setFrom(files('build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec'))
+    violationRules {
+        failOnViolation = true
+        rule {
+            limit {
+                minimum = 0 // need to refine this
+            }
+        }
+    }
+}

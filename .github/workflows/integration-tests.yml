@@ -1,0 +1,115 @@
+name: e2e:tests
+run-name: :integration:tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: ['**']
+
+jobs: 
+  android-e2e: 
+    runs-on: macos-latest
+
+    steps:
+      - name: Setup Node.js env
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 16.0.0
+
+      - name: Install SSH Client 🔑
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Install React Native CLI
+        run: npm install react-native-cli
+
+      - name: Setup Java env
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'corretto'
+          java-version: '11'
+      
+      - name: Gradle cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+
+      - name: Install Maestro CLI
+        run: curl -Ls "https://get.maestro.mobile.dev" | bash
+
+      - name: Add Maestro to path
+        run: echo "${HOME}/.maestro/bin" >> $GITHUB_PATH
+
+      - name: Install Dependencies and build android
+        run: |
+          npm run install:no-pods
+      
+      - name: Run Android Emulator and app
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 29
+          arch: x86_64
+          target: google_apis
+          force-avd-creation: false
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
+          script: |
+            npm run android:release
+            npm run test:e2e:android
+        env:
+          GITHUB_PACKAGES_USER: ${{ github.actor }}
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: 30000
+  
+  ios-e2e:
+    runs-on: macos-latest
+
+    steps:
+
+      - name: setup-cocoapods
+        uses: maxim-lobanov/setup-cocoapods@v1
+        with:
+          version: 1.14.3
+
+      - name: Install SSH Client 🔑
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Get package cache directory path
+        id: package-cache-dir-path
+        run: echo "::set-output name=dir::$(package cache dir)"
+
+      - name: Install React Native CLI
+        run: npm install react-native-cli
+
+      - name: Install Maestro CLI
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          brew tap facebook/fb
+          brew install facebook/fb/idb-companion
+
+      - name: Add Maestro to path
+        run: echo "${HOME}/.maestro/bin" >> $GITHUB_PATH
+
+      - name: Install Dependencies
+        run: npm run install:all
+
+      - name: Run iOS Emulator and app
+        run: |
+          npm run ios:release
+          npm run test:e2e:ios
+
+      - name: Stop Emulator
+        run: killall "Simulator"

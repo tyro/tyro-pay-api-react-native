@@ -1,0 +1,130 @@
+name: :tests
+run-name: :unit:tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: ['**']
+
+jobs: 
+  react-unit: 
+    runs-on: macos-latest
+
+    steps:
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      - name: Install SSH Client 🔑
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Cache Tyro Pay API React Native
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+            **/yarn.lock
+            ios/Pods
+          key: ${{ runner.os }}-tyro-${{ hashFiles('**/package-lock.json', '**/yarn.lock', './Podfile.lock', '**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-tyro-
+
+      - name: Install dependencies, lint and jest test
+        run: | 
+          chmod +x ./.ci_steps/test.sh
+          ./.ci_steps/test.sh
+  
+  ios-unit:
+    runs-on: macos-latest
+
+    steps:
+      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      - name: setup-cocoapods
+        uses: maxim-lobanov/setup-cocoapods@v1
+        with:
+          version: 1.14.3
+
+      - name: Install SSH Client 🔑
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Cache Tyro Pay API React Native
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+            **/yarn.lock
+            ios/Pods
+          key: ${{ runner.os }}-tyro-${{ hashFiles('**/package-lock.json', '**/yarn.lock', '**/Podfile.lock', './Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-tyro-
+
+      - name: Install React Native CLI
+        run: npm install react-native-cli
+
+      - name: Install dependencies
+        run: | 
+          npm run install:all
+
+      - name: Run iOS tests
+        run: npm run test:unit:ios
+
+  android-unit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+
+      - name: Install SSH Client 🔑
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Cache Tyro Pay API React Native
+        uses: actions/cache@v2
+        with:
+          path: |
+            **/node_modules
+            **/yarn.lock
+          key: ${{ runner.os }}-tyro-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-tyro-
+      
+      - name: Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
+      
+      - name: Install React Native CLI
+        run: npm install react-native-cli
+
+      - name: Install dependencies
+        run: | 
+          npm run install:no-pods
+      - name: Run Android unit tests
+        run: |
+          npm run test:unit:android
+        env:
+          GITHUB_PACKAGES_USER: ${{ github.actor }}
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}
+
+    

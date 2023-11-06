@@ -1,0 +1,17 @@
+# ignore artifacts:
+build
+coverage
+dist
+*/vendor/bundle/*
+vendor/bundle/*
+
+# ignore native files
+ios
+android
+
+# ingore yaml files:
+*.yaml
+*.yml
+
+# ignore json files in test fixture directories:
+**/tests/fixtures/*.json

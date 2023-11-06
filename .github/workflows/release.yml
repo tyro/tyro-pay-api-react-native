@@ -1,0 +1,32 @@
+name: Publish Package to GitHub Packages
+on:
+  release:
+    types: [published]
+jobs:
+  publish:
+    runs-on: macos-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      # Setup .npmrc file to publish to npm
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.0.0
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Install dependencies, lint and jest test
+        run: | 
+          chmod +x ./.ci_steps/test.sh
+          ./.ci_steps/test.sh
+
+      - name: Run Prepack Script
+        run: npm run prepack
+
+      - name: Publish
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "paths": {},
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "inlineSources": true,
+    "sourceMap": true,
+    "target": "es2017",
+    "checkJs": false,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "declaration": false,
+    "diagnostics": true,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowJs": true,
+    "jsx": "react-native",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "resolveJsonModule": true
+  },
+  "include": ["./src/**/*.tsx", "./src/**/*.ts", "./src/*.tsx"],
+  "exclude": ["node_modules", "lib", "./src/**/__test__", "./src/**/*.test.*", "./src/**/*.spec.*"]
+}

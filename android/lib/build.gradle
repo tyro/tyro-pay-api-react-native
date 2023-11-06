@@ -1,0 +1,130 @@
+plugins {
+    id 'jacoco'
+}
+
+apply plugin: "com.android.library"
+apply plugin: "com.facebook.react"
+apply plugin: "kotlin-android"
+
+apply from: "./coverage.gradle"
+apply from: "./ktlint.gradle"
+
+/**
+ * This is the configuration block to customize your React Native Android app.
+ * By default you don't need to apply any configuration, just uncomment the lines you need.
+ */
+
+
+/**
+ * Set this to true to Run Proguard on Release builds to minify the Java bytecode.
+ */
+def enableProguardInReleaseBuilds = false
+
+/**
+ * The preferred build flavor of JavaScriptCore (JSC)
+ *
+ * For example, to use the international variant, you can use:
+ * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
+ *
+ * The international variant includes ICU i18n library and necessary data
+ * allowing to use e.g. `Date.toLocaleString` and `String.localeCompare` that
+ * give correct results when using with locales other than en-US. Note that
+ * this variant is about 6MiB larger per architecture than default.
+ */
+def jscFlavor = 'org.webkit:android-jsc:+'
+
+android {
+    ndkVersion rootProject.ext.ndkVersion
+
+    compileSdk rootProject.ext.compileSdkVersion
+
+    namespace "com.tyropayapireactnative"
+    useLibrary 'android.test.mock'
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        debug {
+            storeFile file('debug.keystore')
+            storePassword 'android'
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+        }
+    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+        release {
+            // Caution! In production, you need to generate your own keystore file.
+            // see https://reactnative.dev/docs/signed-apk-android.
+            signingConfig signingConfigs.debug
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+        }
+    }
+    lint {
+        abortOnError true
+        disable 'ObsoleteLintCustomCheck'
+        htmlOutput file("$project.buildDir/reports/lint.html")
+        htmlReport true
+        lintConfig file("lint.xml")
+        warning 'GradleDependency', 'ProtectedPermissions', 'LintError', 'MergeRootFrame', 'GradleCompatible'
+        warningsAsErrors true
+        xmlReport false
+    }
+    testOptions {
+        unitTests {
+            // Note: without this, all Robolectric tests using BuildConfig will fail.
+            includeAndroidResources = true
+            all {
+                maxHeapSize = "1024m"
+            }
+            returnDefaultValues = true
+        }
+
+        kotlinOptions {
+            freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
+        }
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        google()
+        mavenCentral()
+        maven {
+            url = uri("https://maven.pkg.github.com/tyro/tyro-pay-api-sdk-android")
+            credentials {
+                username = System.getenv("GITHUB_PACKAGES_USER")
+                password = System.getenv("GITHUB_PACKAGES_TOKEN")
+            }
+        }
+    }
+}
+
+dependencies {
+    // The version of react-native is set by the React Native Gradle Plugin
+    api "com.facebook.react:react-android"
+    implementation "com.tyro:tyro-pay-api-sdk-android:1.0.0"
+    implementation 'com.google.android.gms:play-services-wallet:19.2.1'
+
+    androidTestImplementation 'junit:junit:4.13.2'
+    androidTestImplementation "androidx.test:core:1.5.0"
+    androidTestImplementation "androidx.test:core-ktx:1.5.0"
+    androidTestImplementation "org.mockito:mockito-core:5.4.0"
+    androidTestImplementation "org.mockito.kotlin:mockito-kotlin:5.0.0"
+    androidTestImplementation 'org.robolectric:robolectric:4.9'
+    androidTestImplementation "androidx.test:core:1.5.0"
+    androidTestImplementation 'androidx.test:runner:1.5.2'
+    androidTestImplementation "org.mockito:mockito-core:5.4.0"
+    testImplementation "androidx.test:core:1.5.0"
+    testImplementation 'androidx.test:runner:1.5.2'
+    testImplementation "org.mockito:mockito-core:5.4.0"
+    testImplementation 'org.robolectric:robolectric:4.9'
+}
