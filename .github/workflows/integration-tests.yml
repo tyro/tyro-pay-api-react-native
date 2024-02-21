@@ -9,18 +9,16 @@ on:
 
 jobs: 
   android-e2e: 
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        api-level: [33]
 
     steps:
       - name: Setup Node.js env
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: 16.0.0
-
-      # - name: Install SSH Client 🔑
-      #   uses: webfactory/ssh-agent@v0.8.0
-      #   with:
-      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+          node-version: 18.0.0
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -33,14 +31,6 @@ jobs:
         with:
           distribution: 'corretto'
           java-version: '11'
-      
-      - name: Gradle cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}-${{ hashFiles('**/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('**/buildSrc/**/*.kt') }}
 
       - name: Install Maestro CLI
         run: curl -Ls "https://get.maestro.mobile.dev" | bash
@@ -50,12 +40,43 @@ jobs:
 
       - name: Install Dependencies and build android
         run: |
+          npm run prepack
           npm run install:no-pods
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Gradle cache
+        uses: gradle/actions/setup-gradle@v3
+          
+      - name: AVD cache
+        uses: actions/cache@v4
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: avd-${{ matrix.api-level }}
+
+      - name: create AVD and generate snapshot for caching
+        if: steps.avd-cache.outputs.cache-hit != 'true'
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: ${{ matrix.api-level }}
+          arch: x86_64
+          target: google_apis
+          force-avd-creation: false
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: false
+          script: echo "Generated AVD snapshot for caching."
       
       - name: Run Android Emulator and app
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 29
+          api-level: ${{ matrix.api-level }}
           arch: x86_64
           target: google_apis
           force-avd-creation: false
@@ -70,7 +91,7 @@ jobs:
           MAESTRO_DRIVER_STARTUP_TIMEOUT: 30000
   
   ios-e2e:
-    runs-on: macos-latest
+    runs-on: macos-14
 
     steps:
 
@@ -78,11 +99,6 @@ jobs:
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
           version: 1.14.3
-
-      # - name: Install SSH Client 🔑
-      #   uses: webfactory/ssh-agent@v0.8.0
-      #   with:
-      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Checkout code
         uses: actions/checkout@v3

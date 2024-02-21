@@ -15,11 +15,6 @@ jobs:
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
 
-      # - name: Install SSH Client 🔑
-      #   uses: webfactory/ssh-agent@v0.8.0
-      #   with:
-      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -29,8 +24,7 @@ jobs:
           path: |
             **/node_modules
             **/yarn.lock
-            ios/Pods
-          key: ${{ runner.os }}-tyro-${{ hashFiles('**/package-lock.json', '**/yarn.lock', './Podfile.lock', '**/Podfile.lock') }}
+          key: ${{ runner.os }}-tyro-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-tyro-
 
@@ -40,7 +34,7 @@ jobs:
           ./.ci_steps/test.sh
   
   ios-unit:
-    runs-on: macos-latest
+    runs-on: macos-14
 
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -52,11 +46,6 @@ jobs:
         with:
           version: 1.14.3
 
-      # - name: Install SSH Client 🔑
-      #   uses: webfactory/ssh-agent@v0.8.0
-      #   with:
-      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -66,8 +55,7 @@ jobs:
           path: |
             **/node_modules
             **/yarn.lock
-            ios/Pods
-          key: ${{ runner.os }}-tyro-${{ hashFiles('**/package-lock.json', '**/yarn.lock', '**/Podfile.lock', './Podfile.lock') }}
+          key: ${{ runner.os }}-tyro-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-tyro-
 
@@ -87,11 +75,6 @@ jobs:
     steps:
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-
-      # - name: Install SSH Client 🔑
-      #   uses: webfactory/ssh-agent@v0.8.0
-      #   with:
-      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Checkout code
         uses: actions/checkout@v3
