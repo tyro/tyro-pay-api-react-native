@@ -127,7 +127,7 @@ The GitHub Packages Token is the same one generated above.
 allprojects {
   repositories {
       maven {
-          url = uri("https://maven.pkg.github.com/tyro/tyro-pay-api-google-pay-sdk-android")
+          url = uri("https://maven.pkg.github.com/tyro/tyro-pay-api-sdk-android")
           credentials {
               username = System.getenv("GITHUB_PACKAGES_USER")
               password = System.getenv("GITHUB_PACKAGES_TOKEN")

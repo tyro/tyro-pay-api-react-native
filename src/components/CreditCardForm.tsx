@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Platform, StyleSheet, TextInput, View } from 'react-native';
 import {
   buildCardExpiry,
   formatCardCVC,
@@ -88,6 +88,16 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
     setSecurityCode(formatted);
   };
 
+  const fieldRefs = {
+    refName: useRef<TextInput>(null),
+    refExpiry: useRef<TextInput>(null),
+    refCvv: useRef<TextInput>(null),
+  };
+
+  const focusNextField = (nextField: string): void => {
+    fieldRefs[nextField].current.focus();
+  };
+
   return (
     <View>
       <InputField
@@ -108,6 +118,9 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
         validator={(event: eventType): void => {
           validateInput(event, 'card_number', number, cardType, validationErrors, setValidationErrors);
         }}
+        returnKeyType={Platform.OS === 'ios' ? 'done' : 'next'}
+        onSubmitEditing={(): void => focusNextField('refName')}
+        blurOnSubmit={false}
       />
       <InputField
         labelText="Name on card"
@@ -121,6 +134,10 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
         validator={(event: eventType): void => {
           validateInput(event, 'card_name', name, cardType, validationErrors, setValidationErrors);
         }}
+        returnKeyType="next"
+        ref={fieldRefs['refName']}
+        onSubmitEditing={(): void => focusNextField('refExpiry')}
+        blurOnSubmit={false}
       />
       <View style={styles.fieldSplit}>
         <InputField
@@ -135,6 +152,10 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
           validator={(event: eventType): void => {
             validateInput(event, 'card_expiry', expiry, cardType, validationErrors, setValidationErrors);
           }}
+          returnKeyType={Platform.OS === 'ios' ? 'done' : 'next'}
+          ref={fieldRefs['refExpiry']}
+          onSubmitEditing={(): void => focusNextField('refCvv')}
+          blurOnSubmit={false}
         />
         <View style={styles.fieldSplitSpacer} />
         <InputField
@@ -149,6 +170,8 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
           validator={(event: eventType): void => {
             validateInput(event, 'card_cvv', securityCode, cardType, validationErrors, setValidationErrors);
           }}
+          returnKeyType="done"
+          ref={fieldRefs['refCvv']}
         />
       </View>
     </View>
