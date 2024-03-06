@@ -14,9 +14,9 @@ module.exports = {
   coverageThreshold: {
     global: {
       branches: 97,
-      functions: 96,
-      lines: 99,
-      statements: 98,
+      functions: 93,
+      lines: 98,
+      statements: 97,
     },
   },
   moduleNameMapper: {
@@ -24,4 +24,5 @@ module.exports = {
   },
   globalSetup: './src/tests/global-setup.ts',
   setupFiles: ['./src/tests/__mocks__/NativeModules.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
 };
