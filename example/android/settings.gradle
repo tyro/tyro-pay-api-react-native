@@ -1,0 +1,6 @@
+rootProject.name = 'example'
+apply from: file("../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesSettingsGradle(settings)
+include ':app'
+include ':tyro_tyro-pay-api-react-native'
+project(':tyro_tyro-pay-api-react-native').projectDir = file('../node_modules/@tyro/tyro-pay-api-react-native/android/lib')
+includeBuild('../node_modules/@react-native/gradle-plugin')
