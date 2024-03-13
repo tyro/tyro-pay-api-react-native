@@ -1,6 +1,6 @@
 {
   "name": "@tyro/tyro-pay-api-react-native",
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "description": "React Native Library for Tyro's Pay API",
   "author": "Tyro",
   "homepage": "https://github.com/tyro/tyro-pay-api-react-native",
