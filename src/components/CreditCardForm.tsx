@@ -53,11 +53,16 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
   }, [payRequest]);
 
   useEffect(() => {
-    const cardTypeName = String(getCardType(number, supportedNetworks as unknown as CardTypeNames[])?.type);
-    if (options?.styleProps?.showSupportedCards === false) {
-      setCardType(UNKNOWN_CARD_TYPE.type);
+    if (!(number || validationErrors.card_number)) {
+      if (options?.styleProps?.showSupportedCards === false) {
+        setCardType(UNKNOWN_CARD_TYPE.type);
+        return;
+      }
+      setCardType(CardImageNames.PREVIEW);
       return;
     }
+
+    const cardTypeName = String(getCardType(number, supportedNetworks as unknown as CardTypeNames[])?.type);
     setCardType(cardTypeName);
   }, [number, supportedNetworks]);
 
@@ -110,9 +115,9 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
         img={
           validationErrors.card_number
             ? CardImageNames.ERROR
-            : cardType !== UNKNOWN_CARD_TYPE.type
+            : cardType !== CardImageNames.PREVIEW
             ? cardType
-            : CardImageNames.UNKNOWN
+            : CardImageNames.PREVIEW
         }
         error={validationErrors.card_number}
         validator={(event: eventType): void => {

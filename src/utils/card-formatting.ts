@@ -85,7 +85,7 @@ export const cardTypes = [
 ] as CardType[];
 
 export const UNKNOWN_CARD_TYPE = {
-  type: 'unknown',
+  type: 'card-unknown',
   pattern: /^[0-9]{14,19}$/,
   format: format4444Spacing,
   minlength: 14,

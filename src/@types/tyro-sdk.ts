@@ -9,6 +9,9 @@ export enum SupportedCardNetworks {
 
 export type SupportedNetworks = SupportedCardNetworks | `${SupportedCardNetworks}`;
 
+export const defaultSupportedNetworks = [
+  ...new Set(Object.values(SupportedCardNetworks).map((val) => val.toString().toLowerCase())),
+] as SupportedNetworks[];
 interface AppleInitParams {
   merchantIdentifier: string;
 }
