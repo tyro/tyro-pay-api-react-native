@@ -69,7 +69,7 @@ describe('WalletPaymentsContainer', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              styleProps: { googlePayButton: { buttonBorderRadius: 8 } },
+              styleProps: { showSupportedCards: false, googlePayButton: { buttonBorderRadius: 8 } },
             });
           });
           // check initial components have rendered, click checkout
@@ -87,7 +87,10 @@ describe('WalletPaymentsContainer', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              styleProps: { googlePayButton: { buttonBorderRadius: '6' as unknown as number } },
+              styleProps: {
+                showSupportedCards: false,
+                googlePayButton: { buttonBorderRadius: '6' as unknown as number },
+              },
             });
           });
           // check initial components have rendered, click checkout
@@ -103,7 +106,10 @@ describe('WalletPaymentsContainer', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              styleProps: { googlePayButton: { buttonBorderRadius: 'monkey' as unknown as number } },
+              styleProps: {
+                showSupportedCards: false,
+                googlePayButton: { buttonBorderRadius: 'monkey' as unknown as number },
+              },
             });
           });
           // check initial components have rendered, click checkout
@@ -119,7 +125,10 @@ describe('WalletPaymentsContainer', () => {
         mockedFetchPayRequestOnCompletion(PayRequestStatus.AWAITING_PAYMENT_INPUT);
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false },
+            });
           });
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');
@@ -139,7 +148,10 @@ describe('WalletPaymentsContainer', () => {
 
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false },
+            });
           });
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');
@@ -160,7 +172,10 @@ describe('WalletPaymentsContainer', () => {
         mockedFetchPayRequestOnCompletion(PayRequestStatus.SUCCESS);
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false },
+            });
           });
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');
@@ -188,7 +203,10 @@ describe('WalletPaymentsContainer', () => {
       it('should hide google-pay button when google pay is not supported', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false },
+            });
           });
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');

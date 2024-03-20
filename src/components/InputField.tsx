@@ -5,6 +5,9 @@ import { ImageSources } from '../@types/images';
 import { getInputStyles } from '../services/style-drawer';
 import { TyroPayOptionsKeys, TyroPayStyleLabelPositions } from '../@types/definitions';
 import { useSDK } from '../SDKSharedContext';
+import { CardImageNames } from '../@types/card-types';
+import CardPreview from './CardPreview';
+import { defaultSupportedNetworks } from '../@types/tyro-sdk';
 
 type InputFieldProps = {
   labelText: string;
@@ -19,7 +22,7 @@ export const InputField = forwardRef<TextInput, InputFieldProps>(function InputF
   { labelText, placeholderText, setText, img, error, validator, ...TextInputProps },
   ref
 ): JSX.Element {
-  const { options } = useSDK();
+  const { options, supportedNetworks } = useSDK();
   const [isFocus, setIsFocus] = useState(false);
   const styles = StyleSheet.create({
     ...getInputStyles(options[TyroPayOptionsKeys.styleProps], {
@@ -50,6 +53,11 @@ export const InputField = forwardRef<TextInput, InputFieldProps>(function InputF
           {img && ImageElement && (
             <View style={styles.image}>
               <ImageElement />
+            </View>
+          )}
+          {img === CardImageNames.PREVIEW && (
+            <View style={styles.image}>
+              <CardPreview supportedNetworks={supportedNetworks ?? defaultSupportedNetworks} />
             </View>
           )}
         </View>

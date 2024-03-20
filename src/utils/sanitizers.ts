@@ -1,4 +1,4 @@
-import { SupportedCardNetworks, SupportedNetworks } from '../@types/tyro-sdk';
+import { SupportedNetworks, defaultSupportedNetworks } from '../@types/tyro-sdk';
 import { defaultOptions } from '../@types/default';
 import {
   TyroPayOptions,
@@ -87,16 +87,14 @@ export const parseSupportedNetworks = (
   fromOptions: SupportedNetworks[] | undefined
 ): SupportedNetworks[] | null => {
   const availableOptions =
-    Array.isArray(fromPayRequest) && fromPayRequest.length
-      ? fromPayRequest
-      : (Object.values(SupportedCardNetworks) as SupportedNetworks[]);
+    Array.isArray(fromPayRequest) && fromPayRequest.length ? fromPayRequest : defaultSupportedNetworks;
   const intersection = Array.isArray(fromOptions)
     ? availableOptions.filter((value) => fromOptions.includes(value))
     : availableOptions;
   if (intersection.length === 0 && Array.isArray(fromPayRequest)) {
     return fromPayRequest;
   }
-  return intersection.length && intersection.length !== Object.values(SupportedCardNetworks).length
+  return intersection.length && intersection.length !== defaultSupportedNetworks.length
     ? (intersection as SupportedNetworks[])
     : null;
 };

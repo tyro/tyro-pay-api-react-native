@@ -147,6 +147,7 @@ describe('PaySheet', () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
               options: { creditCardForm: { supportedNetworks: [SupportedCardNetworks.VISA] } },
+              styleProps: { showSupportedCards: false },
             });
           });
           await checkInitializedCorrectly(wrapper);
@@ -184,6 +185,7 @@ describe('PaySheet', () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
               options: { creditCardForm: { supportedNetworks: [SupportedCardNetworks.VISA] } },
+              styleProps: { showSupportedCards: false },
             });
           });
           await checkInitializedCorrectly(wrapper);
@@ -210,6 +212,7 @@ describe('PaySheet', () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
               options: { creditCardForm: { supportedNetworks: [SupportedCardNetworks.VISA] } },
+              styleProps: { showSupportedCards: false },
             });
           });
           await checkInitializedCorrectly(wrapper);
@@ -243,7 +246,10 @@ describe('PaySheet', () => {
         ); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -274,7 +280,10 @@ describe('PaySheet', () => {
         ); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -308,7 +317,10 @@ describe('PaySheet', () => {
         ); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -329,7 +341,10 @@ describe('PaySheet', () => {
         .mockResolvedValueOnce(mockFetch(500, {} as ClientPayRequestResponse)); // submitPayRequest
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -351,7 +366,10 @@ describe('PaySheet', () => {
         .mockResolvedValueOnce(mockFetch(400, {} as unknown as ClientPayRequestResponse)); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -381,7 +399,10 @@ describe('PaySheet', () => {
         ); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -411,7 +432,10 @@ describe('PaySheet', () => {
         ); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -467,7 +491,10 @@ describe('PaySheet', () => {
         ); // pollFor3DSecureChallengeAndFinalResult
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -527,7 +554,10 @@ describe('PaySheet', () => {
         ); // pollFor3DSecureChallengeAndFinalResult
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -569,7 +599,10 @@ describe('PaySheet', () => {
         .mockResolvedValueOnce(mockFetch(500, {} as unknown as ClientPayRequestResponse)); // pollFor3DSecureAuthResult
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -619,7 +652,10 @@ describe('PaySheet', () => {
         .mockResolvedValueOnce(mockFetch(500, {} as unknown as ClientPayRequestResponse)); // pollFor3DSecureChallengeAndFinalResult
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -663,7 +699,10 @@ describe('PaySheet', () => {
         );
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -707,7 +746,10 @@ describe('PaySheet', () => {
         );
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -747,7 +789,10 @@ describe('PaySheet', () => {
         .mockResolvedValueOnce(mockFetch(400, { want: 'this' } as unknown as ClientPayRequestResponse)); // pollFor3DSecureMethodResult
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -767,7 +812,10 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -788,7 +836,10 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -820,7 +871,10 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -843,7 +897,10 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -866,7 +923,10 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -889,7 +949,10 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -912,7 +975,10 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -968,7 +1034,10 @@ describe('PaySheet', () => {
         ); // init and verify paySecret again // submitPayRequest
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -994,7 +1063,10 @@ describe('PaySheet', () => {
         ); // init and verify paySecret again // submitPayRequest
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
         });
         await checkInitializedCorrectly(wrapper);
         checkForPaySheetRenders(wrapper);
@@ -1013,14 +1085,21 @@ describe('PaySheet', () => {
   describe('styleProps handling', () => {
     beforeEach(() => {
       (global.fetch as jest.Mock).mockResolvedValueOnce(
-        mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
+        mockFetch(200, {
+          status: 'AWAITING_PAYMENT_INPUT',
+          isLive: false,
+          supportedNetworks: null,
+        } as ClientPayRequestResponse)
       );
     });
     describe('walletPayments', () => {
       it('defaults walletPaymentsDividerText', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false },
+            });
           });
           await checkInitializedCorrectly(wrapper);
           checkForPaySheetRenders(wrapper);
@@ -1032,7 +1111,7 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              styleProps: { walletPaymentsDividerText: 'My Custom Divider Text' },
+              styleProps: { walletPaymentsDividerText: 'My Custom Divider Text', showSupportedCards: false },
             });
           });
           await checkInitializedCorrectly(wrapper);
@@ -1045,7 +1124,7 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              styleProps: { walletPaymentsDividerEnabled: false },
+              styleProps: { walletPaymentsDividerEnabled: false, showSupportedCards: false },
             });
           });
           await checkInitializedCorrectly(wrapper);
@@ -1054,11 +1133,14 @@ describe('PaySheet', () => {
         });
       });
     });
-    describe('card images', () => {
+    describe('card images - no card preview rotation', () => {
       it('defaults to showing blank card icon', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false },
+            });
           });
           await checkInitializedCorrectly(wrapper);
           checkForPaySheetRenders(wrapper);
@@ -1071,7 +1153,10 @@ describe('PaySheet', () => {
       it('it shows visa card when a visa is entered', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false },
+            });
           });
           await checkInitializedCorrectly(wrapper);
           checkForPaySheetRenders(wrapper);
@@ -1084,7 +1169,10 @@ describe('PaySheet', () => {
       it('it shows mastercard card when a mastercard is entered', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false },
+            });
           });
           await checkInitializedCorrectly(wrapper);
           checkForPaySheetRenders(wrapper);
@@ -1098,7 +1186,10 @@ describe('PaySheet', () => {
       it('it shows error when credit card invalid', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false },
+            });
           });
           await checkInitializedCorrectly(wrapper);
           checkForPaySheetRenders(wrapper);
@@ -1111,7 +1202,10 @@ describe('PaySheet', () => {
       it('it shows error when cvc invalid', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false },
+            });
           });
           await checkInitializedCorrectly(wrapper);
           checkForPaySheetRenders(wrapper);
@@ -1154,30 +1248,95 @@ describe('PaySheet', () => {
           expect(wrapper.queryByTestId('card-error-image')).toBeNull();
         });
       });
-      it('it shows the default card unknown icon always, but logo branding when disabled and something entered', async () => {
+    });
+    describe('card images - card preview enabled', () => {
+      beforeEach(() => {
+        jest.useFakeTimers();
+        jest.setSystemTime(new Date(0));
+      });
+      afterEach(() => {
+        jest.useRealTimers();
+      });
+
+      it('it shows card preview', async () => {
         await act(async () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              styleProps: { showSupportedCards: false },
+            });
+          });
+          await checkInitializedCorrectly(wrapper);
+        });
+        wrapper.getByTestId('visa-image');
+        await act(async () => {
+          jest.advanceTimersByTime(2000);
+          await waitFor(
+            () => {
+              wrapper.getByTestId('mastercard-image');
+            },
+            { timeout: 1000, interval: 500 }
+          );
+        });
+      });
+      it('it shows card preview when showCardIcon is false', async () => {
+        await act(async () => {
+          await waitFor(async () => {
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showCardIcon: false },
             });
           });
           await checkInitializedCorrectly(wrapper);
           checkForPaySheetRenders(wrapper);
-          await fillOutForm(wrapper, '5105105105105100', 'test name', '01' + useYear, '123');
-          expect(wrapper.getByTestId('card-unknown-image')).not.toBeNull();
-          expect(wrapper.queryByTestId('visa-image')).toBeNull();
-          expect(wrapper.queryByTestId('mastercard-image')).toBeNull();
-          expect(wrapper.getByTestId('card-cvv-image')).not.toBeNull();
-          expect(wrapper.queryByTestId('card-error-image')).toBeNull();
         });
+        wrapper.getByTestId('visa-image');
+        expect(wrapper.queryByTestId('card-unknown-image')).toBeNull();
+        expect(wrapper.queryByTestId('card-error-image')).toBeNull();
+      });
+      it('it shows relative card icon when start entering card number', async () => {
+        await act(async () => {
+          await waitFor(async () => {
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+            });
+          });
+          await checkInitializedCorrectly(wrapper);
+          jest.advanceTimersByTime(1000);
+        });
+        expect(wrapper.queryByTestId('card-unknown-image')).toBeNull();
+        wrapper.getByTestId('card-cvv-image');
+        wrapper.getByTestId('visa-image');
+        const cardInputField = wrapper.getByPlaceholderText('Card number');
+        await fireEvent.changeText(cardInputField, '51051');
+        expect(wrapper.queryByTestId('card-unknown-image')).toBeNull();
+        expect(wrapper.queryByTestId('visa-image')).toBeNull();
+        expect(wrapper.queryByTestId('card-error-image')).toBeNull();
+        wrapper.getByTestId('mastercard-image');
+      });
+      it('it shows error when credit card invalid', async () => {
+        await act(async () => {
+          await waitFor(async () => {
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+            });
+          });
+          await checkInitializedCorrectly(wrapper);
+          jest.advanceTimersByTime(1000);
+        });
+        await fillOutForm(wrapper, '1234', '', '', '123');
+        await pressButton(wrapper, 'pay-button');
+        wrapper.getByTestId('card-error-image');
+        wrapper.getByTestId('card-cvv-image');
       });
     });
     describe('showErrorSpacing', () => {
       it('defaults to enable error spacing on all input fields', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false },
+            });
           });
           await checkInitializedCorrectly(wrapper);
           checkForPaySheetRenders(wrapper);
@@ -1189,7 +1348,7 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              styleProps: { showErrorSpacing: true },
+              styleProps: { showErrorSpacing: true, showSupportedCards: false },
             });
           });
           await checkInitializedCorrectly(wrapper);
@@ -1202,7 +1361,7 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              styleProps: { showErrorSpacing: false },
+              styleProps: { showErrorSpacing: false, showSupportedCards: false },
             });
           });
           await checkInitializedCorrectly(wrapper);
@@ -1215,7 +1374,10 @@ describe('PaySheet', () => {
       it('defaults to use placeholder text with labelPosition=floating', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false },
+            });
           });
           await checkInitializedCorrectly(wrapper);
           expect(wrapper.getByPlaceholderText('Card number')).not.toBeNull();
@@ -1233,7 +1395,7 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              styleProps: { labelPosition: TyroPayStyleLabelPositions.BLOCK },
+              styleProps: { labelPosition: TyroPayStyleLabelPositions.BLOCK, showSupportedCards: false },
             });
           });
           await checkInitializedCorrectly(wrapper);
@@ -1252,7 +1414,7 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<TestPayButton title={''} />, {
               liveMode: false,
-              styleProps: { labelPosition: TyroPayStyleLabelPositions.BLOCK },
+              styleProps: { labelPosition: TyroPayStyleLabelPositions.BLOCK, showSupportedCards: false },
             });
           });
           expect(wrapper.getByText('Pay')).not.toBeNull();
