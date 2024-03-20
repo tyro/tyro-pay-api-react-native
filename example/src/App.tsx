@@ -5,7 +5,7 @@
  * @format
  */
 
-import { TyroProvider } from '@tyro/tyro-pay-api-react-native';
+import { TyroProvider, SampleView } from '@tyro/tyro-pay-api-react-native';
 import CheckOut from './checkout';
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
@@ -26,6 +26,7 @@ function App(): JSX.Element {
           {/* Title */}
           <View style={styles.titleContainer}>
             <Text style={styles.titleText}>Demo Checkout</Text>
+            <SampleView color="#0000ff" style={styles.box} />
           </View>
           {/* Content */}
           <View style={styles.contentContainer}>
@@ -91,6 +92,11 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 16,
     color: '#333',
+  },
+  box: {
+    width: 40,
+    height: 40,
+    marginVertical: 20,
   },
 });
 

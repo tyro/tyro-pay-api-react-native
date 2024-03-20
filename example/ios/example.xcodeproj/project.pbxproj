@@ -32,13 +32,6 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = example;
 		};
-		9BDC11DF2B9EE19A003033F6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9BDC11DB2B9EE19A003033F6 /* tyroPayApiReactNative.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 9BDC11D12B9EE19A003033F6;
-			remoteInfo = tyroPayApiReactNative;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -60,7 +53,6 @@
 		89C6BE57DB24E9ADA2F236DE /* Pods-example-exampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-example-exampleTests.release.xcconfig"; path = "Target Support Files/Pods-example-exampleTests/Pods-example-exampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		9BDC11432B9ADE4D003033F6 /* tyroPayApiReactNativeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tyroPayApiReactNativeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BDC11452B9ADE4D003033F6 /* tyroPayApiReactNativeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tyroPayApiReactNativeTests.swift; sourceTree = "<group>"; };
-		9BDC11DB2B9EE19A003033F6 /* tyroPayApiReactNative.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = tyroPayApiReactNative.xcodeproj; path = ../../ios/tyroPayApiReactNative/tyroPayApiReactNative.xcodeproj; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -141,7 +133,6 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				9BDC11DB2B9EE19A003033F6 /* tyroPayApiReactNative.xcodeproj */,
 				13B07FAE1A68108700A75B9A /* example */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* exampleTests */,
@@ -171,14 +162,6 @@
 				9BDC11452B9ADE4D003033F6 /* tyroPayApiReactNativeTests.swift */,
 			);
 			path = tyroPayApiReactNativeTests;
-			sourceTree = "<group>";
-		};
-		9BDC11DC2B9EE19A003033F6 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				9BDC11E02B9EE19A003033F6 /* libtyroPayApiReactNative.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
@@ -289,12 +272,6 @@
 			mainGroup = 83CBB9F61A601CBA00E9B192;
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 9BDC11DC2B9EE19A003033F6 /* Products */;
-					ProjectRef = 9BDC11DB2B9EE19A003033F6 /* tyroPayApiReactNative.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* example */,
@@ -303,16 +280,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		9BDC11E02B9EE19A003033F6 /* libtyroPayApiReactNative.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libtyroPayApiReactNative.a;
-			remoteRef = 9BDC11DF2B9EE19A003033F6 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
