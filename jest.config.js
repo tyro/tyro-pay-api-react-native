@@ -23,6 +23,6 @@ module.exports = {
     'react-native-webview': '<rootDir>/src/tests/__mocks__/WebView.tsx',
   },
   globalSetup: './src/tests/global-setup.ts',
-  setupFiles: ['./src/tests/__mocks__/NativeModules.ts'],
+  setupFiles: ['./src/tests/__mocks__/NativeModules.ts', './src/tests/__mocks__/Animation.ts'],
   setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
 };

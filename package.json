@@ -31,7 +31,7 @@
     "prepack": "bob build",
     "prepare": "[ \"$NODE_ENV\" == production ] || husky install",
     "test:unit:ios": "xcodebuild test -workspace example/ios/example.xcworkspace -scheme example -configuration Debug -destination name=\"iPhone 14 Pro Max\"",
-    "test:unit:android": "cd android && chmod +x ./gradlew && ./gradlew --no-daemon test && ./gradlew ktlintFormat && ./gradlew ktlint && ./gradlew lint",
+    "test:unit:android": "cd example/android && chmod +x ./gradlew && ./gradlew --no-daemon test && ./gradlew ktlintFormat && ./gradlew ktlint && ./gradlew lint",
     "test:e2e:ios": "bash ./scripts/run-e2e-tests ios",
     "test:e2e:android": "bash ./scripts/run-e2e-tests android",
     "test:local:ios": "maestro test src/tests/integration/ios/local-only -e APP_ID=com.tyropayapireactnative",
@@ -43,7 +43,7 @@
     "install:no-pods": "npm install && cd example && npm install",
     "gradlew:build:all": "npm run gradlew:build:sdk && npm run gradlew:build:example",
     "gradlew:build:example": "cd example/android && chmod +x ./gradlew && ./gradlew --no-daemon -S -Dorg.gradle.dependency.verification=off clean build",
-    "gradlew:build:sdk": "cd android && chmod +x ./gradlew && ./gradlew --no-daemon -S -Dorg.gradle.dependency.verification=off clean build",
+    "gradlew:build:sdk": "cd example/android && chmod +x ./gradlew && ./gradlew --no-daemon -S -Dorg.gradle.dependency.verification=off clean build",
     "ios:release:build": "cd example/ios && xcodebuild -workspace example.xcworkspace -scheme example -configuration Debug -sdk iphonesimulator clean build"
   },
   "devDependencies": {
