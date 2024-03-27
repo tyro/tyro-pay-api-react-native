@@ -41,6 +41,7 @@ export const InputField = forwardRef<TextInput, InputFieldProps>(function InputF
             accessibilityState={{ selected: isFocus }}
             style={[styles.textInput]}
             placeholder={!hasPhysicalLabel ? placeholderText : undefined}
+            placeholderTextColor={styles.placeholder.color}
             onChangeText={setText}
             onFocus={(): void => setIsFocus(true)}
             onBlur={(): void => {
