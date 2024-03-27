@@ -186,6 +186,9 @@ describe('Style Drawer Service', () => {
           padding: 10,
           width: '100%',
         },
+        placeholder: {
+          color: '#686868',
+        },
       });
     });
     it('it maps noError, noFocus', () => {
@@ -231,7 +234,7 @@ describe('Style Drawer Service', () => {
         labelContainer: {
           color: 'purple',
           fontFamily: 'arial',
-          fontSize: 15,
+          fontSize: 36,
           fontWeight: '37',
           padding: 38,
           width: '100%',
@@ -245,6 +248,9 @@ describe('Style Drawer Service', () => {
           height: '100%',
           padding: 31,
           width: '100%',
+        },
+        placeholder: {
+          color: 'purple',
         },
       });
     });
@@ -302,6 +308,9 @@ describe('Style Drawer Service', () => {
           padding: 10,
           width: '100%',
         },
+        placeholder: {
+          color: '#686868',
+        },
       });
     });
     it('it maps isError, noFocus', () => {
@@ -347,7 +356,7 @@ describe('Style Drawer Service', () => {
         labelContainer: {
           color: 'purple',
           fontFamily: 'arial',
-          fontSize: 15,
+          fontSize: 36,
           fontWeight: '37',
           padding: 38,
           width: '100%',
@@ -361,6 +370,9 @@ describe('Style Drawer Service', () => {
           height: '100%',
           padding: 31,
           width: '100%',
+        },
+        placeholder: {
+          color: 'purple',
         },
       });
     });
@@ -395,7 +407,7 @@ describe('Style Drawer Service', () => {
           justifyContent: 'space-between',
         },
         inputWrapper: {
-          backgroundColor: '#f2f2f2',
+          backgroundColor: '#f9f9f9',
           borderColor: 'red',
           borderRadius: 5,
           borderWidth: 1,
@@ -417,6 +429,9 @@ describe('Style Drawer Service', () => {
           height: '100%',
           padding: 10,
           width: '100%',
+        },
+        placeholder: {
+          color: '#686868',
         },
       });
     });
@@ -463,7 +478,7 @@ describe('Style Drawer Service', () => {
         labelContainer: {
           color: 'purple',
           fontFamily: 'arial',
-          fontSize: 15,
+          fontSize: 36,
           fontWeight: '37',
           padding: 38,
           width: '100%',
@@ -477,6 +492,9 @@ describe('Style Drawer Service', () => {
           height: '100%',
           padding: 31,
           width: '100%',
+        },
+        placeholder: {
+          color: 'purple',
         },
       });
     });
@@ -511,7 +529,7 @@ describe('Style Drawer Service', () => {
           justifyContent: 'space-between',
         },
         inputWrapper: {
-          backgroundColor: '#f2f2f2',
+          backgroundColor: '#f9f9f9',
           borderColor: 'blue',
           borderRadius: 5,
           borderWidth: 1,
@@ -533,6 +551,9 @@ describe('Style Drawer Service', () => {
           height: '100%',
           padding: 10,
           width: '100%',
+        },
+        placeholder: {
+          color: '#686868',
         },
       });
     });
@@ -579,7 +600,7 @@ describe('Style Drawer Service', () => {
         labelContainer: {
           color: 'purple',
           fontFamily: 'arial',
-          fontSize: 15,
+          fontSize: 36,
           fontWeight: '37',
           padding: 38,
           width: '100%',
@@ -593,6 +614,9 @@ describe('Style Drawer Service', () => {
           height: '100%',
           padding: 31,
           width: '100%',
+        },
+        placeholder: {
+          color: 'purple',
         },
       });
     });
@@ -646,7 +670,7 @@ describe('Style Drawer Service', () => {
         labelContainer: {
           color: 'purple',
           fontFamily: 'arial',
-          fontSize: 15,
+          fontSize: 36,
           fontWeight: '37',
           padding: 38,
           width: '100%',
@@ -660,6 +684,9 @@ describe('Style Drawer Service', () => {
           height: '100%',
           padding: 31,
           width: '100%',
+        },
+        placeholder: {
+          color: 'purple',
         },
       });
     });
@@ -724,9 +751,9 @@ describe('Style Drawer Service', () => {
       const result = getDividerStyles(styleProps);
       expect(result).toEqual({
         dividerWrapper: { alignItems: 'center', flexDirection: 'row', margin: 10, marginBottom: 20 },
-        line: { backgroundColor: '#d9d9d9', flex: 1, height: 1 },
+        line: { backgroundColor: '#eeeeee', flex: 1, height: 1 },
         text: {
-          color: '#303030',
+          color: 'purple',
           fontFamily: 'arial',
           fontSize: 15,
           paddingLeft: 5,
@@ -845,6 +872,9 @@ describe('Style Drawer Service', () => {
           padding: 40,
           width: '100%',
         },
+        placeholder: {
+          color: '#686868',
+        },
       });
     });
     it('when numbers converts appropriately', () => {
@@ -910,6 +940,9 @@ describe('Style Drawer Service', () => {
           height: '100%',
           padding: 40,
           width: '100%',
+        },
+        placeholder: {
+          color: '#686868',
         },
       });
     });
