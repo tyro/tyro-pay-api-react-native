@@ -1410,7 +1410,7 @@ describe('PaySheet', () => {
           expect(wrapper.getByPlaceholderText('CVV')).not.toBeNull();
           expect(wrapper.queryByText('Card number')).toBeNull();
           expect(wrapper.queryByText('Name on card')).toBeNull();
-          expect(wrapper.queryByText('Expiry date (MM/YY)')).toBeNull();
+          expect(wrapper.queryByText('Expiry (MM/YY)')).toBeNull();
           expect(wrapper.queryByText('Security code')).toBeNull();
         });
       });
@@ -1425,7 +1425,7 @@ describe('PaySheet', () => {
           await checkInitializedCorrectly(wrapper);
           expect(wrapper.getByText('Card number')).not.toBeNull();
           expect(wrapper.getByText('Name on card')).not.toBeNull();
-          expect(wrapper.getByText('Expiry date (MM/YY)')).not.toBeNull();
+          expect(wrapper.getByText('Expiry (MM/YY)')).not.toBeNull();
           expect(wrapper.getByText('Security code')).not.toBeNull();
           expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
           expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();

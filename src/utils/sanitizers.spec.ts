@@ -57,6 +57,8 @@ describe('sanitizers', () => {
           errorFontColor: '#FE87A1',
           inputBackgroundColor: '#30313D',
           inputBorderColor: '#424253',
+          inputFocusFontColor: '#FEFEFE',
+          inputFocusBackgroundColor: '#4d4e61',
           inputErrorBorderColor: '#FE87A1',
           inputErrorFontColor: '#FE87A1',
           inputFocusBorderColor: '#878799',
