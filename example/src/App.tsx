@@ -37,6 +37,9 @@ function App(): JSX.Element {
                     enabled: true,
                     merchantName: 'Example Merchant',
                   },
+                  applePay: {
+                    enabled: true,
+                  },
                 },
                 styleProps: {
                   fontFamily: 'roboto',

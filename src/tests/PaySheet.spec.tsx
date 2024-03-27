@@ -1098,6 +1098,14 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+                applePay: {
+                  enabled: true,
+                },
+              },
               styleProps: { showSupportedCards: false },
             });
           });
@@ -1111,6 +1119,14 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+                applePay: {
+                  enabled: true,
+                },
+              },
               styleProps: { walletPaymentsDividerText: 'My Custom Divider Text', showSupportedCards: false },
             });
           });
@@ -1124,6 +1140,14 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+                applePay: {
+                  enabled: true,
+                },
+              },
               styleProps: { walletPaymentsDividerEnabled: false, showSupportedCards: false },
             });
           });

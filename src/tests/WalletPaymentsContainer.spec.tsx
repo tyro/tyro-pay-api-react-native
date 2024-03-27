@@ -63,12 +63,32 @@ describe('WalletPaymentsContainer', () => {
       afterEach(() => {
         jest.clearAllMocks();
       });
+      test('googlePay defaults to be disabled', async () => {
+        await act(async () => {
+          await waitFor(async () => {
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false, googlePayButton: { buttonBorderRadius: 8 } },
+            });
+          });
+          // check initial components have rendered, click checkout
+          const checkOutButton = await wrapper.findByTestId('test-button');
+          await fireEvent.press(checkOutButton);
+        });
+        // check google pay button
+        expect(wrapper.queryByTestId('google-pay-button')).toBeNull();
+      });
 
       test('should render google-pay button when google pay is supported', async () => {
         await act(async () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
               styleProps: { showSupportedCards: false, googlePayButton: { buttonBorderRadius: 8 } },
             });
           });
@@ -87,6 +107,11 @@ describe('WalletPaymentsContainer', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
               styleProps: {
                 showSupportedCards: false,
                 googlePayButton: { buttonBorderRadius: '6' as unknown as number },
@@ -106,6 +131,11 @@ describe('WalletPaymentsContainer', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
               styleProps: {
                 showSupportedCards: false,
                 googlePayButton: { buttonBorderRadius: 'monkey' as unknown as number },
@@ -127,6 +157,11 @@ describe('WalletPaymentsContainer', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
               styleProps: { showSupportedCards: false },
             });
           });
@@ -150,6 +185,11 @@ describe('WalletPaymentsContainer', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
               styleProps: { showSupportedCards: false },
             });
           });
@@ -174,6 +214,11 @@ describe('WalletPaymentsContainer', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
               styleProps: { showSupportedCards: false },
             });
           });
@@ -205,6 +250,11 @@ describe('WalletPaymentsContainer', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
               styleProps: { showSupportedCards: false },
             });
           });
