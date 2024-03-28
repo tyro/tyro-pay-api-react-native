@@ -106,9 +106,9 @@ export const getInputStyles = (
   },
   inputWrapper: {
     // State-conditional background color
-    ...(isFocus
-      ? getStylePropOrDefault(styleProps, 'backgroundColor', TyroPayStylePropKeys.inputFocusBackgroundColor, '#f2f2f2')
-      : getStylePropOrDefault(styleProps, 'backgroundColor', TyroPayStylePropKeys.inputBackgroundColor, '#f9f9f9')),
+    ...getStylePropOrDefault(styleProps, 'backgroundColor', TyroPayStylePropKeys.inputBackgroundColor, '#f9f9f9'),
+    ...(isFocus &&
+      getStylePropOrDefault(styleProps, 'backgroundColor', TyroPayStylePropKeys.inputFocusBackgroundColor, undefined)),
     // State-conditional border size
     ...(isError
       ? getStylePropOrDefault(styleProps, 'borderWidth', TyroPayStylePropKeys.inputErrorBorderSize, 1)
@@ -130,17 +130,17 @@ export const getInputStyles = (
     ...getStylePropOrDefault(styleProps, 'fontSize', TyroPayStylePropKeys.inputFontSize, 15),
     ...getStylePropOrDefault(styleProps, 'fontWeight', TyroPayStylePropKeys.inputFontWeight, undefined),
     // State-conditional input font color
-    ...(isError
-      ? getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputErrorFontColor, '#303030')
-      : isFocus
-      ? getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputFocusFontColor, '#303030')
-      : getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputFontColor, '#303030')),
+    ...getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputFontColor, '#303030'),
+    ...(isFocus && getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputFocusFontColor, undefined)),
+    ...(isError && getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputErrorFontColor, undefined)),
     ...getStylePropOrDefault(styleProps, 'padding', TyroPayStylePropKeys.inputPadding, DEFAULT_INPUT_SPACING),
     width: '100%',
     height: '100%',
     flex: 1,
   },
-
+  placeholder: {
+    ...getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.labelFontColor, '#686868'),
+  },
   imageWrapper: {
     display: 'flex',
     flexDirection: 'row',
@@ -170,7 +170,7 @@ export const getInputStyles = (
   labelContainer: {
     ...getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.labelFontColor, '#303030'),
     ...getStylePropOrDefault(styleProps, 'fontFamily', TyroPayStylePropKeys.fontFamily, 'roboto'),
-    ...getStylePropOrDefault(styleProps, 'fontSize', TyroPayStylePropKeys.labelFontColor, 15),
+    ...getStylePropOrDefault(styleProps, 'fontSize', TyroPayStylePropKeys.labelFontSize, 15),
     ...getStylePropOrDefault(styleProps, 'fontWeight', TyroPayStylePropKeys.labelFontWeight, '600'),
     ...getStylePropOrDefault(styleProps, 'padding', TyroPayStylePropKeys.labelPadding, 10),
     width: '100%',
@@ -185,9 +185,13 @@ export const getDividerStyles = (styleProps: TyroPayStyleProps): Record<string, 
     paddingLeft: 5,
     paddingRight: 5,
     textAlign: 'center',
-    color: '#303030',
+    ...getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.labelFontColor, '#303030'),
   },
-  line: { flex: 1, height: 1, backgroundColor: '#d9d9d9' },
+  line: {
+    flex: 1,
+    height: 1,
+    ...getStylePropOrDefault(styleProps, 'backgroundColor', TyroPayStylePropKeys.inputBorderColor, '#d9d9d9'),
+  },
 });
 
 export const getWalletPaymentsStyles = (styleProps: TyroPayStyleProps): Record<string, any> => ({

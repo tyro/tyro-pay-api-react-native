@@ -146,7 +146,7 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
       />
       <View style={styles.fieldSplit}>
         <InputField
-          labelText="Expiry date (MM/YY)"
+          labelText="Expiry (MM/YY)"
           placeholderText="MM/YY"
           setText={onChangeExpiry}
           value={expiry}
