@@ -110,16 +110,16 @@ export const getInputStyles = (
     ...(isFocus &&
       getStylePropOrDefault(styleProps, 'backgroundColor', TyroPayStylePropKeys.inputFocusBackgroundColor, undefined)),
     // State-conditional border size
-    ...(isError
-      ? getStylePropOrDefault(styleProps, 'borderWidth', TyroPayStylePropKeys.inputErrorBorderSize, 1)
-      : isFocus
+    ...(isFocus
       ? getStylePropOrDefault(styleProps, 'borderWidth', TyroPayStylePropKeys.inputFocusBorderSize, 1)
+      : isError
+      ? getStylePropOrDefault(styleProps, 'borderWidth', TyroPayStylePropKeys.inputErrorBorderSize, 1)
       : getStylePropOrDefault(styleProps, 'borderWidth', TyroPayStylePropKeys.inputBorderSize, 1)),
     // State-conditional border color
-    ...(isError
-      ? getStylePropOrDefault(styleProps, 'borderColor', TyroPayStylePropKeys.inputErrorBorderColor, 'red')
-      : isFocus
+    ...(isFocus
       ? getStylePropOrDefault(styleProps, 'borderColor', TyroPayStylePropKeys.inputFocusBorderColor, 'blue')
+      : isError
+      ? getStylePropOrDefault(styleProps, 'borderColor', TyroPayStylePropKeys.inputErrorBorderColor, 'red')
       : getStylePropOrDefault(styleProps, 'borderColor', TyroPayStylePropKeys.inputBorderColor, '#d9d9d9')),
     // End conditionals
     ...getStylePropOrDefault(styleProps, 'borderRadius', TyroPayStylePropKeys.inputBorderRadius, 5),
@@ -131,8 +131,8 @@ export const getInputStyles = (
     ...getStylePropOrDefault(styleProps, 'fontWeight', TyroPayStylePropKeys.inputFontWeight, undefined),
     // State-conditional input font color
     ...getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputFontColor, '#303030'),
-    ...(isFocus && getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputFocusFontColor, undefined)),
     ...(isError && getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputErrorFontColor, undefined)),
+    ...(isFocus && getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputFocusFontColor, undefined)),
     ...getStylePropOrDefault(styleProps, 'padding', TyroPayStylePropKeys.inputPadding, DEFAULT_INPUT_SPACING),
     width: '100%',
     height: '100%',
