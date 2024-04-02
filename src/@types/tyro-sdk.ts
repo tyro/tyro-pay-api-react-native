@@ -1,38 +1,39 @@
 import { CardTypeNames } from './card-types';
 
-export enum SupportedCardNetworks {
-  VISA = CardTypeNames.VISA,
-  MASTERCARD = CardTypeNames.MASTERCARD,
-  AMEX = CardTypeNames.AMEX,
-  JCB = CardTypeNames.JCB,
-}
+export type SupportedNetworks = `${CardTypeNames}`;
 
-export type SupportedNetworks = SupportedCardNetworks | `${SupportedCardNetworks}`;
+export type SupportedNetworksGooglePay = `${Extract<
+  CardTypeNames,
+  CardTypeNames.AMEX | CardTypeNames.JCB | CardTypeNames.MASTERCARD | CardTypeNames.VISA
+>}`;
 
-export const defaultSupportedNetworks = [
-  ...new Set(Object.values(SupportedCardNetworks).map((val) => val.toString().toLowerCase())),
-] as SupportedNetworks[];
-interface AppleInitParams {
+export type SupportedNetworksApplePay = `${Extract<
+  CardTypeNames,
+  CardTypeNames.AMEX | CardTypeNames.JCB | CardTypeNames.MASTERCARD | CardTypeNames.VISA | CardTypeNames.MAESTRO
+>}`;
+
+export const defaultSupportedNetworks = Object.values(CardTypeNames);
+
+interface AppleWalletInitParams {
+  enabled: boolean;
   merchantIdentifier: string;
+  supportedNetworks: SupportedNetworksApplePay[];
 }
 
-interface GoogleInitParams {
+interface GoogleWalletInitParams {
+  enabled: boolean;
   merchantName: string;
+  supportedNetworks: SupportedNetworksGooglePay[];
 }
-
-interface BaseWalletParams {
+interface CreditCardFormInitParams {
   enabled: boolean;
   supportedNetworks: SupportedNetworks[];
 }
 
-interface AppleWalletInitParams extends AppleInitParams, BaseWalletParams {}
-
-interface GoogleWalletInitParams extends GoogleInitParams, BaseWalletParams {}
-
 interface OptionParams {
   applePay: AppleWalletInitParams;
   googlePay: GoogleWalletInitParams;
-  creditCardForm: boolean;
+  creditCardForm: CreditCardFormInitParams;
 }
 
 export interface InitTyroParams {
