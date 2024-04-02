@@ -7,7 +7,7 @@ import { TyroPayOptionsKeys, TyroPayStyleLabelPositions } from '../@types/defini
 import { useSDK } from '../SDKSharedContext';
 import { CardImageNames } from '../@types/card-types';
 import CardPreview from './CardPreview';
-import { defaultSupportedNetworks } from '../@types/tyro-sdk';
+import { defaultSupportedNetworks } from '../@types/default';
 
 type InputFieldProps = {
   labelText: string;

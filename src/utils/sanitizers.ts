@@ -1,5 +1,5 @@
-import { SupportedNetworks, defaultSupportedNetworks } from '../@types/tyro-sdk';
-import { defaultOptions } from '../@types/default';
+import { SupportedNetworks } from '../@types/network-types';
+import { defaultOptions, defaultSupportedNetworks } from '../@types/default';
 import {
   TyroPayOptions,
   TyroPayOptionsKeys,

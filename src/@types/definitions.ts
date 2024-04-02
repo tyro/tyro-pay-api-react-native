@@ -1,6 +1,6 @@
 import { ApplePayButtonStyleProps, GooglePayButtonStyleProps } from './style-types';
 import { ThemeNames } from './theme-styles';
-import { SupportedNetworks, SupportedNetworksApplePay, SupportedNetworksGooglePay } from './tyro-sdk';
+import { SupportedNetworks, SupportedNetworksApplePay, SupportedNetworksGooglePay } from './network-types';
 
 export enum TyroPayStyleLabelPositions {
   BLOCK = 'block',
