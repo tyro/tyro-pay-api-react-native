@@ -2,12 +2,20 @@ import { CardTypeNames } from './card-types';
 
 export type SupportedNetworks = `${CardTypeNames}`;
 
-export type SupportedNetworksGooglePay = `${Extract<
-  CardTypeNames,
-  CardTypeNames.AMEX | CardTypeNames.JCB | CardTypeNames.MASTERCARD | CardTypeNames.VISA
->}`;
+export const SupportedCardsGooglePay = [
+  CardTypeNames.AMEX,
+  CardTypeNames.JCB,
+  CardTypeNames.MASTERCARD,
+  CardTypeNames.VISA,
+] as const;
 
-export type SupportedNetworksApplePay = `${Extract<
-  CardTypeNames,
-  CardTypeNames.AMEX | CardTypeNames.JCB | CardTypeNames.MASTERCARD | CardTypeNames.VISA | CardTypeNames.MAESTRO
->}`;
+export const SupportedCardsApplePay = [
+  CardTypeNames.AMEX,
+  CardTypeNames.JCB,
+  CardTypeNames.MASTERCARD,
+  CardTypeNames.VISA,
+  CardTypeNames.MAESTRO,
+] as const;
+
+export type SupportedNetworksGooglePay = `${(typeof SupportedCardsGooglePay)[number]}`;
+export type SupportedNetworksApplePay = `${(typeof SupportedCardsApplePay)[number]}`;
