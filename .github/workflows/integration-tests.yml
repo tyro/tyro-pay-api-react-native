@@ -95,6 +95,11 @@ jobs:
 
     steps:
 
+      - name: Setup Node.js env
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 18.0.0
+          
       - name: setup-cocoapods
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
@@ -103,9 +108,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Get package cache directory path
-        id: package-cache-dir-path
-        run: echo "::set-output name=dir::$(package cache dir)"
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      - uses: actions/cache@v3
+        id: npm-cache
+        with:
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - uses: actions/cache@v2
+        with:
+          path: example/ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pods-
+
 
       - name: Install React Native CLI
         run: npm install react-native-cli
