@@ -408,7 +408,7 @@ describe('Style Drawer Service', () => {
         },
         inputWrapper: {
           backgroundColor: '#f9f9f9',
-          borderColor: 'red',
+          borderColor: 'blue',
           borderRadius: 5,
           borderWidth: 1,
           width: 'auto',
@@ -470,9 +470,9 @@ describe('Style Drawer Service', () => {
         },
         inputWrapper: {
           backgroundColor: '#bbbbbb',
-          borderColor: '#cccccc',
+          borderColor: '#aaaaaa',
           borderRadius: 26,
-          borderWidth: 27,
+          borderWidth: 28,
           width: 'auto',
         },
         labelContainer: {
@@ -484,7 +484,7 @@ describe('Style Drawer Service', () => {
           width: '100%',
         },
         textInput: {
-          color: '#dddddd',
+          color: '#999999',
           flex: 1,
           fontFamily: 'arial',
           fontSize: 29,
