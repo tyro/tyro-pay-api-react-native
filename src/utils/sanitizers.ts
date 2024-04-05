@@ -68,7 +68,7 @@ export const sanitizeOptions = (options: TyroPayOptionsProps): TyroPayOptions =>
   );
 
   // Apply theme defaults
-  if (!useOptions?.theme || !Object.values(ThemeNames).includes(useOptions.theme)) {
+  if (!useOptions?.theme || !Object.values(ThemeNames).includes(useOptions.theme as ThemeNames)) {
     useOptions.theme = ThemeNames.DEFAULT;
   }
 
