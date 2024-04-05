@@ -76,7 +76,6 @@ describe('Style Drawer Service', () => {
           width: '100%',
           alignItems: 'center',
           backgroundColor: 'white',
-          fontFamily: 'roboto',
           justifyContent: 'center',
         },
       });
@@ -137,7 +136,6 @@ describe('Style Drawer Service', () => {
       expect(result).toEqual({
         error: {
           color: 'red',
-          fontFamily: 'roboto',
           fontSize: 15,
           marginVertical: 10,
         },
@@ -171,7 +169,6 @@ describe('Style Drawer Service', () => {
         },
         labelContainer: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           fontWeight: '600',
           padding: 10,
@@ -179,7 +176,6 @@ describe('Style Drawer Service', () => {
         },
         textInput: {
           color: '#303030',
-          fontFamily: 'roboto',
           flex: 1,
           fontSize: 15,
           height: '100%',
@@ -259,7 +255,6 @@ describe('Style Drawer Service', () => {
       expect(result).toEqual({
         error: {
           color: 'red',
-          fontFamily: 'roboto',
           fontSize: 15,
           marginVertical: 10,
         },
@@ -293,7 +288,6 @@ describe('Style Drawer Service', () => {
         },
         labelContainer: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           fontWeight: '600',
           padding: 10,
@@ -301,7 +295,6 @@ describe('Style Drawer Service', () => {
         },
         textInput: {
           color: '#303030',
-          fontFamily: 'roboto',
           flex: 1,
           fontSize: 15,
           height: '100%',
@@ -381,7 +374,6 @@ describe('Style Drawer Service', () => {
       expect(result).toEqual({
         error: {
           color: 'red',
-          fontFamily: 'roboto',
           fontSize: 15,
           marginVertical: 10,
         },
@@ -415,7 +407,6 @@ describe('Style Drawer Service', () => {
         },
         labelContainer: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           fontWeight: '600',
           padding: 10,
@@ -423,7 +414,6 @@ describe('Style Drawer Service', () => {
         },
         textInput: {
           color: '#303030',
-          fontFamily: 'roboto',
           flex: 1,
           fontSize: 15,
           height: '100%',
@@ -503,7 +493,6 @@ describe('Style Drawer Service', () => {
       expect(result).toEqual({
         error: {
           color: 'red',
-          fontFamily: 'roboto',
           fontSize: 15,
           marginVertical: 10,
         },
@@ -537,7 +526,6 @@ describe('Style Drawer Service', () => {
         },
         labelContainer: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           fontWeight: '600',
           padding: 10,
@@ -545,7 +533,6 @@ describe('Style Drawer Service', () => {
         },
         textInput: {
           color: '#303030',
-          fontFamily: 'roboto',
           flex: 1,
           fontSize: 15,
           height: '100%',
@@ -739,7 +726,6 @@ describe('Style Drawer Service', () => {
         line: { backgroundColor: '#d9d9d9', flex: 1, height: 1 },
         text: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           paddingLeft: 5,
           paddingRight: 5,
@@ -775,7 +761,6 @@ describe('Style Drawer Service', () => {
         },
         buttonText: {
           color: 'white',
-          fontFamily: 'roboto',
         },
         container: {
           alignItems: 'center',
@@ -822,7 +807,6 @@ describe('Style Drawer Service', () => {
       expect(result).toEqual({
         error: {
           color: 'red',
-          fontFamily: 'roboto',
           fontSize: 15,
           marginVertical: 10,
         },
@@ -856,7 +840,6 @@ describe('Style Drawer Service', () => {
         },
         labelContainer: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           fontWeight: '600',
           padding: 10,
@@ -864,7 +847,6 @@ describe('Style Drawer Service', () => {
         },
         textInput: {
           color: '#303030',
-          fontFamily: 'roboto',
           flex: 1,
           fontSize: 30,
           fontWeight: '50',
@@ -891,7 +873,6 @@ describe('Style Drawer Service', () => {
       expect(result).toEqual({
         error: {
           color: 'red',
-          fontFamily: 'roboto',
           fontSize: 15,
           marginVertical: 10,
         },
@@ -925,7 +906,6 @@ describe('Style Drawer Service', () => {
         },
         labelContainer: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           fontWeight: '600',
           padding: 10,
@@ -933,7 +913,6 @@ describe('Style Drawer Service', () => {
         },
         textInput: {
           color: '#303030',
-          fontFamily: 'roboto',
           flex: 1,
           fontSize: 30,
           fontWeight: '50',
