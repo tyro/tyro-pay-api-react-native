@@ -1,6 +1,6 @@
 import { ApplePayButtonStyleProps, GooglePayButtonStyleProps } from './style-types';
 import { ThemeNames } from './theme-styles';
-import { SupportedNetworks } from './tyro-sdk';
+import { SupportedNetworks, SupportedNetworksApplePay, SupportedNetworksGooglePay } from './network-types';
 
 export enum TyroPayStyleLabelPositions {
   BLOCK = 'block',
@@ -45,7 +45,7 @@ export enum TyroPayApplePayOptionKeys {
 export type TyroPayApplePayOptions = {
   [TyroPayApplePayOptionKeys.enabled]?: boolean;
   [TyroPayApplePayOptionKeys.merchantIdentifier]?: string;
-  [TyroPayApplePayOptionKeys.supportedNetworks]?: SupportedNetworks[];
+  [TyroPayApplePayOptionKeys.supportedNetworks]?: SupportedNetworksApplePay[];
 };
 
 export enum TyroPayGooglePayOptionKeys {
@@ -57,7 +57,7 @@ export enum TyroPayGooglePayOptionKeys {
 export type TyroPayGooglePayOptions = {
   [TyroPayGooglePayOptionKeys.enabled]?: boolean;
   [TyroPayGooglePayOptionKeys.merchantName]?: string;
-  [TyroPayGooglePayOptionKeys.supportedNetworks]?: SupportedNetworks[];
+  [TyroPayGooglePayOptionKeys.supportedNetworks]?: SupportedNetworksGooglePay[];
 };
 
 export enum TyroPayCreditCardFormOptionKeys {

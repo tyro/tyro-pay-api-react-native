@@ -4,7 +4,7 @@ import { View } from 'react-native';
 import { TyroPayOptions, TyroPayOptionsKeys } from './@types/definitions';
 import { ErrorMessage, ErrorMessageType, TyroErrorMessages } from './@types/message-types';
 import { ClientPayRequestResponse, PayRequestStatus, ThreeDSecureStatus } from './@types/pay-request-types';
-import { SupportedNetworks } from './@types/tyro-sdk';
+import { SupportedNetworks } from './@types/network-types';
 import { getCardType, UNKNOWN_CARD_TYPE } from './utils/card-formatting';
 import { CardDetails } from './@types/card-types';
 import { errorMessage } from './utils/error-message';

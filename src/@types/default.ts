@@ -1,4 +1,6 @@
+import { CardTypeNames } from './card-types';
 import { TyroPayOptions } from './definitions';
+import { SupportedNetworks } from './network-types';
 import { applePayButtonDefaultStyles, googlePayButtonDefaultStyles, ThemeNames, ThemeStyles } from './theme-styles';
 
 export const defaultOptions = {
@@ -21,3 +23,5 @@ export const defaultOptions = {
     },
   },
 } as TyroPayOptions;
+
+export const defaultSupportedNetworks = Object.values(CardTypeNames) as SupportedNetworks[];

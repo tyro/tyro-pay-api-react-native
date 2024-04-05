@@ -1,4 +1,4 @@
-import { SupportedNetworks } from './tyro-sdk';
+import { SupportedNetworks } from './network-types';
 
 export interface PayRequestOrigin {
   orderId: string;

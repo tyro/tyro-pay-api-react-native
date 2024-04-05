@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, View } from 'react-native';
 import { ImageSources } from '../@types/images';
-import { SupportedNetworks } from '../@types/tyro-sdk';
+import { SupportedNetworks } from '../@types/network-types';
 
 type CardPreviewProps = {
   supportedNetworks: SupportedNetworks[];

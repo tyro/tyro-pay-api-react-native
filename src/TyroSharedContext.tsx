@@ -6,7 +6,7 @@ import { ClientPayRequestResponse, PayRequestStatus } from './@types/pay-request
 import TyroSDK from './TyroSDK';
 import { ErrorMessage, ErrorMessageType, TyroErrorMessages } from './@types/message-types';
 import { errorMessage } from './utils/error-message';
-import { SupportedNetworks } from './@types/tyro-sdk';
+import { SupportedNetworks } from './@types/network-types';
 import { parseSupportedNetworks, sanitizeOptions } from './utils/sanitizers';
 import SDKProvider from './SDKSharedContext';
 
