@@ -18,14 +18,14 @@ export enum TyroPayOptionsKeys {
 
 export type TyroPayOptions = {
   [TyroPayOptionsKeys.liveMode]: boolean;
-  [TyroPayOptionsKeys.theme]: ThemeNames;
+  [TyroPayOptionsKeys.theme]: `${ThemeNames}`;
   [TyroPayOptionsKeys.styleProps]: TyroPayStyleProps;
   [TyroPayOptionsKeys.options]: TyroPayOptionsOptionsProps;
 };
 
 export type TyroPayOptionsProps = {
   [TyroPayOptionsKeys.liveMode]: boolean;
-  [TyroPayOptionsKeys.theme]?: ThemeNames;
+  [TyroPayOptionsKeys.theme]?: `${ThemeNames}`;
   [TyroPayOptionsKeys.styleProps]?: TyroPayStyleProps;
   [TyroPayOptionsKeys.options]?: TyroPayOptionsOptionsProps;
 };
@@ -144,7 +144,7 @@ export type TyroPayStyleProps = {
   [TyroPayStylePropKeys.inputFontWeight]?: string | number;
   [TyroPayStylePropKeys.inputPadding]?: string | number;
   [TyroPayStylePropKeys.inputSpacing]?: string | number;
-  [TyroPayStylePropKeys.labelPosition]?: TyroPayStyleLabelPositions | `${TyroPayStyleLabelPositions}`;
+  [TyroPayStylePropKeys.labelPosition]?: `${TyroPayStyleLabelPositions}`;
   [TyroPayStylePropKeys.labelFontColor]?: string;
   [TyroPayStylePropKeys.labelFontSize]?: string | number;
   [TyroPayStylePropKeys.labelFontWeight]?: string | number;
