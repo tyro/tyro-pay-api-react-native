@@ -9,12 +9,6 @@ export enum TyroPayStyleLabelPositions {
   // INLINE = 'inline',
 }
 
-export enum TyroPayStyleFontFamilys {
-  ARIAL = 'arial',
-  SERIF = 'serif',
-  ROBOTO = 'roboto',
-}
-
 export enum TyroPayOptionsKeys {
   liveMode = 'liveMode',
   theme = 'theme',
@@ -133,7 +127,7 @@ export type TyroPayStyleProps = {
   [TyroPayStylePropKeys.bodyWidth]?: string | number;
   [TyroPayStylePropKeys.bodyMinWidth]?: string | number;
   [TyroPayStylePropKeys.bodyMaxWidth]?: string | number;
-  [TyroPayStylePropKeys.fontFamily]?: TyroPayStyleFontFamilys | `${TyroPayStyleFontFamilys}`;
+  [TyroPayStylePropKeys.fontFamily]?: string;
   [TyroPayStylePropKeys.inputBackgroundColor]?: string;
   [TyroPayStylePropKeys.inputBorderColor]?: string;
   [TyroPayStylePropKeys.inputBorderSize]?: string | number;

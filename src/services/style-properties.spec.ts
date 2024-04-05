@@ -4,7 +4,7 @@ import { StyleProcessors } from './style-properties';
 
 const typeValidSample = {
   labelPosition: ['block', 'inline', 'floating'],
-  fontFamily: ['roboto', 'arial', 'serif'],
+  fontFamily: ['AlNile-Bold', 'Arial', 'serif', 'Bodoni 72'],
   cardType: ['visa', 'mastercard', 'amex', 'maestro', 'jcb', 'diners'],
   color: ['#FFF', '#FFF000', '#Ff04fA'],
   size: ['1', '20', '10%', '30.5%', '100%', 'auto'],
@@ -16,7 +16,7 @@ const typeValidSample = {
 
 const typeInvalidSample = {
   labelPosition: 'anything',
-  fontFamily: 'anything',
+  fontFamily: '&#$1()',
   cardType: 'anything',
   color: ['#F', '#FFFFFFF', 'anything'],
   size: ['1px', '0px', '100px', '10em', '1.2em', '2pt', '-1px', 'Apx', 'px', '10x', '10p', '10x', '.1', 'anything'],
