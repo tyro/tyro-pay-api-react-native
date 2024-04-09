@@ -11,10 +11,7 @@ export interface StyleProps
   bodyWidth?: string;
   bodyMinWidth?: string;
   bodyMaxWidth?: string;
-  /*
-  // @todo, implement this later
   fontFamily?: string;
-  */
   inputBackgroundColor?: string;
   inputBorderColor?: string;
   inputBorderSize?: string;
@@ -125,12 +122,6 @@ export enum StyleLabelPositions {
   INLINE = 'inline',
 }
 
-export enum StyleFontFamilys {
-  ARIAL = 'arial',
-  SERIF = 'serif',
-  ROBOTO = 'roboto',
-}
-
 export type StyleProcessValue = string | string[] | boolean;
 
 export const StyleTypes = {
@@ -138,7 +129,7 @@ export const StyleTypes = {
     pattern: '^' + Object.values(StyleLabelPositions).join('|') + '$',
   },
   fontFamily: {
-    pattern: '^' + Object.values(StyleFontFamilys).join('|') + '$',
+    pattern: /^[a-z0-9_\- ]*$/gi,
   },
   cardType: {
     pattern: '^' + Object.values(CardTypeNames).join('|') + '$',

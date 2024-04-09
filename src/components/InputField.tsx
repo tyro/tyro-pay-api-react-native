@@ -7,7 +7,7 @@ import { TyroPayOptionsKeys, TyroPayStyleLabelPositions } from '../@types/defini
 import { useSDK } from '../SDKSharedContext';
 import { CardImageNames } from '../@types/card-types';
 import CardPreview from './CardPreview';
-import { defaultSupportedNetworks } from '../@types/tyro-sdk';
+import { defaultSupportedNetworks } from '../@types/default';
 
 type InputFieldProps = {
   labelText: string;
@@ -41,6 +41,7 @@ export const InputField = forwardRef<TextInput, InputFieldProps>(function InputF
             accessibilityState={{ selected: isFocus }}
             style={[styles.textInput]}
             placeholder={!hasPhysicalLabel ? placeholderText : undefined}
+            placeholderTextColor={styles.placeholder.color}
             onChangeText={setText}
             onFocus={(): void => setIsFocus(true)}
             onBlur={(): void => {

@@ -5,7 +5,7 @@ import { ClientPayRequestResponse } from '../@types/pay-request-types';
 import { mockFetch } from './utils/mocks';
 import { act } from 'react-test-renderer';
 import { InitTestComponent, TestPayButton, useYear } from './test-components/tests';
-import { SupportedCardNetworks } from '../@types/tyro-sdk';
+import { CardTypeNames } from '../@types/card-types';
 import { TyroPayOptionsProps, TyroPayStyleLabelPositions } from '../@types/definitions';
 
 jest.mock('../clients/config/pay-request-client-config.ts', () => {
@@ -127,7 +127,7 @@ describe('PaySheet', () => {
             mockFetch(200, {
               status: 'AWAITING_PAYMENT_INPUT',
               isLive: false,
-              supportedNetworks: [SupportedCardNetworks.VISA],
+              supportedNetworks: [CardTypeNames.VISA],
             } as unknown as ClientPayRequestResponse)
           ) // init and verify paySecret
           .mockResolvedValueOnce(
@@ -146,7 +146,7 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              options: { creditCardForm: { supportedNetworks: [SupportedCardNetworks.VISA] } },
+              options: { creditCardForm: { supportedNetworks: [CardTypeNames.VISA] } },
               styleProps: { showSupportedCards: false },
             });
           });
@@ -165,7 +165,7 @@ describe('PaySheet', () => {
             mockFetch(200, {
               status: 'AWAITING_PAYMENT_INPUT',
               isLive: false,
-              supportedNetworks: [SupportedCardNetworks.MASTERCARD],
+              supportedNetworks: [CardTypeNames.MASTERCARD],
             } as unknown as ClientPayRequestResponse)
           ) // init and verify paySecret
           .mockResolvedValueOnce(
@@ -184,7 +184,7 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              options: { creditCardForm: { supportedNetworks: [SupportedCardNetworks.VISA] } },
+              options: { creditCardForm: { supportedNetworks: [CardTypeNames.VISA] } },
               styleProps: { showSupportedCards: false },
             });
           });
@@ -204,14 +204,14 @@ describe('PaySheet', () => {
           mockFetch(200, {
             status: 'AWAITING_PAYMENT_INPUT',
             isLive: false,
-            SupportedCardNetworks: [SupportedCardNetworks.VISA],
+            supportedNetworks: [CardTypeNames.VISA],
           } as unknown as ClientPayRequestResponse)
         ); // init and verify paySecret
         await act(async () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              options: { creditCardForm: { supportedNetworks: [SupportedCardNetworks.VISA] } },
+              options: { creditCardForm: { supportedNetworks: [CardTypeNames.VISA] } },
               styleProps: { showSupportedCards: false },
             });
           });
@@ -999,7 +999,7 @@ describe('PaySheet', () => {
       (global.fetch as jest.Mock).mockResolvedValueOnce(
         mockFetch(200, {
           status: 'AWAITING_PAYMENT_INPUT',
-          supportedNetworks: [SupportedCardNetworks.VISA],
+          supportedNetworks: [CardTypeNames.VISA],
           isLive: false,
         } as ClientPayRequestResponse)
       );
@@ -1007,7 +1007,7 @@ describe('PaySheet', () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent />, {
             liveMode: false,
-            options: { creditCardForm: { supportedNetworks: [SupportedCardNetworks.VISA] } },
+            options: { creditCardForm: { supportedNetworks: [CardTypeNames.VISA] } },
           });
         });
         await checkInitializedCorrectly(wrapper);
@@ -1098,6 +1098,14 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+                applePay: {
+                  enabled: true,
+                },
+              },
               styleProps: { showSupportedCards: false },
             });
           });
@@ -1111,6 +1119,14 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+                applePay: {
+                  enabled: true,
+                },
+              },
               styleProps: { walletPaymentsDividerText: 'My Custom Divider Text', showSupportedCards: false },
             });
           });
@@ -1124,6 +1140,14 @@ describe('PaySheet', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+                applePay: {
+                  enabled: true,
+                },
+              },
               styleProps: { walletPaymentsDividerEnabled: false, showSupportedCards: false },
             });
           });
@@ -1386,7 +1410,7 @@ describe('PaySheet', () => {
           expect(wrapper.getByPlaceholderText('CVV')).not.toBeNull();
           expect(wrapper.queryByText('Card number')).toBeNull();
           expect(wrapper.queryByText('Name on card')).toBeNull();
-          expect(wrapper.queryByText('Expiry date (MM/YY)')).toBeNull();
+          expect(wrapper.queryByText('Expiry (MM/YY)')).toBeNull();
           expect(wrapper.queryByText('Security code')).toBeNull();
         });
       });
@@ -1401,7 +1425,7 @@ describe('PaySheet', () => {
           await checkInitializedCorrectly(wrapper);
           expect(wrapper.getByText('Card number')).not.toBeNull();
           expect(wrapper.getByText('Name on card')).not.toBeNull();
-          expect(wrapper.getByText('Expiry date (MM/YY)')).not.toBeNull();
+          expect(wrapper.getByText('Expiry (MM/YY)')).not.toBeNull();
           expect(wrapper.getByText('Security code')).not.toBeNull();
           expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
           expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();

@@ -76,7 +76,6 @@ describe('Style Drawer Service', () => {
           width: '100%',
           alignItems: 'center',
           backgroundColor: 'white',
-          fontFamily: 'roboto',
           justifyContent: 'center',
         },
       });
@@ -137,7 +136,6 @@ describe('Style Drawer Service', () => {
       expect(result).toEqual({
         error: {
           color: 'red',
-          fontFamily: 'roboto',
           fontSize: 15,
           marginVertical: 10,
         },
@@ -171,7 +169,6 @@ describe('Style Drawer Service', () => {
         },
         labelContainer: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           fontWeight: '600',
           padding: 10,
@@ -179,12 +176,14 @@ describe('Style Drawer Service', () => {
         },
         textInput: {
           color: '#303030',
-          fontFamily: 'roboto',
           flex: 1,
           fontSize: 15,
           height: '100%',
           padding: 10,
           width: '100%',
+        },
+        placeholder: {
+          color: '#686868',
         },
       });
     });
@@ -231,7 +230,7 @@ describe('Style Drawer Service', () => {
         labelContainer: {
           color: 'purple',
           fontFamily: 'arial',
-          fontSize: 15,
+          fontSize: 36,
           fontWeight: '37',
           padding: 38,
           width: '100%',
@@ -246,6 +245,9 @@ describe('Style Drawer Service', () => {
           padding: 31,
           width: '100%',
         },
+        placeholder: {
+          color: 'purple',
+        },
       });
     });
     it('it defaults isError, noFocus', () => {
@@ -253,7 +255,6 @@ describe('Style Drawer Service', () => {
       expect(result).toEqual({
         error: {
           color: 'red',
-          fontFamily: 'roboto',
           fontSize: 15,
           marginVertical: 10,
         },
@@ -287,7 +288,6 @@ describe('Style Drawer Service', () => {
         },
         labelContainer: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           fontWeight: '600',
           padding: 10,
@@ -295,12 +295,14 @@ describe('Style Drawer Service', () => {
         },
         textInput: {
           color: '#303030',
-          fontFamily: 'roboto',
           flex: 1,
           fontSize: 15,
           height: '100%',
           padding: 10,
           width: '100%',
+        },
+        placeholder: {
+          color: '#686868',
         },
       });
     });
@@ -347,7 +349,7 @@ describe('Style Drawer Service', () => {
         labelContainer: {
           color: 'purple',
           fontFamily: 'arial',
-          fontSize: 15,
+          fontSize: 36,
           fontWeight: '37',
           padding: 38,
           width: '100%',
@@ -362,6 +364,9 @@ describe('Style Drawer Service', () => {
           padding: 31,
           width: '100%',
         },
+        placeholder: {
+          color: 'purple',
+        },
       });
     });
     it('it defaults isError, isFocus', () => {
@@ -369,7 +374,6 @@ describe('Style Drawer Service', () => {
       expect(result).toEqual({
         error: {
           color: 'red',
-          fontFamily: 'roboto',
           fontSize: 15,
           marginVertical: 10,
         },
@@ -395,15 +399,14 @@ describe('Style Drawer Service', () => {
           justifyContent: 'space-between',
         },
         inputWrapper: {
-          backgroundColor: '#f2f2f2',
-          borderColor: 'red',
+          backgroundColor: '#f9f9f9',
+          borderColor: 'blue',
           borderRadius: 5,
           borderWidth: 1,
           width: 'auto',
         },
         labelContainer: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           fontWeight: '600',
           padding: 10,
@@ -411,12 +414,14 @@ describe('Style Drawer Service', () => {
         },
         textInput: {
           color: '#303030',
-          fontFamily: 'roboto',
           flex: 1,
           fontSize: 15,
           height: '100%',
           padding: 10,
           width: '100%',
+        },
+        placeholder: {
+          color: '#686868',
         },
       });
     });
@@ -455,21 +460,21 @@ describe('Style Drawer Service', () => {
         },
         inputWrapper: {
           backgroundColor: '#bbbbbb',
-          borderColor: '#cccccc',
+          borderColor: '#aaaaaa',
           borderRadius: 26,
-          borderWidth: 27,
+          borderWidth: 28,
           width: 'auto',
         },
         labelContainer: {
           color: 'purple',
           fontFamily: 'arial',
-          fontSize: 15,
+          fontSize: 36,
           fontWeight: '37',
           padding: 38,
           width: '100%',
         },
         textInput: {
-          color: '#dddddd',
+          color: '#999999',
           flex: 1,
           fontFamily: 'arial',
           fontSize: 29,
@@ -478,6 +483,9 @@ describe('Style Drawer Service', () => {
           padding: 31,
           width: '100%',
         },
+        placeholder: {
+          color: 'purple',
+        },
       });
     });
     it('it defaults noError, isFocus', () => {
@@ -485,7 +493,6 @@ describe('Style Drawer Service', () => {
       expect(result).toEqual({
         error: {
           color: 'red',
-          fontFamily: 'roboto',
           fontSize: 15,
           marginVertical: 10,
         },
@@ -511,7 +518,7 @@ describe('Style Drawer Service', () => {
           justifyContent: 'space-between',
         },
         inputWrapper: {
-          backgroundColor: '#f2f2f2',
+          backgroundColor: '#f9f9f9',
           borderColor: 'blue',
           borderRadius: 5,
           borderWidth: 1,
@@ -519,7 +526,6 @@ describe('Style Drawer Service', () => {
         },
         labelContainer: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           fontWeight: '600',
           padding: 10,
@@ -527,12 +533,14 @@ describe('Style Drawer Service', () => {
         },
         textInput: {
           color: '#303030',
-          fontFamily: 'roboto',
           flex: 1,
           fontSize: 15,
           height: '100%',
           padding: 10,
           width: '100%',
+        },
+        placeholder: {
+          color: '#686868',
         },
       });
     });
@@ -579,7 +587,7 @@ describe('Style Drawer Service', () => {
         labelContainer: {
           color: 'purple',
           fontFamily: 'arial',
-          fontSize: 15,
+          fontSize: 36,
           fontWeight: '37',
           padding: 38,
           width: '100%',
@@ -593,6 +601,9 @@ describe('Style Drawer Service', () => {
           height: '100%',
           padding: 31,
           width: '100%',
+        },
+        placeholder: {
+          color: 'purple',
         },
       });
     });
@@ -646,7 +657,7 @@ describe('Style Drawer Service', () => {
         labelContainer: {
           color: 'purple',
           fontFamily: 'arial',
-          fontSize: 15,
+          fontSize: 36,
           fontWeight: '37',
           padding: 38,
           width: '100%',
@@ -660,6 +671,9 @@ describe('Style Drawer Service', () => {
           height: '100%',
           padding: 31,
           width: '100%',
+        },
+        placeholder: {
+          color: 'purple',
         },
       });
     });
@@ -712,7 +726,6 @@ describe('Style Drawer Service', () => {
         line: { backgroundColor: '#d9d9d9', flex: 1, height: 1 },
         text: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           paddingLeft: 5,
           paddingRight: 5,
@@ -724,9 +737,9 @@ describe('Style Drawer Service', () => {
       const result = getDividerStyles(styleProps);
       expect(result).toEqual({
         dividerWrapper: { alignItems: 'center', flexDirection: 'row', margin: 10, marginBottom: 20 },
-        line: { backgroundColor: '#d9d9d9', flex: 1, height: 1 },
+        line: { backgroundColor: '#eeeeee', flex: 1, height: 1 },
         text: {
-          color: '#303030',
+          color: 'purple',
           fontFamily: 'arial',
           fontSize: 15,
           paddingLeft: 5,
@@ -748,7 +761,6 @@ describe('Style Drawer Service', () => {
         },
         buttonText: {
           color: 'white',
-          fontFamily: 'roboto',
         },
         container: {
           alignItems: 'center',
@@ -795,7 +807,6 @@ describe('Style Drawer Service', () => {
       expect(result).toEqual({
         error: {
           color: 'red',
-          fontFamily: 'roboto',
           fontSize: 15,
           marginVertical: 10,
         },
@@ -829,7 +840,6 @@ describe('Style Drawer Service', () => {
         },
         labelContainer: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           fontWeight: '600',
           padding: 10,
@@ -837,13 +847,15 @@ describe('Style Drawer Service', () => {
         },
         textInput: {
           color: '#303030',
-          fontFamily: 'roboto',
           flex: 1,
           fontSize: 30,
           fontWeight: '50',
           height: '100%',
           padding: 40,
           width: '100%',
+        },
+        placeholder: {
+          color: '#686868',
         },
       });
     });
@@ -861,7 +873,6 @@ describe('Style Drawer Service', () => {
       expect(result).toEqual({
         error: {
           color: 'red',
-          fontFamily: 'roboto',
           fontSize: 15,
           marginVertical: 10,
         },
@@ -895,7 +906,6 @@ describe('Style Drawer Service', () => {
         },
         labelContainer: {
           color: '#303030',
-          fontFamily: 'roboto',
           fontSize: 15,
           fontWeight: '600',
           padding: 10,
@@ -903,13 +913,15 @@ describe('Style Drawer Service', () => {
         },
         textInput: {
           color: '#303030',
-          fontFamily: 'roboto',
           flex: 1,
           fontSize: 30,
           fontWeight: '50',
           height: '100%',
           padding: 40,
           width: '100%',
+        },
+        placeholder: {
+          color: '#686868',
         },
       });
     });

@@ -63,7 +63,17 @@ describe('TyroProvider', () => {
       );
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            options: {
+              googlePay: {
+                enabled: true,
+              },
+              applePay: {
+                enabled: true,
+              },
+            },
+          });
         });
         expect(wrapper.queryByText('Pay')).toBeNull();
         expect(wrapper.queryByText('Or pay with card')).toBeNull();
