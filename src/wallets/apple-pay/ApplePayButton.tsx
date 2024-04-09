@@ -1,21 +1,15 @@
-import React, { PropsWithChildren } from 'react';
-import { Button } from 'react-native';
+import { requireNativeComponent, UIManager } from 'react-native';
 import { ApplePayButtonStyleProps } from '../../@types/style-types';
 
-type ApplePayButtonProps = PropsWithChildren<{
-  title: string;
+type ApplePayButtonProps = {
   styles: ApplePayButtonStyleProps;
-  onSubmit: () => void;
-}>;
-
-const ApplePayButton = ({ title }: ApplePayButtonProps): JSX.Element => {
-  // @todo, implement
-  /*
-  import { requireNativeComponent } from "react-native";
-  const ApplePayButtonView = requireNativeComponent('ApplePayButtonView');
-  return <ApplePayButtonView style={buttonStyle} buttonTitle={buttonTitle} onSubmit={onSubmit} />;
-  */
-  return <Button title={title ?? 'ApplePay Button'} />;
 };
+
+const ApplePayButton = UIManager.getViewManagerConfig('ApplePayButton') !== null
+  ? requireNativeComponent<ApplePayButtonProps>('ApplePayButton')
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  : () => {
+    throw new Error('Unable to find ApplePayButton');
+  };
 
 export default ApplePayButton;

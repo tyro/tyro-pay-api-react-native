@@ -1,6 +1,6 @@
 import { getPayRequest } from './clients/pay-request-client';
 import { ClientPayRequestResponse, PayRequestStatus } from './@types/pay-request-types';
-import { TyroPayOptions, TyroPayOptionsKeys } from './@types/definitions';
+import { TyroPayOptions, TyroPayOptionsKeys, TyroPaymentItem } from './@types/definitions';
 import { isAndroid } from './utils/helpers';
 import { Platform } from 'react-native';
 import { NativeModules } from 'react-native';
@@ -38,28 +38,32 @@ class TyroSDK {
     return this.payRequest;
   };
 
-  initWalletPay = async (options: TyroPayOptions): Promise<WalletPaymentInitResult> => {
+  initWalletPay = async (options: TyroPayOptions, paymentItems: TyroPaymentItem[]): Promise<WalletPaymentInitResult> => {
     const walletPaymentConfigs = options?.[TyroPayOptionsKeys.options];
+    let paymentSupported = false;
     if (walletPaymentConfigs?.googlePay?.enabled) {
       const liveMode = options[TyroPayOptionsKeys.liveMode];
-      const googlePaySupported: boolean = await TyroPaySdkModule.initWalletPay({
+      paymentSupported = await TyroPaySdkModule.initWalletPay({
         googlePay: { ...walletPaymentConfigs.googlePay, liveMode },
       });
-      return {
-        googlePaySupported,
-      };
+    } else if (walletPaymentConfigs?.applePay?.enabled) {        
+      paymentSupported = await TyroPaySdkModule.initWalletPay({
+        paymentItems,
+        ...options.options.applePay,
+      });
     }
-    return {};
+    return {
+      paymentSupported,
+    };
   };
 
   initPaySheet = async (paySecret: string, liveMode: boolean): Promise<ClientPayRequestResponse> => {
-    const payRequest = await this.initAndVerifyPaySecret(paySecret, liveMode);
-    return payRequest;
+    return this.initAndVerifyPaySecret(paySecret, liveMode);
   };
 
   startWalletPay = async (paySecret: string): Promise<WalletPaymentResult> => {
-    const walletPaymentResult: WalletPaymentResult = await TyroPaySdkModule.startWalletPay(paySecret);
-    return walletPaymentResult;
+    console.log(`startWalletPay: ${paySecret}`)
+    return TyroPaySdkModule.startWalletPay(paySecret);
   };
 
   private payRequestAlreadySubmitted = (status: PayRequestStatus): boolean => {

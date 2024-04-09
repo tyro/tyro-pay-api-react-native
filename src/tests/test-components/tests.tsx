@@ -8,6 +8,7 @@ import { useSDK } from '../../SDKSharedContext';
 import SubmitPayFormButton from '../../components/SubmitPayFormButton';
 import { ValidationErrors } from '../../utils/validators';
 import CreditCardForm from '../../components/CreditCardForm';
+import { TyroPaymentItem } from '../../@types/definitions';
 
 export const useYear = parseInt(new Date().getFullYear().toString().slice(-2)) + 2;
 export const ProviderTestComponent = (): JSX.Element => {
@@ -32,7 +33,12 @@ export const InitTestComponent = (): JSX.Element => {
   const fetchPayRequest = async (): Promise<void> => {
     const { paySecret } = await genNewPayRequest();
     try {
-      await initPaySheet(paySecret);
+      const paymentItems: TyroPaymentItem[] = [{
+        label: "Burger",
+        type: "custom",
+        value: 1.00,
+      }]
+      await initPaySheet(paySecret, paymentItems);
     } catch (error) {
       console.log(error);
     }

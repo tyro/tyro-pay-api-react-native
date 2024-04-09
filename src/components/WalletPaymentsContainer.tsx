@@ -1,7 +1,7 @@
 import GooglePayButton from '../wallets/google-pay/GooglePayButton';
 import ApplePayButton from '../wallets/apple-pay/ApplePayButton';
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, TouchableOpacity, View, Button } from 'react-native';
 import { WalletPaymentResult } from '../@types/wallet-payment-result';
 import TyroSDK from '../TyroSDK';
 import { getWalletPaymentsStyles } from '../services/style-drawer';
@@ -25,10 +25,11 @@ export const WalletPaymentsContainer = (): JSX.Element => {
   return (
     <TouchableOpacity
       style={{ ...styles.walletWrapper }}
-      onPress={(): Promise<void> =>
+      onPress={(): Promise<void> => {
+        console.log('TouchableOpacity');
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         launchWalletPayment(paySecret!)
-      }
+      }}
     >
       <View style={{ ...styles.walletPadder }}>
         <View style={{ ...styles.walletContainer }}>
@@ -37,12 +38,7 @@ export const WalletPaymentsContainer = (): JSX.Element => {
           )}
           {options?.options?.applePay?.enabled && (
             <ApplePayButton
-              title={'IOS Pay Button'}
               styles={{}}
-              onSubmit={(): void => {
-                // @Todo
-                // Do nothing for now
-              }}
             />
           )}
         </View>

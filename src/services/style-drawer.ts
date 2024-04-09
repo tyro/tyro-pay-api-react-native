@@ -31,11 +31,12 @@ const getStylePropOrDefault = (
   } else {
     value = value as string;
   }
-  if (value === undefined && defaultValue !== undefined) {
-    value = defaultValue;
-  }
   if (value === undefined) {
-    return {};
+    if (defaultValue !== undefined) {
+      value = defaultValue;
+    } else {
+      return {};
+    }
   }
   if (STRING_ONLY_PROPS.includes(styleSheetKey)) {
     value = `${value}` as string;

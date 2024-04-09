@@ -7,12 +7,18 @@ import { createPayRequest } from './clients/mock-client';
 const CheckOut = (): JSX.Element => {
   const [loadPaySheet, setLoadPaySheet] = useState(false);
   const [showPayResult, setShowPayResult] = useState(false);
-  const { initPaySheet, tyroError, payRequest, hasPayRequestCompleted } = useTyro();
+  const { initPaySheet, tyroError, payRequest, hasPayRequestCompleted, isWalletPaymentReady } = useTyro();
 
   const fetchPayRequest = async (): Promise<void> => {
     const { paySecret } = await createPayRequest();
     try {
-      await initPaySheet(paySecret);
+      const paymentItems = [{
+        label: "Burger",
+        type: "custom",
+        amount: "1.00",
+      }];
+      
+      await initPaySheet(paySecret, paymentItems);
     } catch (error) {
       console.log(error);
     }
@@ -35,9 +41,7 @@ const CheckOut = (): JSX.Element => {
 
   return (
     <View>
-      <View style={styles.checkoutButtonContainer}>
-        <Button title="Checkout" onPress={presentPaySheet} />
-      </View>
+      {!isWalletPaymentReady && <View style={styles.checkoutButtonContainer}><Button title="Checkout" onPress={presentPaySheet} /></View>}      
       {loadPaySheet && <PaySheet />}
       {tyroError?.errorType && <Text>ErrorType: {tyroError.errorType}</Text>}
       {tyroError?.errorCode && <Text>ErrorCode: {tyroError.errorCode}</Text>}

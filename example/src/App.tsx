@@ -37,6 +37,11 @@ function App(): JSX.Element {
                     enabled: true,
                     merchantName: 'Example Merchant',
                   },
+                  applePay: {
+                    enabled: true,
+                    merchantIdentifier: 'merchant.tyro-pay-api-sample-app',
+                    supportedNetworks: ['visa', 'amex']
+                  }
                 },
                 styleProps: {
                   fontFamily: 'roboto',

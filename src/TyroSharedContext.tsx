@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, createContext, useEffect, createRef, useContext } from 'react';
-import { TyroPayOptions, TyroPayOptionsProps } from './@types/definitions';
+import { TyroPayOptions, TyroPayOptionsProps, TyroPaymentItem } from './@types/definitions';
 import { View } from 'react-native';
 import { ClientPayRequestResponse, PayRequestStatus } from './@types/pay-request-types';
 import TyroSDK from './TyroSDK';
@@ -15,8 +15,9 @@ export type TyroPayContextProps = {
   payRequest: ClientPayRequestResponse | null;
   isPayRequestReady: boolean;
   isPayRequestLoading: boolean;
+  isWalletPaymentReady: boolean;
   tyroError: ErrorMessage | null;
-  initPaySheet: (paySecret: string) => Promise<void>;
+  initPaySheet: (paySecret: string, paymentItems: TyroPaymentItem[]) => Promise<void>;
   hasPayRequestCompleted: () => boolean;
 };
 
@@ -40,6 +41,7 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
   const [initialised, setInitialised] = useState<boolean | null>(null);
   const [payRequest, setPayRequest] = useState<ClientPayRequestResponse | null>(null);
   const [isPayRequestReady, setPayRequestReady] = useState<boolean>(false);
+  const [isWalletPaymentReady, setWalletPaymentSupported] = useState<boolean>(false);
   const [isPayRequestLoading, setPayRequestIsLoading] = useState<boolean>(false);
   const [tyroError, setTyroErrorMessage] = useState<ErrorMessage | null>(null);
   const [paySecret, setPaySecret] = useState<string | null>(null);
@@ -81,7 +83,7 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     setPayRequestIsLoading(false);
   };
 
-  async function initPaySheet(paySecret: string): Promise<void> {
+  async function initPaySheet(paySecret: string, paymentItems: TyroPaymentItem[]): Promise<void> {
     if (!verifyInitialisation()) {
       setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.NOT_INITIALISED]));
       return;
@@ -89,11 +91,16 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     try {
       setPayRequestIsLoading(true);
       const payRequest = await TyroSDK.initPaySheet(paySecret, cleanedOptions.liveMode);
-      const initWalletPayResult = await TyroSDK.initWalletPay(cleanedOptions);
-      if (initWalletPayResult.googlePaySupported === false) {
+      const initWalletPayResult = await TyroSDK.initWalletPay(cleanedOptions, paymentItems);
+      if (initWalletPayResult.paymentSupported) {
+        setWalletPaymentSupported(true);
+      } else {
         setOptions((options) => ({
           ...options,
-          options: { ...options.options, googlePay: { ...options.options.googlePay, enabled: false } },
+          options: { 
+            ...options.options, 
+            googlePay: { ...options.options.googlePay, enabled: false }, 
+            applePay: { ...options.options.applePay, enabled: false } },
         }));
       }
       setPaySecret(paySecret);
@@ -121,6 +128,7 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     payRequest,
     isPayRequestReady,
     isPayRequestLoading,
+    isWalletPaymentReady,
     tyroError: tyroError,
     initPaySheet,
     hasPayRequestCompleted,
