@@ -46,6 +46,10 @@ jobs:
         with:
           version: 1.14.3
 
+      - name: Add cocoapod repo
+        run: |
+          pod repo add tyro-connect-cocoapods https://github.com/tyro/connect-cocoapods.git
+
       - name: Checkout code
         uses: actions/checkout@v3
 
