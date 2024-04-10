@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, createContext, useEffect, createRef, useContext } from 'react';
-import { TyroPayOptions, TyroPayOptionsProps, TyroPaymentItem } from './@types/definitions';
+import { TyroPayOptions, TyroPayOptionsProps } from './@types/definitions';
 import { View } from 'react-native';
 import { ClientPayRequestResponse, PayRequestStatus } from './@types/pay-request-types';
 import TyroSDK from './TyroSDK';

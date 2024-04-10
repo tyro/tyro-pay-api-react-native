@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useTyro } from '../../TyroSharedContext';
 import PaySheet from '../../PaySheet';
 import { createPayRequest } from '../../clients/mock-client';
-import { TyroPaymentItem } from '../../@types/definitions';
 
 // Demo Component: initPaySheet and rendering the PaySheet
 const CheckOut = (): JSX.Element => {
@@ -14,14 +13,7 @@ const CheckOut = (): JSX.Element => {
   const fetchPayRequest = async (): Promise<void> => {
     const { paySecret } = await createPayRequest();
     try {
-
-      const paymentItems: TyroPaymentItem[] = [{
-        label: "Burger",
-        type: "custom",
-        value: 1.00
-      }];
-
-      await initPaySheet(paySecret, paymentItems);
+      await initPaySheet(paySecret);
     } catch (error) {
       console.log(error);
     }
