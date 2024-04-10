@@ -37,9 +37,7 @@ export const WalletPaymentsContainer = (): JSX.Element => {
             <GooglePayButton buttonStyles={options?.styleProps?.googlePayButton} />
           )}
           {options?.options?.applePay?.enabled && (
-            <ApplePayButton
-              styles={{}}
-            />
+            <ApplePayButton buttonStyles={options?.styleProps?.applePayButton} />
           )}
         </View>
       </View>

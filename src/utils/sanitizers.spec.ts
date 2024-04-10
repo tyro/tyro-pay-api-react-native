@@ -18,8 +18,7 @@ const defaultedOptionsExpectation = {
     showSupportedCards: true,
     applePayButton: {
       buttonStyle: 'black',
-      buttonType: 'plain',
-      buttonBorderRadius: '4',
+      buttonLabel: 'plain',
     },
     googlePayButton: {
       buttonColor: 'default',
@@ -85,7 +84,6 @@ describe('sanitizers', () => {
           bodyPadding: '5',
           bodyWidth: '50%',
           applePayButton: {
-            buttonBorderRadius: '12',
           },
           googlePayButton: {
             buttonBorderRadius: '14' as unknown as number,
@@ -99,7 +97,6 @@ describe('sanitizers', () => {
         bodyWidth: '50%',
         applePayButton: {
           ...defaultedOptionsExpectation.styleProps.applePayButton,
-          buttonBorderRadius: '12',
         },
         googlePayButton: {
           ...defaultedOptionsExpectation.styleProps.googlePayButton,

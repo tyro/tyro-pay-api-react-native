@@ -1,6 +1,6 @@
 import { getPayRequest } from './clients/pay-request-client';
 import { ClientPayRequestResponse, PayRequestStatus } from './@types/pay-request-types';
-import { TyroPayOptions, TyroPayOptionsKeys, TyroPaymentItem } from './@types/definitions';
+import { TyroPayOptions, TyroPayOptionsKeys } from './@types/definitions';
 import { isAndroid } from './utils/helpers';
 import { Platform } from 'react-native';
 import { NativeModules } from 'react-native';
@@ -40,17 +40,19 @@ class TyroSDK {
 
   initWalletPay = async (options: TyroPayOptions): Promise<WalletPaymentInitResult> => {
     const walletPaymentConfigs = options?.[TyroPayOptionsKeys.options];
-    let paymentSupported = false;
+    const liveMode = options[TyroPayOptionsKeys.liveMode];
+    let walletConfig = {};
     if (walletPaymentConfigs?.googlePay?.enabled) {
-      const liveMode = options[TyroPayOptionsKeys.liveMode];
-      paymentSupported = await TyroPaySdkModule.initWalletPay({
+      walletConfig = {
         googlePay: { ...walletPaymentConfigs.googlePay, liveMode },
-      });
+      };
     } else if (walletPaymentConfigs?.applePay?.enabled) {        
-      paymentSupported = await TyroPaySdkModule.initWalletPay({
+      walletConfig = {
         ...options.options.applePay,
-      });
+        liveMode,
+      };
     }
+    const paymentSupported = await TyroPaySdkModule.initWalletPay(walletConfig);
     return {
       paymentSupported,
     };
@@ -61,7 +63,6 @@ class TyroSDK {
   };
 
   startWalletPay = async (paySecret: string): Promise<WalletPaymentResult> => {
-    console.log(`startWalletPay: ${paySecret}`)
     return TyroPaySdkModule.startWalletPay(paySecret);
   };
 

@@ -1,15 +1,20 @@
+import React from 'react';
 import { requireNativeComponent, UIManager } from 'react-native';
-import { ApplePayButtonStyleProps } from '../../@types/style-types';
+import { ApplePayButtonStyleProps, ApplePayButtonNativeProps } from '../../@types/style-types';
 
 type ApplePayButtonProps = {
-  styles: ApplePayButtonStyleProps;
+  buttonStyles?: ApplePayButtonStyleProps;
 };
 
-const ApplePayButton = UIManager.getViewManagerConfig('ApplePayButton') !== null
-  ? requireNativeComponent<ApplePayButtonProps>('ApplePayButton')
+const ApplePayButtonComponent = UIManager.getViewManagerConfig('ApplePayButton') !== null
+  ? requireNativeComponent<ApplePayButtonNativeProps>('ApplePayButton')
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   : () => {
     throw new Error('Unable to find ApplePayButton');
   };
+
+const ApplePayButton =  ({ buttonStyles }: ApplePayButtonProps): JSX.Element => {
+  return <ApplePayButtonComponent style={{ flex: 1 }} {...buttonStyles} testID="apple-pay-button" />;
+};
 
 export default ApplePayButton;

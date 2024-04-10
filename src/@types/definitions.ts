@@ -164,9 +164,3 @@ export type TyroPayStyleProps = {
   [TyroPayStylePropKeys.applePayButton]?: ApplePayButtonStyleProps;
   [TyroPayStylePropKeys.googlePayButton]?: GooglePayButtonStyleProps;
 };
-
-export type TyroPaymentItem = {
-  label: string,
-  type: string,
-  amount: string,
-};

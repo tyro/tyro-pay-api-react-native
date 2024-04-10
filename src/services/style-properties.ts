@@ -137,7 +137,7 @@ export const ApplePayStyleProcessors: Record<string, StyleProcessor> = {
   buttonStyle: {
     type: StyleTypes.text,
   },
-  buttonType: {
+  buttonLabel: {
     type: StyleTypes.text,
   },
 };

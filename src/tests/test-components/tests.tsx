@@ -8,7 +8,6 @@ import { useSDK } from '../../SDKSharedContext';
 import SubmitPayFormButton from '../../components/SubmitPayFormButton';
 import { ValidationErrors } from '../../utils/validators';
 import CreditCardForm from '../../components/CreditCardForm';
-import { TyroPaymentItem } from '../../@types/definitions';
 
 export const useYear = parseInt(new Date().getFullYear().toString().slice(-2)) + 2;
 export const ProviderTestComponent = (): JSX.Element => {
@@ -33,30 +32,20 @@ export const InitTestComponent = (): JSX.Element => {
   const fetchPayRequest = async (): Promise<void> => {
     const { paySecret } = await genNewPayRequest();
     try {
-      const paymentItems: TyroPaymentItem[] = [{
-        label: "Burger",
-        type: "custom",
-        value: 1.00,
-      }]
-      await initPaySheet(paySecret, paymentItems);
+      await initPaySheet(paySecret);
     } catch (error) {
       console.log(error);
     }
   };
 
   const presentPaySheet = async (): Promise<void> => {
-    setLoadPaySheet(true);
+    setLoadPaySheet(true);    
     await fetchPayRequest();
   };
 
   useEffect(() => {
     if (!payRequest) return;
-
-    if (hasPayRequestCompleted()) {
-      setShowPayResult(true);
-    } else {
-      setShowPayResult(false);
-    }
+    setShowPayResult(hasPayRequestCompleted());
   }, [payRequest]);
 
   return (
