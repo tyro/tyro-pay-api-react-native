@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: ['**']
 
+env:
+  GITHUB_PACKAGES_USER: ${{ github.actor }}
+  GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}    
+
 jobs: 
   react-unit: 
     runs-on: macos-latest
@@ -46,10 +50,6 @@ jobs:
         with:
           version: 1.14.3
 
-      - name: Add cocoapod repo
-        run: |
-          pod repo add tyro-connect-cocoapods https://github.com/tyro/connect-cocoapods.git
-
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -68,6 +68,7 @@ jobs:
 
       - name: Install dependencies
         run: | 
+          pod repo add tyro-connect-cocoapods https://${{ secrets.PACKAGE_READ_PAT }}@github.com/tyro/connect-cocoapods.git    
           npm run install:all
 
       - name: Run iOS tests

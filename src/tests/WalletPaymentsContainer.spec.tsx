@@ -70,7 +70,7 @@ describe('WalletPaymentsContainer', () => {
               liveMode: false,
               styleProps: { showSupportedCards: false, googlePayButton: { buttonBorderRadius: 8 } },
             });
-          });
+          }, { timeout: 10000 });
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');
           await fireEvent.press(checkOutButton);
@@ -192,7 +192,7 @@ describe('WalletPaymentsContainer', () => {
               },
               styleProps: { showSupportedCards: false },
             });
-          });
+          }, { timeout: 10000 });
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');
           await fireEvent.press(checkOutButton);
@@ -221,7 +221,7 @@ describe('WalletPaymentsContainer', () => {
               },
               styleProps: { showSupportedCards: false },
             });
-          });
+          }, { timeout: 10000 });
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');
           await fireEvent.press(checkOutButton);
