@@ -12,8 +12,7 @@ import TyroApplePay
 struct ApplePayButton: View {
 	var body: some View {
 		VStack {
-			PayWithApplePayButton {
-			}
+			PayWithApplePayButton(PayWithApplePayButtonLabel.buy) {}
 		}
 	}
 }

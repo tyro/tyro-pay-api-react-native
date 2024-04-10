@@ -12,13 +12,7 @@ const CheckOut = (): JSX.Element => {
   const fetchPayRequest = async (): Promise<void> => {
     const { paySecret } = await createPayRequest();
     try {
-      const paymentItems = [{
-        label: "Burger",
-        type: "custom",
-        amount: "1.00",
-      }];
-      
-      await initPaySheet(paySecret, paymentItems);
+      await initPaySheet(paySecret);
     } catch (error) {
       console.log(error);
     }

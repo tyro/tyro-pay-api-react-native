@@ -38,7 +38,7 @@ class TyroSDK {
     return this.payRequest;
   };
 
-  initWalletPay = async (options: TyroPayOptions, paymentItems: TyroPaymentItem[]): Promise<WalletPaymentInitResult> => {
+  initWalletPay = async (options: TyroPayOptions): Promise<WalletPaymentInitResult> => {
     const walletPaymentConfigs = options?.[TyroPayOptionsKeys.options];
     let paymentSupported = false;
     if (walletPaymentConfigs?.googlePay?.enabled) {
@@ -48,7 +48,6 @@ class TyroSDK {
       });
     } else if (walletPaymentConfigs?.applePay?.enabled) {        
       paymentSupported = await TyroPaySdkModule.initWalletPay({
-        paymentItems,
         ...options.options.applePay,
       });
     }
