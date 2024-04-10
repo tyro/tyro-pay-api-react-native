@@ -25,7 +25,7 @@ export const WalletPaymentsContainer = (): JSX.Element => {
   return (
     <TouchableOpacity
       style={{ ...styles.walletWrapper }}
-      onPress={(): Promise<void> => {
+      onPress={(): void => {
         console.log('TouchableOpacity');
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         launchWalletPayment(paySecret!)
