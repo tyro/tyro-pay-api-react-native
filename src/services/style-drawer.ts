@@ -131,8 +131,11 @@ export const getInputStyles = (
     ...getStylePropOrDefault(styleProps, 'fontWeight', TyroPayStylePropKeys.inputFontWeight, undefined),
     // State-conditional input font color
     ...getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputFontColor, '#303030'),
-    ...(isError && getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputErrorFontColor, undefined)),
-    ...(isFocus && getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputFocusFontColor, undefined)),
+    ...(isFocus
+      ? getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputFocusFontColor, undefined)
+      : isError
+      ? getStylePropOrDefault(styleProps, 'color', TyroPayStylePropKeys.inputErrorFontColor, undefined)
+      : undefined),
     ...getStylePropOrDefault(styleProps, 'padding', TyroPayStylePropKeys.inputPadding, DEFAULT_INPUT_SPACING),
     width: '100%',
     height: '100%',
