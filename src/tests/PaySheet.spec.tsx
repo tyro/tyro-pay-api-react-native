@@ -1106,8 +1106,8 @@ describe('PaySheet', () => {
                 },
                 applePay: {
                   enabled: true,
-                  merchantIdentifier: "merchantIdentifier",
-                  supportedNetworks: ['visa']
+                  merchantIdentifier: 'merchantIdentifier',
+                  supportedNetworks: ['visa'],
                 },
               },
               styleProps: { showSupportedCards: false },
@@ -1447,6 +1447,27 @@ describe('PaySheet', () => {
           });
           expect(wrapper.getByText('Pay')).not.toBeNull();
         });
+      });
+    });
+  });
+  describe('basic UI/UX responses', () => {
+    it('should focus and blur components on press', async () => {
+      (global.fetch as jest.Mock).mockResolvedValueOnce(
+        mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
+      ); // init and verify paySecret
+      await act(async () => {
+        await waitFor(async () => {
+          wrapper = await renderWithProvider(<TestPayButton title={'Pay'} />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
+        });
+        checkForPaySheetRenders(wrapper);
+        const cardInputField = wrapper.getByPlaceholderText('Card number');
+        await fireEvent(cardInputField, 'focus');
+        expect(wrapper.getByPlaceholderText('Card number')).toBeSelected();
+        await fireEvent(cardInputField, 'blur');
+        expect(wrapper.getByPlaceholderText('Card number')).not.toBeSelected();
       });
     });
   });

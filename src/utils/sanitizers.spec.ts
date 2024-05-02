@@ -83,8 +83,7 @@ describe('sanitizers', () => {
           bodyBackgroundColor: '#cecece',
           bodyPadding: '5',
           bodyWidth: '50%',
-          applePayButton: {
-          },
+          applePayButton: {},
           googlePayButton: {
             buttonBorderRadius: '14' as unknown as number,
           },
@@ -117,8 +116,41 @@ describe('sanitizers', () => {
             buttonBorderRadius: 'monkey',
           },
         },
-      } as TyroPayOptionsProps);
+      } as unknown as TyroPayOptionsProps);
       expect(result).toEqual(defaultedOptionsExpectation);
+    });
+    it('disables applePay on Android platform', () => {
+      jest.resetModules();
+      jest.mock('react-native/Libraries/Utilities/Platform', () => ({
+        OS: 'android',
+        select: (): any => null,
+      }));
+      const result = sanitizeOptions({
+        liveMode: true,
+        options: {
+          applePay: {
+            enabled: true,
+          },
+        },
+      });
+      expect(result.options.applePay).toEqual({ enabled: false });
+    });
+
+    it('disables googlePay on iOS platform', () => {
+      jest.resetModules();
+      jest.mock('react-native/Libraries/Utilities/Platform', () => ({
+        OS: 'ios',
+        select: (): any => null,
+      }));
+      const result = sanitizeOptions({
+        liveMode: true,
+        options: {
+          googlePay: {
+            enabled: true,
+          },
+        },
+      });
+      expect(result.options.googlePay).toEqual({ enabled: false });
     });
   });
   describe('parseSupportedNetworks', () => {
