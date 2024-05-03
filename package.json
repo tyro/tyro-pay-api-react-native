@@ -38,7 +38,7 @@
     "test:local:android": "maestro test src/tests/integration/android/local-only -e APP_ID=com.example",
     "android:release": "cd example && react-native run-android --mode=release",
     "ios:release": "cd example && react-native run-ios --mode Release --simulator \"iPhone 14 Pro Max\"",
-    "install:all": "npm run prepack && npm run install:no-pods && npm run install:pods",
+    "install:all": "npm run install:no-pods && npm run install:pods && npm run prepack",
     "install:pods": "cd example/ios && pod install",
     "install:no-pods": "npm install && cd example && npm install",
     "gradlew:build:all": "npm run gradlew:build:sdk && npm run gradlew:build:example",
