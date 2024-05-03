@@ -66,11 +66,6 @@ jobs:
       - name: Install React Native CLI
         run: npm install react-native-cli
 
-      - name: Install dependencies
-        run: | 
-          pod repo add tyro-connect-cocoapods https://${{ secrets.PACKAGE_READ_PAT }}@github.com/tyro/connect-cocoapods.git    
-          npm run install:all
-
       - name: Run iOS tests
         run: npm run test:unit:ios
 
