@@ -30,7 +30,7 @@
     "prepush": "npm run prepush:checks && npm run test:unit:android",
     "prepack": "bob build",
     "prepare": "[ \"$NODE_ENV\" == production ] || husky install",
-    "test:unit:ios": "xcodebuild test -workspace example/ios/example.xcworkspace -scheme example -configuration Debug -destination name=\"iPhone 14 Pro Max\"",
+    "test:unit:ios": "xcodebuild test -workspace example/ios/example.xcworkspace -scheme example -configuration Debug -destination name=\"iPhone 15 Pro\"",
     "test:unit:android": "cd example/android && chmod +x ./gradlew && ./gradlew --no-daemon test && ./gradlew ktlintFormat && ./gradlew ktlint && ./gradlew lint",
     "test:e2e:ios": "bash ./scripts/run-e2e-tests ios",
     "test:e2e:android": "bash ./scripts/run-e2e-tests android",
