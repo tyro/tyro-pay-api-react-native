@@ -8,6 +8,7 @@ import {
 } from './sanitizers';
 import { ThemeNames } from '../@types/theme-styles';
 import { TyroPayOptionsProps } from '../@types/definitions';
+import { Platform } from 'react-native';
 
 const defaultedOptionsExpectation = {
   liveMode: true,
@@ -120,11 +121,7 @@ describe('sanitizers', () => {
       expect(result).toEqual(defaultedOptionsExpectation);
     });
     it('disables applePay on Android platform', () => {
-      jest.resetModules();
-      jest.mock('react-native/Libraries/Utilities/Platform', () => ({
-        OS: 'android',
-        select: (): any => null,
-      }));
+      Platform.OS = 'android';
       const result = sanitizeOptions({
         liveMode: true,
         options: {
@@ -137,11 +134,7 @@ describe('sanitizers', () => {
     });
 
     it('disables googlePay on iOS platform', () => {
-      jest.resetModules();
-      jest.mock('react-native/Libraries/Utilities/Platform', () => ({
-        OS: 'ios',
-        select: (): any => null,
-      }));
+      Platform.OS = 'ios';
       const result = sanitizeOptions({
         liveMode: true,
         options: {

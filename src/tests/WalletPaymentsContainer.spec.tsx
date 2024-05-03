@@ -1,5 +1,5 @@
 import React from 'react';
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { act } from 'react-test-renderer';
 import TyroProvider from '../TyroSharedContext';
@@ -44,10 +44,7 @@ describe('WalletPaymentsContainer', () => {
   });
   describe('when platform OS is android', () => {
     beforeAll(() => {
-      jest.mock('react-native/Libraries/Utilities/Platform', () => ({
-        OS: 'android',
-        select: (): any => null,
-      }));
+      Platform.OS = 'android';
     });
 
     afterEach(() => {
@@ -301,15 +298,16 @@ describe('WalletPaymentsContainer', () => {
 
   describe('when platform OS is ios', () => {
     beforeAll(() => {
-      jest.mock('react-native/Libraries/Utilities/Platform', () => ({
-        OS: 'ios',
-        select: (): any => null,
-      }));
+      Platform.OS = 'ios';
+    });
+    afterEach(() => {
+      jest.clearAllMocks();
     });
 
     describe('when applePay is supported', () => {
       beforeEach(() => {
         mockedFetchPayRequestOnCompletion(PayRequestStatus.AWAITING_PAYMENT_INPUT);
+        NativeModules.TyroPaySdkModule.initWalletPay.mockResolvedValue(true);
       });
       afterEach(() => {
         jest.clearAllMocks();
