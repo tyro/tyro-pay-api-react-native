@@ -46,7 +46,7 @@ class TyroSDK {
       walletConfig = {
         googlePay: { ...walletPaymentConfigs.googlePay, liveMode },
       };
-    } else if (walletPaymentConfigs?.applePay?.enabled) {        
+    } else if (walletPaymentConfigs?.applePay?.enabled) {
       walletConfig = {
         ...options.options.applePay,
         liveMode,

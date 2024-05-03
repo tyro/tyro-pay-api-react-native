@@ -35,7 +35,11 @@ const CheckOut = (): JSX.Element => {
 
   return (
     <View>
-      {!isWalletPaymentReady && <View style={styles.checkoutButtonContainer}><Button title="Checkout" onPress={presentPaySheet} /></View>}      
+      {!isWalletPaymentReady && (
+        <View style={styles.checkoutButtonContainer}>
+          <Button title="Checkout" onPress={presentPaySheet} />
+        </View>
+      )}
       {loadPaySheet && <PaySheet />}
       {tyroError?.errorType && <Text>ErrorType: {tyroError.errorType}</Text>}
       {tyroError?.errorCode && <Text>ErrorCode: {tyroError.errorCode}</Text>}

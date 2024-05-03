@@ -32,11 +32,9 @@ export const WalletPaymentsContainer = (): JSX.Element => {
           }}
         >
           {options?.options?.googlePay?.enabled && (
-            <GooglePayButton buttonStyles={options?.styleProps?.googlePayButton!} />
+            <GooglePayButton buttonStyles={options.styleProps.googlePayButton!} />
           )}
-          {options?.options?.applePay?.enabled && (
-            <ApplePayButton buttonStyles={options?.styleProps?.applePayButton!} />
-          )}
+          {options?.options?.applePay?.enabled && <ApplePayButton buttonStyles={options.styleProps.applePayButton!} />}
         </TouchableOpacity>
       </View>
     </View>
