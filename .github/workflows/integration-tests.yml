@@ -84,7 +84,7 @@ jobs:
           disable-animations: true
           script: |
             npm run android:release
-            npm run test:e2e:android
+            npm run test:e2e:android -- pipeline
         env:
           GITHUB_PACKAGES_USER: ${{ github.actor }}
           GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}
@@ -147,7 +147,7 @@ jobs:
       - name: Run iOS Emulator and app
         run: |
           npm run ios:release
-          npm run test:e2e:ios
+          npm run test:e2e:ios -- pipeline
         env:
           MAESTRO_DRIVER_STARTUP_TIMEOUT: 30000
 

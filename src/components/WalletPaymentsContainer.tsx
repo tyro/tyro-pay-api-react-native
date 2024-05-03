@@ -1,7 +1,7 @@
 import GooglePayButton from '../wallets/google-pay/GooglePayButton';
 import ApplePayButton from '../wallets/apple-pay/ApplePayButton';
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Button } from 'react-native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { WalletPaymentResult } from '../@types/wallet-payment-result';
 import TyroSDK from '../TyroSDK';
 import { getWalletPaymentsStyles } from '../services/style-drawer';
@@ -23,24 +23,23 @@ export const WalletPaymentsContainer = (): JSX.Element => {
   };
 
   return (
-    <TouchableOpacity
-      style={{ ...styles.walletWrapper }}
-      onPress={(): void => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        launchWalletPayment(paySecret!);
-      }}
-    >
+    <View style={{ ...styles.walletWrapper }}>
       <View style={{ ...styles.walletPadder }}>
-        <View style={{ ...styles.walletContainer }}>
+        <TouchableOpacity
+          style={{ ...styles.walletContainer }}
+          onPress={(): void => {
+            launchWalletPayment(paySecret!);
+          }}
+        >
           {options?.options?.googlePay?.enabled && (
             <GooglePayButton buttonStyles={options?.styleProps?.googlePayButton!} />
           )}
           {options?.options?.applePay?.enabled && (
             <ApplePayButton buttonStyles={options?.styleProps?.applePayButton!} />
           )}
-        </View>
+        </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

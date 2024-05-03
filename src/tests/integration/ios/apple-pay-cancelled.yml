@@ -1,0 +1,13 @@
+appId: ${APP_ID}
+---
+- launchApp
+- assertVisible: "Demo Checkout"
+- tapOn: "CHECKOUT"
+- extendedWaitUntil:
+    visible: "Or pay with card"
+    timeout: 150000
+- tapOn:
+    id: "apple-pay-button"
+- tapOn: "close"
+- assertNotVisible: "ErrorCode: THREED_SECURE_FAILED"
+- assertNotVisible: "ErrorMessage: Payment failed"
