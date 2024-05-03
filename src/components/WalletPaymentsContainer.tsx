@@ -28,13 +28,19 @@ export const WalletPaymentsContainer = (): JSX.Element => {
         <TouchableOpacity
           style={{ ...styles.walletContainer }}
           onPress={(): void => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             launchWalletPayment(paySecret!);
           }}
         >
           {options?.options?.googlePay?.enabled && (
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             <GooglePayButton buttonStyles={options.styleProps.googlePayButton!} />
           )}
-          {options?.options?.applePay?.enabled && <ApplePayButton buttonStyles={options.styleProps.applePayButton!} />}
+
+          {options?.options?.applePay?.enabled && (
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            <ApplePayButton buttonStyles={options.styleProps.applePayButton!} />
+          )}
         </TouchableOpacity>
       </View>
     </View>
