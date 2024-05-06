@@ -143,6 +143,8 @@ jobs:
 
       - name: Install Dependencies
         run: npm run install:all
+        env:
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}
 
       - name: Run iOS Emulator and app
         run: |

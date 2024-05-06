@@ -48,7 +48,7 @@ jobs:
       - name: setup-cocoapods
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
-          version: 1.14.3
+          version: 1.15.2
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -68,8 +68,9 @@ jobs:
 
       - name: Install dependencies
         run: | 
-          pod repo add tyro-connect-cocoapods https://${{ secrets.PACKAGE_READ_PAT }}@github.com/tyro/connect-cocoapods.git    
           npm run install:all
+        env:
+          GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}
 
       - name: Run iOS tests
         run: npm run test:unit:ios
@@ -114,5 +115,3 @@ jobs:
         env:
           GITHUB_PACKAGES_USER: ${{ github.actor }}
           GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}
-
-    
