@@ -16,8 +16,8 @@ const cleanStyle = (styler: StyleProcessor, value: string | number | boolean | u
 };
 
 export const cleanStyles = (
-  styleProps: Record<string, string | number | boolean | undefined> = {},
-  styleProcessors: Record<string, StyleProcessor> = {}
+  styleProps: Record<string, string | number | boolean | undefined>,
+  styleProcessors: Record<string, StyleProcessor>
 ): StyleProps =>
   Object.keys(styleProcessors)
     .map((styleProp) => [styleProp, cleanStyle(styleProcessors[styleProp], styleProps[styleProp])])

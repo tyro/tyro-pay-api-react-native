@@ -126,9 +126,6 @@ describe('Style Properties Service', () => {
       it.each(testGroup)('attempt %s', (testValue) => {
         expect(testType).toBeDefined();
         expect(testValue).toBeDefined();
-        if (StyleProcessors[key].isArray) {
-          testValue = [testValue];
-        }
         const result = cleanStyles(
           {
             [key]: testValue,
@@ -162,9 +159,6 @@ describe('Style Properties Service', () => {
       it.each(testGroup)('attempt %s', (testValue) => {
         expect(testType).toBeDefined();
         expect(testValue).toBeDefined();
-        if (StyleProcessors[key].isArray) {
-          testValue = [testValue];
-        }
         const result = cleanStyles(
           {
             [key]: testValue,
