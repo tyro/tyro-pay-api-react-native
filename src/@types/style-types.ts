@@ -170,7 +170,6 @@ export type StyleProcessorType = {
 
 export type StyleProcessor = {
   type: StyleProcessorType;
-  // isArray?: boolean;
   process?: (value: StyleProcessValue, styleProps: StyleProps) => string;
   selector?: string;
   style?: string;
