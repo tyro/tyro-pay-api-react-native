@@ -8,6 +8,11 @@ appId: ${APP_ID}
     timeout: 150000
 - tapOn:
     id: "apple-pay-button"
+- extendedWaitUntil:
+    visible: "Pay with Passcode"
+    timeout: 150000
 - tapOn: "close"
 - assertNotVisible: "ErrorCode: THREED_SECURE_FAILED"
 - assertNotVisible: "ErrorMessage: Payment failed"
+- assertVisible:
+    id: "apple-pay-button"
