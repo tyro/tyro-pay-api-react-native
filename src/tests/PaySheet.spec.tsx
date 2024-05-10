@@ -110,7 +110,7 @@ describe('PaySheet', () => {
         ); // init and verify paySecret
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<TestPayButton title={'Pay'} />, { liveMode: false });
+            wrapper = await renderWithProvider(<TestPayButton />, { liveMode: false });
           });
           checkForPaySheetRenders(wrapper);
           await fillOutForm(wrapper, '4111111111111111', 'test name', '01' + useYear, '123');
@@ -222,6 +222,32 @@ describe('PaySheet', () => {
           expect(wrapper.getByText('ErrorType: INVALID_CARD_TYPE')).not.toBeNull();
           expect(wrapper.getByText('ErrorMessage: Card type not supported.')).not.toBeNull();
           checkForPaySheetRenders(wrapper);
+        });
+      }, 15000);
+
+      test('cannot submit if form validation fails', async () => {
+        (global.fetch as jest.Mock).mockResolvedValueOnce(
+          mockFetch(200, {
+            status: 'AWAITING_PAYMENT_INPUT',
+            isLive: false,
+            supportedNetworks: null,
+          } as unknown as ClientPayRequestResponse)
+        ); // init and verify paySecret
+
+        await act(async () => {
+          await waitFor(async () => {
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              options: { creditCardForm: { supportedNetworks: [CardTypeNames.VISA] } },
+              styleProps: { showSupportedCards: false },
+            });
+          });
+          await checkInitializedCorrectly(wrapper);
+          checkForPaySheetRenders(wrapper);
+          await fillOutForm(wrapper, '411111111111', '', '01' + useYear, '');
+          await pressButton(wrapper, 'pay-button');
+          wrapper.getByText('ErrorType: INVALID_CARD_DETAILS');
+          wrapper.getByText('ErrorMessage: Invalid card details');
         });
       }, 15000);
     });
@@ -1431,17 +1457,6 @@ describe('PaySheet', () => {
           expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();
           expect(wrapper.queryByPlaceholderText('MM/YY')).toBeNull();
           expect(wrapper.queryByPlaceholderText('CVV')).toBeNull();
-        });
-      });
-      it('If empty string title provided it defaults to say Pay', async () => {
-        await act(async () => {
-          await waitFor(async () => {
-            wrapper = await renderWithProvider(<TestPayButton title={''} />, {
-              liveMode: false,
-              styleProps: { labelPosition: TyroPayStyleLabelPositions.BLOCK, showSupportedCards: false },
-            });
-          });
-          expect(wrapper.getByText('Pay')).not.toBeNull();
         });
       });
     });

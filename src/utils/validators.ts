@@ -99,7 +99,7 @@ export const validateInput = (
   value: string,
   cardType: string,
   errors: ValidationErrors,
-  setErrors: React.Dispatch<React.SetStateAction<ValidationErrors>>
+  setErrors: (ValidationErrors: ValidationErrors) => void
 ): void => {
   const validator = validationTriggers[key];
   setErrors({ ...errors, [key]: validator(event, errors[key], value, cardType) });

@@ -214,22 +214,3 @@ export const getWalletPaymentsStyles = (styleProps: TyroPayStyleProps): Record<s
     minWidth: 90,
   },
 });
-
-export const getPayButtonStyles = (styleProps: TyroPayStyleProps): Record<string, any> => ({
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginVertical: 10,
-  },
-  button: {
-    borderRadius: 5,
-    height: 40,
-    width: '100%',
-    backgroundColor: 'blue',
-  },
-  buttonText: {
-    ...getStylePropOrDefault(styleProps, 'fontFamily', TyroPayStylePropKeys.fontFamily, undefined),
-    color: 'white',
-  },
-});
