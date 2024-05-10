@@ -208,6 +208,8 @@ const CheckoutPage = ({ paySecret }: CheckoutProps) => {
     isPayRequestReady,
     isPayRequestLoading,
     tyroError,
+    isSubmitting,
+    submitPayForm,
   } = useTyro();
 
   Rest of CheckoutPage Below
@@ -267,6 +269,7 @@ const CheckoutPage = ({ paySecret }: CheckoutProps) => {
         errorMessage={tyroError?.errorMessage}
       />
       {isPayRequestReady && <PaySheet />}
+      {isPayRequestReady && <YourOwnPayButton onPress={submitPayForm} loading={isSubmitting} />}
       {isPayRequestLoading && <ActivityIndicator />}
     </>
   );
