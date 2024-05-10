@@ -299,7 +299,6 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     setTyroErrorMessage,
     setPayRequest,
     setCardDetails,
-    setIsSubmitting,
   };
 
   return (

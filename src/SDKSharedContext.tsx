@@ -19,11 +19,11 @@ type SDKContextProps = {
   cardDetails: CardDetails;
   validationErrors: ValidationErrors;
   threeDSCheck: ThreeDSCheckType;
-  setValidationErrors: (ValidationErrors: ValidationErrors) => void;
-  setPayRequestIsLoading: (loading: boolean) => void;
-  setTyroErrorMessage: (errorMessage: ErrorMessage | null) => void;
-  setPayRequest: (payRequest: ClientPayRequestResponse | null) => void;
-  setCardDetails: (cardDetails: CardDetails) => void;
+  setValidationErrors: React.Dispatch<React.SetStateAction<ValidationErrors>>;
+  setPayRequestIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  setTyroErrorMessage: React.Dispatch<React.SetStateAction<ErrorMessage | null>>;
+  setPayRequest: React.Dispatch<React.SetStateAction<ClientPayRequestResponse | null>>;
+  setCardDetails: React.Dispatch<React.SetStateAction<CardDetails>>;
 };
 
 type SDKUseContextProps = SDKContextProps & {
