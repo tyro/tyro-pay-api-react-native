@@ -59,6 +59,11 @@ run_tests(){
     done
 }
 
+if [ -z "$allDevices" ]; then
+    echo "No running devices found!"
+    exit 1
+fi
+
 failedTests=()
 if [ "$MODE" == "local" ]; then
   for device in $allDevices
