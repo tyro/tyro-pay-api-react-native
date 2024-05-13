@@ -7,12 +7,8 @@ on:
   pull_request:
     branches: ['**']
 
-env:
-  GITHUB_PACKAGES_USER: ${{ github.actor }}
-  GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}    
-
 jobs: 
-  unit: 
+  react-unit: 
     runs-on: macos-latest
 
     steps:
@@ -36,7 +32,11 @@ jobs:
         run: | 
           chmod +x ./.ci_steps/test.sh
           ./.ci_steps/test.sh
-    
+  
+  ios-unit:
+    runs-on: macos-14
+
+    steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
@@ -44,7 +44,7 @@ jobs:
       - name: setup-cocoapods
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
-          version: 1.15.2
+          version: 1.14.3
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -61,6 +61,10 @@ jobs:
 
       - name: Install React Native CLI
         run: npm install react-native-cli
+
+      - name: Install dependencies
+        run: | 
+          npm run install:all
 
       - name: Run iOS tests
         run: npm run test:unit:ios
