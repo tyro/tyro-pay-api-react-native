@@ -8,7 +8,7 @@ import {
   getCardType,
   UNKNOWN_CARD_TYPE,
 } from '../utils/card-formatting';
-import { eventType, validateInput, ValidationErrors } from '../utils/validators';
+import { eventType, validateInput } from '../utils/validators';
 import InputField from './InputField';
 import { CardImageNames, CardTypeNames } from '../@types/card-types';
 import { getFormStyles } from '../services/style-drawer';
@@ -17,15 +17,10 @@ import { useSDK } from '../SDKSharedContext';
 import { useTyro } from '../TyroSharedContext';
 import { PayRequestStatus } from '../@types/pay-request-types';
 
-type CreditCardFormProps = {
-  validationErrors: ValidationErrors;
-  setValidationErrors: React.Dispatch<React.SetStateAction<ValidationErrors>>;
-};
-
 const completedStatuses = [PayRequestStatus.FAILED, PayRequestStatus.SUCCESS, PayRequestStatus.VOIDED];
 
-export const CreditCardForm = ({ validationErrors, setValidationErrors }: CreditCardFormProps): JSX.Element => {
-  const { options, supportedNetworks, setCardDetails } = useSDK();
+export const CreditCardForm = (): JSX.Element => {
+  const { options, supportedNetworks, setCardDetails, validationErrors, setValidationErrors } = useSDK();
   const { payRequest } = useTyro();
   const [cardType, setCardType] = useState<string>(UNKNOWN_CARD_TYPE.type);
   const [number, setNumber] = useState('');

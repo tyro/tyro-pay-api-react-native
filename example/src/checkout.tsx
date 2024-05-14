@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useTyro, PaySheet } from '@tyro/tyro-pay-api-react-native';
 import { createPayRequest } from './clients/mock-client';
@@ -7,7 +7,15 @@ import { createPayRequest } from './clients/mock-client';
 const CheckOut = (): JSX.Element => {
   const [loadPaySheet, setLoadPaySheet] = useState(false);
   const [showPayResult, setShowPayResult] = useState(false);
-  const { initPaySheet, tyroError, payRequest, hasPayRequestCompleted, isWalletPaymentReady } = useTyro();
+  const {
+    initPaySheet,
+    tyroError,
+    payRequest,
+    hasPayRequestCompleted,
+    isWalletPaymentReady,
+    submitPayForm,
+    isSubmitting,
+  } = useTyro();
 
   const fetchPayRequest = async (): Promise<void> => {
     const { paySecret } = await createPayRequest();
@@ -40,7 +48,24 @@ const CheckOut = (): JSX.Element => {
           <Button title="Checkout" onPress={presentPaySheet} />
         </View>
       )}
-      {loadPaySheet && <PaySheet />}
+      {loadPaySheet && (
+        <View>
+          <PaySheet />
+          {isSubmitting ? (
+            <ActivityIndicator />
+          ) : (
+            <TouchableOpacity
+              style={[styles.container, styles.button]}
+              activeOpacity={0.3}
+              onPress={submitPayForm}
+              accessibilityLabel="Submit the Pay Form"
+              testID="pay-button"
+            >
+              <Text style={styles.buttonText}>Pay</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
       {tyroError?.errorType && <Text>ErrorType: {tyroError.errorType}</Text>}
       {tyroError?.errorCode && <Text>ErrorCode: {tyroError.errorCode}</Text>}
       {tyroError?.gatewayCode && <Text>GatewayCode: {tyroError.gatewayCode}</Text>}
@@ -52,6 +77,21 @@ const CheckOut = (): JSX.Element => {
 
 const styles = StyleSheet.create({
   checkoutButtonContainer: { marginBottom: 20 },
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 10,
+  },
+  button: {
+    borderRadius: 5,
+    height: 40,
+    width: '100%',
+    backgroundColor: 'blue',
+  },
+  buttonText: {
+    color: 'white',
+  },
 });
 
 export default CheckOut;

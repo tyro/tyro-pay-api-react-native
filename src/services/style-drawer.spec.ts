@@ -3,7 +3,6 @@ import {
   getDividerStyles,
   getFormStyles,
   getInputStyles,
-  getPayButtonStyles,
   getWalletPaymentsStyles,
 } from './style-drawer';
 import { TyroPayStyleProps } from '../@types/definitions';
@@ -745,49 +744,6 @@ describe('Style Drawer Service', () => {
           paddingLeft: 5,
           paddingRight: 5,
           textAlign: 'center',
-        },
-      });
-    });
-  });
-  describe('getPayButtonStyles', () => {
-    it('it defaults', () => {
-      const result = getPayButtonStyles(emptyStyleProps);
-      expect(result).toEqual({
-        button: {
-          backgroundColor: 'blue',
-          borderRadius: 5,
-          height: 40,
-          width: '100%',
-        },
-        buttonText: {
-          color: 'white',
-        },
-        container: {
-          alignItems: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          marginVertical: 10,
-        },
-      });
-    });
-    it('it maps', () => {
-      const result = getPayButtonStyles(styleProps);
-      expect(result).toEqual({
-        button: {
-          backgroundColor: 'blue',
-          borderRadius: 5,
-          height: 40,
-          width: '100%',
-        },
-        buttonText: {
-          color: 'white',
-          fontFamily: 'arial',
-        },
-        container: {
-          alignItems: 'center',
-          display: 'flex',
-          justifyContent: 'center',
-          marginVertical: 10,
         },
       });
     });

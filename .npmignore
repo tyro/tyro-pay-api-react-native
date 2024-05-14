@@ -11,15 +11,9 @@ tsconfig.eslint.json
 
 jest.config.js
 
-ios/TyroPayApiReactNative
-ios/TyroPayApiReactNativeTests
-ios/TyroPayApiReactNativeUnitTests
-ios/TyroPayApiReactNative.xcodeproj/*
-ios/Pods
-ios/TyroPayApiReactNative.xcworkspace
-xcuserdata
-ios/.xcode.env
-ios/build
+example
+
+ios/tyroPayApiReactNative/tyroPayApiReactNative.xcodeproj/*
 
 android/build
 android/gradle
@@ -27,6 +21,8 @@ android/gradlew
 android/gradlew.bat
 android/local.properties
 android/app
+android/lib/build
+android/lib/src/androidTest
 
 **.spec.**
 

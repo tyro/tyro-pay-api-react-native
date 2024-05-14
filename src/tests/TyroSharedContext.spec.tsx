@@ -49,7 +49,6 @@ describe('TyroProvider', () => {
         const button = await wrapper.findByTestId('test-button');
         await fireEvent.press(button);
         expect(await wrapper.findByText('ErrorMessage: TyroProvider not initialised')).not.toBeNull();
-        expect(wrapper.queryByText('Pay')).toBeNull();
         expect(wrapper.queryByText('Or pay with card')).toBeNull();
         expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
         expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();
@@ -101,7 +100,6 @@ describe('TyroProvider', () => {
         const button = await wrapper.findByTestId('test-button');
         await fireEvent.press(button);
         expect(await wrapper.findByText('ErrorMessage: PaySheet failed to initialise')).not.toBeNull();
-        expect(wrapper.queryByText('Pay')).toBeNull();
         expect(wrapper.queryByText('Or pay with card')).toBeNull();
         expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
         expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();
