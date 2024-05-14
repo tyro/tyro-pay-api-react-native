@@ -69,6 +69,8 @@ For testing GooglePay, you can add your google account on the device to the goog
 
 # Releasing the Package to GitHub Packages
 
+## Release using GitHub Action
+
 Before releasing:
 
 - Checkout the branch 'version-bump' which would have the latest package version pushed to it.
@@ -79,3 +81,22 @@ Releasing:
 
 - If still prerelease check 'Set as pre-release' box, then write a description of the release and click 'Publish Release' when ready to release.
 - Check the GitHub Action ran to publish the release to GitHub Packages
+
+## Release Locally
+
+Before releasing:
+
+- Check/update the version in `package.json`
+- Run `npm run prepack` to pack the package
+- Login to the NPM Registry, replacing USERNAME with your GitHub username, TOKEN with your personal access token (classic)
+
+```bash
+$ npm login --scope=@tyro --auth-type=legacy --registry=https://npm.pkg.github.com
+
+> Username: USERNAME
+> Password: TOKEN
+```
+
+Releasing:
+
+- Run `npm publish`
