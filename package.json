@@ -37,7 +37,7 @@
     "test:local:ios": "maestro test src/tests/integration/ios/local-only -e APP_ID=com.tyropayapireactnative",
     "test:local:android": "maestro test src/tests/integration/android/local-only -e APP_ID=com.example",
     "android:release": "cd example && react-native run-android --mode=release",
-    "ios:release": "cd example && react-native run-ios --mode Release --simulator \"iPhone 14 Pro Max\"",
+    "ios:release": "cd example && react-native run-ios --mode Release --simulator \"iPhone 15 Pro\"",
     "install:all": "npm run install:no-pods && npm run install:pods && npm run prepack",
     "install:pods": "cd example/ios && pod install",
     "install:no-pods": "npm install && cd example && npm install",

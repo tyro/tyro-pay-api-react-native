@@ -149,7 +149,7 @@ jobs:
           npm run ios:release
           npm run test:e2e:ios
         env:
-          MAESTRO_DRIVER_STARTUP_TIMEOUT: 30000
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: 120000
 
       - name: Stop Emulator
         run: killall "Simulator"
