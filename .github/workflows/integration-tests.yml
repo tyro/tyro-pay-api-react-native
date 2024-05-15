@@ -99,54 +99,45 @@ jobs:
         uses: actions/setup-node@v2.1.5
         with:
           node-version: 18.0.0
-          
-      - name: setup-cocoapods
-        uses: maxim-lobanov/setup-cocoapods@v1
-        with:
-          version: 1.14.3
 
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Get npm cache directory
-        id: npm-cache-dir
-        shell: bash
-        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+      # - name: Get npm cache directory
+      #   id: npm-cache-dir
+      #   shell: bash
+      #   run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
 
-      - uses: actions/cache@v3
-        id: npm-cache
-        with:
-          path: ${{ steps.npm-cache-dir.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      # - uses: actions/cache@v3
+      #   id: npm-cache
+      #   with:
+      #     path: ${{ steps.npm-cache-dir.outputs.dir }}
+      #     key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-
 
-      - uses: actions/cache@v2
-        with:
-          path: example/ios/Pods
-          key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pods-
-
+      # - uses: actions/cache@v3
+      #   id: pod-cache
+      #   with:
+      #     path: example/ios/Pods
+      #     key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-pods-
+              
+      - name: Install Dependencies
+        run: npm run install:all
 
       - name: Install React Native CLI
         run: npm install react-native-cli
 
-      - name: Install Maestro CLI
-        run: |
-          curl -Ls "https://get.maestro.mobile.dev" | bash
-          brew tap facebook/fb
-          brew install facebook/fb/idb-companion
-
-      - name: Add Maestro to path
-        run: echo "${HOME}/.maestro/bin" >> $GITHUB_PATH
-
-      - name: Install Dependencies
-        run: npm run install:all
-
       - name: Run iOS Emulator and app
         run: |
           npm run ios:release
+
+      - uses: dniHze/maestro-test-action@v1
+        
+      - name: Run Maestro tests
+        run: |
           npm run test:e2e:ios
         env:
           MAESTRO_DRIVER_STARTUP_TIMEOUT: 120000
