@@ -132,7 +132,7 @@ jobs:
 
       - name: Run iOS Emulator and app
         run: |
-          npm run ios:release
+          npm run ios:debug
 
       - uses: dniHze/maestro-test-action@v1
         
