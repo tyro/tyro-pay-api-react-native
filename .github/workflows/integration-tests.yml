@@ -91,7 +91,7 @@ jobs:
           MAESTRO_DRIVER_STARTUP_TIMEOUT: 30000
   
   ios-e2e:
-    runs-on: macos-14
+    runs-on: macos-14.2.1
 
     steps:
 
