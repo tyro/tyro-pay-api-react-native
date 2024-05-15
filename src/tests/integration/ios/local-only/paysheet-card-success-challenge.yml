@@ -2,7 +2,7 @@ appId: ${APP_ID}
 ---
 - launchApp
 - extendedWaitUntil: 
-    visibile: "Demo Checkout"
+    visible: "Demo Checkout"
     timeout: 150000
 - tapOn: "CHECKOUT"
 - extendedWaitUntil:
