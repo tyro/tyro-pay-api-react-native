@@ -5,9 +5,17 @@ import { createPayRequest } from './clients/mock-client';
 
 // Demo Component: initPaySheet and rendering the PaySheet
 const CheckOut = (): JSX.Element => {
-  const [loadPaySheet, setLoadPaySheet] = useState(false);
   const [showPayResult, setShowPayResult] = useState(false);
-  const { initPaySheet, tyroError, payRequest, hasPayRequestCompleted, submitPayForm, isSubmitting } = useTyro();
+  const {
+    initPaySheet,
+    tyroError,
+    payRequest,
+    hasPayRequestCompleted,
+    submitPayForm,
+    isSubmitting,
+    isPayRequestReady,
+    isPayRequestLoading,
+  } = useTyro();
 
   const fetchPayRequest = async (): Promise<void> => {
     const { paySecret } = await createPayRequest();
@@ -19,7 +27,6 @@ const CheckOut = (): JSX.Element => {
   };
 
   const presentPaySheet = async (): Promise<void> => {
-    setLoadPaySheet(true);
     await fetchPayRequest();
   };
 
@@ -38,7 +45,7 @@ const CheckOut = (): JSX.Element => {
       <View style={styles.checkoutButtonContainer}>
         <Button title="Checkout" onPress={presentPaySheet} />
       </View>
-      {loadPaySheet && (
+      {isPayRequestReady && (
         <View>
           <PaySheet />
           {isSubmitting ? (
@@ -56,6 +63,7 @@ const CheckOut = (): JSX.Element => {
           )}
         </View>
       )}
+      {isPayRequestLoading && <ActivityIndicator />}
       {tyroError?.errorType && <Text>ErrorType: {tyroError.errorType}</Text>}
       {tyroError?.errorCode && <Text>ErrorCode: {tyroError.errorCode}</Text>}
       {tyroError?.gatewayCode && <Text>GatewayCode: {tyroError.gatewayCode}</Text>}

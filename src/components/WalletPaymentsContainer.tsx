@@ -9,16 +9,14 @@ import { TyroPayOptionsKeys } from '../@types/definitions';
 import { useSDK } from '../SDKSharedContext';
 
 export const WalletPaymentsContainer = (): JSX.Element => {
-  const { options, paySecret, setPayRequestIsLoading, handleWalletPaymentStatusUpdate } = useSDK();
+  const { options, paySecret, handleWalletPaymentStatusUpdate } = useSDK();
 
   const styles = StyleSheet.create({
     ...getWalletPaymentsStyles(options[TyroPayOptionsKeys.styleProps]),
   });
 
   const launchWalletPayment = async (paySecret: string): Promise<void> => {
-    setPayRequestIsLoading(true);
     const walletPaymentResult: WalletPaymentResult = await TyroSDK.startWalletPay(paySecret);
-    setPayRequestIsLoading(false);
     handleWalletPaymentStatusUpdate(paySecret, walletPaymentResult);
   };
 
