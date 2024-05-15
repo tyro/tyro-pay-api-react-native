@@ -135,6 +135,8 @@ jobs:
           npm run ios:debug
 
       - uses: dniHze/maestro-test-action@v1
+        with:
+          version: 1.34.1
         
       - name: Run Maestro tests
         run: |
