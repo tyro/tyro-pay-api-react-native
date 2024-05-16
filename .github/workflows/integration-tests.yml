@@ -149,13 +149,13 @@ jobs:
           npm run ios:debug
 
         env:
-          MAESTRO_DRIVER_STARTUP_TIMEOUT: 30000
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: 120000
 
       - name: Run iOS E2E tests
         run: |
           npm run test:e2e:ios
         env:
-          MAESTRO_DRIVER_STARTUP_TIMEOUT: 30000
+          MAESTRO_DRIVER_STARTUP_TIMEOUT: 120000
 
       - name: Stop Emulator
         run: killall "Simulator"
