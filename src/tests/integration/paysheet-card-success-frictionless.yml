@@ -1,4 +1,4 @@
-appId: ${APPID}
+appId: ${APP_ID}
 ---
 - launchApp
 - assertVisible: "Demo Checkout"

@@ -144,18 +144,18 @@ jobs:
       - name: Install Dependencies
         run: npm run install:all
 
-      - name: Run iOS Debug
+      - name: Run iOS in Debug mode
         run: |
           npm run ios:debug
 
         env:
           MAESTRO_DRIVER_STARTUP_TIMEOUT: 30000
 
-      - name: Run iOS E2E
+      - name: Run iOS E2E tests
         run: |
           npm run test:e2e:ios
         env:
           MAESTRO_DRIVER_STARTUP_TIMEOUT: 30000
-          
+
       - name: Stop Emulator
         run: killall "Simulator"
