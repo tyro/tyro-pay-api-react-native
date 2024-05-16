@@ -91,7 +91,7 @@ jobs:
           MAESTRO_DRIVER_STARTUP_TIMEOUT: 30000
   
   ios-e2e:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
 
