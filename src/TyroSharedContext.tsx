@@ -247,6 +247,9 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
   };
 
   const submitPayForm = async (): Promise<void> => {
+    if (isSubmitting) {
+      return;
+    }
     if (!paySecret) {
       setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.NO_PAY_SECRET]));
       return;
@@ -255,7 +258,6 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     if (Object.keys(foundErrors).length) {
       setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.INVALID_CARD_DETAILS]));
       setValidationErrors({ ...validationErrors, ...foundErrors });
-      setIsSubmitting(false);
       return;
     }
     if (supportedNetworks?.length) {
