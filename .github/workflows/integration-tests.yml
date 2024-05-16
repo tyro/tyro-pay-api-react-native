@@ -129,20 +129,20 @@ jobs:
             ${{ runner.os }}-pods-
 
 
-      # - name: Install React Native CLI
-      #   run: npm install react-native-cli
+      - name: Install React Native CLI
+        run: npm install react-native-cli
 
-      # - name: Install Maestro CLI
-      #   run: |
-      #     curl -Ls "https://get.maestro.mobile.dev" | bash
-      #     brew tap facebook/fb
-      #     brew install facebook/fb/idb-companion
+      - name: Install Maestro CLI
+        run: |
+          curl -Ls "https://get.maestro.mobile.dev" | bash
+          brew tap facebook/fb
+          brew install facebook/fb/idb-companion
 
-      # - name: Add Maestro to path
-      #   run: echo "${HOME}/.maestro/bin" >> $GITHUB_PATH
+      - name: Add Maestro to path
+        run: echo "${HOME}/.maestro/bin" >> $GITHUB_PATH
 
-      # - name: Install Dependencies
-      #   run: npm run install:all
+      - name: Install Dependencies
+        run: npm run install:all
 
       # - name: Run iOS Emulator and app
       #   run: |
