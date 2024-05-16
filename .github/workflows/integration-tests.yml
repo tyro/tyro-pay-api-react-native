@@ -147,6 +147,7 @@ jobs:
       - name: Run iOS Emulator and app
         run: |
           npm run ios:debug
+          npm run test:e2e:ios
         env:
           MAESTRO_DRIVER_STARTUP_TIMEOUT: 30000
 
