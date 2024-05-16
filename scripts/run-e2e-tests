@@ -17,7 +17,7 @@ case $PLATFORM in
 esac
 
 if [ "$PLATFORM" == "ios" ]; then
-  APPID="com.example"
+  APPID="com.tyro.example-pay-api-app"
   allTestFiles=$(ls ./src/tests/integration/*.yml ./src/tests/integration/ios/*.yml)
 else
   APPID="com.example"
