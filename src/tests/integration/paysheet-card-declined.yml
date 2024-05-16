@@ -1,4 +1,4 @@
-appId: ${APP_ID}
+appId: "com.tyro.example-pay-api-app"
 ---
 - launchApp
 - assertVisible: "Demo Checkout"
