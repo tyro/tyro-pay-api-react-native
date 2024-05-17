@@ -11,10 +11,7 @@ export interface StyleProps
   bodyWidth?: string;
   bodyMinWidth?: string;
   bodyMaxWidth?: string;
-  /*
-  // @todo, implement this later
   fontFamily?: string;
-  */
   inputBackgroundColor?: string;
   inputBorderColor?: string;
   inputBorderSize?: string;
@@ -52,37 +49,46 @@ export interface StyleProps
   googlePayButton?: GooglePayButtonStyleProps;
 }
 
-export interface ApplePayButtonStyleProps extends Record<string, string | undefined> {
-  buttonBorderRadius?: string;
+export interface ApplePayButtonStyleProps extends Record<string, undefined | ApplePayButtonStyle | ApplePayButtonType> {
   buttonStyle?: ApplePayButtonStyle;
-  buttonType?: ApplePayButtonType;
+  buttonLabel?: ApplePayButtonType;
+}
+export interface ApplePayButtonNativeProps {
+  style?: StyleProp<ViewStyle>;
+  buttonStyle?: ApplePayButtonStyle;
+  buttonLabel?: ApplePayButtonType;
+  testID: string;
 }
 
-export enum ApplePayButtonType {
+export enum ApplePayButtonTypeText {
   PLAIN = 'plain',
-  ADD_MONEY = 'add-money',
+  ADD_MONEY = 'addMoney',
   BOOK = 'book',
   BUY = 'buy',
-  CHECK_OUT = 'check-out',
+  CHECK_OUT = 'checkout',
   CONTINUE = 'continue',
   CONTRIBUTE = 'contribute',
   DONATE = 'donate',
   ORDER = 'order',
-  PAY = 'pay',
+  IN_STORE = 'inStore',
   RELOAD = 'reload',
   RENT = 'rent',
-  SET_UP = 'set-up',
+  SET_UP = 'setUp',
   SUBSCRIBE = 'subscribe',
   SUPPORT = 'support',
   TIP = 'tip',
-  TOP_UP = 'top-up',
+  TOP_UP = 'topUp',
 }
 
-export enum ApplePayButtonStyle {
+export type ApplePayButtonType = ApplePayButtonTypeText | `${ApplePayButtonTypeText}`;
+
+export enum ApplePayButtonStyleText {
   BLACK = 'black',
   WHITE_OUTLINE = 'white-outline',
   WHITE = 'white',
 }
+
+export type ApplePayButtonStyle = ApplePayButtonStyleText | `${ApplePayButtonStyleText}`;
 
 export interface GooglePayButtonStyleProps
   extends Record<string, undefined | number | GooglePayButtonColorType | GooglePayButtonType> {
@@ -125,12 +131,6 @@ export enum StyleLabelPositions {
   INLINE = 'inline',
 }
 
-export enum StyleFontFamilys {
-  ARIAL = 'arial',
-  SERIF = 'serif',
-  ROBOTO = 'roboto',
-}
-
 export type StyleProcessValue = string | string[] | boolean;
 
 export const StyleTypes = {
@@ -138,7 +138,7 @@ export const StyleTypes = {
     pattern: '^' + Object.values(StyleLabelPositions).join('|') + '$',
   },
   fontFamily: {
-    pattern: '^' + Object.values(StyleFontFamilys).join('|') + '$',
+    pattern: /^[a-z0-9_\- ]*$/gi,
   },
   cardType: {
     pattern: '^' + Object.values(CardTypeNames).join('|') + '$',

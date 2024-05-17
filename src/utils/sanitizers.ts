@@ -1,5 +1,11 @@
-import { SupportedCardNetworks, SupportedNetworks } from '../@types/tyro-sdk';
-import { defaultOptions } from '../@types/default';
+import {
+  SupportedCardsApplePay,
+  SupportedCardsGooglePay,
+  SupportedNetworks,
+  SupportedNetworksApplePay,
+  SupportedNetworksGooglePay,
+} from '../@types/network-types';
+import { defaultOptions, defaultSupportedNetworks } from '../@types/default';
 import {
   TyroPayOptions,
   TyroPayOptionsKeys,
@@ -53,8 +59,16 @@ export const sanitizeOptions = (options: TyroPayOptionsProps): TyroPayOptions =>
   const supportedNetworks = parseSupportedNetworks(null, useOptions?.options?.creditCardForm?.supportedNetworks);
   useOptions.options.creditCardForm.supportedNetworks = supportedNetworks ?? undefined;
 
+  // Parse walletPay supportedNetworks
+  useOptions.options.applePay.supportedNetworks = parseSupportedNetworksApplePay(
+    useOptions?.options?.applePay?.supportedNetworks
+  );
+  useOptions.options.googlePay.supportedNetworks = parseSupportedNetworksGooglePay(
+    useOptions?.options?.googlePay?.supportedNetworks
+  );
+
   // Apply theme defaults
-  if (!useOptions?.theme || !Object.values(ThemeNames).includes(useOptions.theme)) {
+  if (!useOptions?.theme || !Object.values(ThemeNames).includes(useOptions.theme as ThemeNames)) {
     useOptions.theme = ThemeNames.DEFAULT;
   }
 
@@ -87,16 +101,30 @@ export const parseSupportedNetworks = (
   fromOptions: SupportedNetworks[] | undefined
 ): SupportedNetworks[] | null => {
   const availableOptions =
-    Array.isArray(fromPayRequest) && fromPayRequest.length
-      ? fromPayRequest
-      : (Object.values(SupportedCardNetworks) as SupportedNetworks[]);
+    Array.isArray(fromPayRequest) && fromPayRequest.length ? fromPayRequest : defaultSupportedNetworks;
   const intersection = Array.isArray(fromOptions)
     ? availableOptions.filter((value) => fromOptions.includes(value))
     : availableOptions;
   if (intersection.length === 0 && Array.isArray(fromPayRequest)) {
     return fromPayRequest;
   }
-  return intersection.length && intersection.length !== Object.values(SupportedCardNetworks).length
+  return intersection.length && intersection.length !== defaultSupportedNetworks.length
     ? (intersection as SupportedNetworks[])
     : null;
+};
+
+export const parseSupportedNetworksApplePay = (
+  fromOptions: SupportedNetworksApplePay[] | undefined
+): SupportedNetworksApplePay[] | undefined => {
+  return Array.isArray(fromOptions)
+    ? (SupportedCardsApplePay.filter((value) => fromOptions.includes(value)) as SupportedNetworksApplePay[])
+    : undefined;
+};
+
+export const parseSupportedNetworksGooglePay = (
+  fromOptions: SupportedNetworksGooglePay[] | undefined
+): SupportedNetworksGooglePay[] | undefined => {
+  return Array.isArray(fromOptions)
+    ? (SupportedCardsGooglePay.filter((value) => fromOptions.includes(value)) as SupportedNetworksGooglePay[])
+    : undefined;
 };

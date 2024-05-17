@@ -87,6 +87,19 @@ class GooglePayButtonView(private val context: ThemedReactContext) : FrameLayout
         }
     }
 
+    override fun requestLayout() {
+        super.requestLayout()
+        post(measureAndLayout)
+    }
+
+    private val measureAndLayout = Runnable {
+        measure(
+            MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY),
+        )
+        button?.layout(left, top, right, bottom)
+    }
+
     fun setButtonType(buttonType: String) {
         this.buttonTypeProp = buttonType
     }

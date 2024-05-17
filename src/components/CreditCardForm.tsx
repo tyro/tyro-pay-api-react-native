@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Platform, StyleSheet, TextInput, View } from 'react-native';
 import {
   buildCardExpiry,
   formatCardCVC,
@@ -8,7 +8,7 @@ import {
   getCardType,
   UNKNOWN_CARD_TYPE,
 } from '../utils/card-formatting';
-import { eventType, validateInput, ValidationErrors } from '../utils/validators';
+import { eventType, validateInput } from '../utils/validators';
 import InputField from './InputField';
 import { CardImageNames, CardTypeNames } from '../@types/card-types';
 import { getFormStyles } from '../services/style-drawer';
@@ -17,15 +17,10 @@ import { useSDK } from '../SDKSharedContext';
 import { useTyro } from '../TyroSharedContext';
 import { PayRequestStatus } from '../@types/pay-request-types';
 
-type CreditCardFormProps = {
-  validationErrors: ValidationErrors;
-  setValidationErrors: React.Dispatch<React.SetStateAction<ValidationErrors>>;
-};
-
 const completedStatuses = [PayRequestStatus.FAILED, PayRequestStatus.SUCCESS, PayRequestStatus.VOIDED];
 
-export const CreditCardForm = ({ validationErrors, setValidationErrors }: CreditCardFormProps): JSX.Element => {
-  const { options, supportedNetworks, setCardDetails } = useSDK();
+export const CreditCardForm = (): JSX.Element => {
+  const { options, supportedNetworks, setCardDetails, validationErrors, setValidationErrors } = useSDK();
   const { payRequest } = useTyro();
   const [cardType, setCardType] = useState<string>(UNKNOWN_CARD_TYPE.type);
   const [number, setNumber] = useState('');
@@ -53,11 +48,16 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
   }, [payRequest]);
 
   useEffect(() => {
-    const cardTypeName = String(getCardType(number, supportedNetworks as unknown as CardTypeNames[])?.type);
-    if (options?.styleProps?.showSupportedCards === false) {
-      setCardType(UNKNOWN_CARD_TYPE.type);
+    if (!(number || validationErrors.card_number)) {
+      if (options?.styleProps?.showSupportedCards === false) {
+        setCardType(UNKNOWN_CARD_TYPE.type);
+        return;
+      }
+      setCardType(CardImageNames.PREVIEW);
       return;
     }
+
+    const cardTypeName = String(getCardType(number, supportedNetworks as unknown as CardTypeNames[])?.type);
     setCardType(cardTypeName);
   }, [number, supportedNetworks]);
 
@@ -88,6 +88,16 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
     setSecurityCode(formatted);
   };
 
+  const fieldRefs = {
+    refName: useRef<TextInput>(null),
+    refExpiry: useRef<TextInput>(null),
+    refCvv: useRef<TextInput>(null),
+  };
+
+  const focusNextField = (nextField: string): void => {
+    fieldRefs[nextField].current.focus();
+  };
+
   return (
     <View>
       <InputField
@@ -100,14 +110,17 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
         img={
           validationErrors.card_number
             ? CardImageNames.ERROR
-            : cardType !== UNKNOWN_CARD_TYPE.type
+            : cardType !== CardImageNames.PREVIEW
             ? cardType
-            : CardImageNames.UNKNOWN
+            : CardImageNames.PREVIEW
         }
         error={validationErrors.card_number}
         validator={(event: eventType): void => {
           validateInput(event, 'card_number', number, cardType, validationErrors, setValidationErrors);
         }}
+        returnKeyType={Platform.OS === 'ios' ? 'done' : 'next'}
+        onSubmitEditing={(): void => focusNextField('refName')}
+        blurOnSubmit={false}
       />
       <InputField
         labelText="Name on card"
@@ -121,10 +134,14 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
         validator={(event: eventType): void => {
           validateInput(event, 'card_name', name, cardType, validationErrors, setValidationErrors);
         }}
+        returnKeyType="next"
+        ref={fieldRefs['refName']}
+        onSubmitEditing={(): void => focusNextField('refExpiry')}
+        blurOnSubmit={false}
       />
       <View style={styles.fieldSplit}>
         <InputField
-          labelText="Expiry date (MM/YY)"
+          labelText="Expiry (MM/YY)"
           placeholderText="MM/YY"
           setText={onChangeExpiry}
           value={expiry}
@@ -135,6 +152,10 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
           validator={(event: eventType): void => {
             validateInput(event, 'card_expiry', expiry, cardType, validationErrors, setValidationErrors);
           }}
+          returnKeyType={Platform.OS === 'ios' ? 'done' : 'next'}
+          ref={fieldRefs['refExpiry']}
+          onSubmitEditing={(): void => focusNextField('refCvv')}
+          blurOnSubmit={false}
         />
         <View style={styles.fieldSplitSpacer} />
         <InputField
@@ -149,6 +170,8 @@ export const CreditCardForm = ({ validationErrors, setValidationErrors }: Credit
           validator={(event: eventType): void => {
             validateInput(event, 'card_cvv', securityCode, cardType, validationErrors, setValidationErrors);
           }}
+          returnKeyType="done"
+          ref={fieldRefs['refCvv']}
         />
       </View>
     </View>

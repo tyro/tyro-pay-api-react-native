@@ -1,18 +1,12 @@
 import { ApplePayButtonStyleProps, GooglePayButtonStyleProps } from './style-types';
 import { ThemeNames } from './theme-styles';
-import { SupportedNetworks } from './tyro-sdk';
+import { SupportedNetworks, SupportedNetworksApplePay, SupportedNetworksGooglePay } from './network-types';
 
 export enum TyroPayStyleLabelPositions {
   BLOCK = 'block',
   FLOATING = 'floating',
   // Note: For now this is not a supported property in the react-native component
   // INLINE = 'inline',
-}
-
-export enum TyroPayStyleFontFamilys {
-  ARIAL = 'arial',
-  SERIF = 'serif',
-  ROBOTO = 'roboto',
 }
 
 export enum TyroPayOptionsKeys {
@@ -24,14 +18,14 @@ export enum TyroPayOptionsKeys {
 
 export type TyroPayOptions = {
   [TyroPayOptionsKeys.liveMode]: boolean;
-  [TyroPayOptionsKeys.theme]: ThemeNames;
+  [TyroPayOptionsKeys.theme]: `${ThemeNames}`;
   [TyroPayOptionsKeys.styleProps]: TyroPayStyleProps;
   [TyroPayOptionsKeys.options]: TyroPayOptionsOptionsProps;
 };
 
 export type TyroPayOptionsProps = {
   [TyroPayOptionsKeys.liveMode]: boolean;
-  [TyroPayOptionsKeys.theme]?: ThemeNames;
+  [TyroPayOptionsKeys.theme]?: `${ThemeNames}`;
   [TyroPayOptionsKeys.styleProps]?: TyroPayStyleProps;
   [TyroPayOptionsKeys.options]?: TyroPayOptionsOptionsProps;
 };
@@ -45,7 +39,7 @@ export enum TyroPayApplePayOptionKeys {
 export type TyroPayApplePayOptions = {
   [TyroPayApplePayOptionKeys.enabled]?: boolean;
   [TyroPayApplePayOptionKeys.merchantIdentifier]?: string;
-  [TyroPayApplePayOptionKeys.supportedNetworks]?: SupportedNetworks[];
+  [TyroPayApplePayOptionKeys.supportedNetworks]?: SupportedNetworksApplePay[];
 };
 
 export enum TyroPayGooglePayOptionKeys {
@@ -57,7 +51,7 @@ export enum TyroPayGooglePayOptionKeys {
 export type TyroPayGooglePayOptions = {
   [TyroPayGooglePayOptionKeys.enabled]?: boolean;
   [TyroPayGooglePayOptionKeys.merchantName]?: string;
-  [TyroPayGooglePayOptionKeys.supportedNetworks]?: SupportedNetworks[];
+  [TyroPayGooglePayOptionKeys.supportedNetworks]?: SupportedNetworksGooglePay[];
 };
 
 export enum TyroPayCreditCardFormOptionKeys {
@@ -133,7 +127,7 @@ export type TyroPayStyleProps = {
   [TyroPayStylePropKeys.bodyWidth]?: string | number;
   [TyroPayStylePropKeys.bodyMinWidth]?: string | number;
   [TyroPayStylePropKeys.bodyMaxWidth]?: string | number;
-  [TyroPayStylePropKeys.fontFamily]?: TyroPayStyleFontFamilys | `${TyroPayStyleFontFamilys}`;
+  [TyroPayStylePropKeys.fontFamily]?: string;
   [TyroPayStylePropKeys.inputBackgroundColor]?: string;
   [TyroPayStylePropKeys.inputBorderColor]?: string;
   [TyroPayStylePropKeys.inputBorderSize]?: string | number;
@@ -150,7 +144,7 @@ export type TyroPayStyleProps = {
   [TyroPayStylePropKeys.inputFontWeight]?: string | number;
   [TyroPayStylePropKeys.inputPadding]?: string | number;
   [TyroPayStylePropKeys.inputSpacing]?: string | number;
-  [TyroPayStylePropKeys.labelPosition]?: TyroPayStyleLabelPositions | `${TyroPayStyleLabelPositions}`;
+  [TyroPayStylePropKeys.labelPosition]?: `${TyroPayStyleLabelPositions}`;
   [TyroPayStylePropKeys.labelFontColor]?: string;
   [TyroPayStylePropKeys.labelFontSize]?: string | number;
   [TyroPayStylePropKeys.labelFontWeight]?: string | number;

@@ -9,6 +9,7 @@ export enum CardTypeNames {
 
 export enum CardImageNames {
   UNKNOWN = 'card-unknown',
+  PREVIEW = 'card-preview',
   CVV = 'card-cvv',
   ERROR = 'card-error',
 }

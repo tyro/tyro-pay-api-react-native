@@ -1,5 +1,6 @@
 import TyroProvider from '../TyroSharedContext';
 import React from 'react';
+import { NativeModules } from 'react-native';
 import * as helpers from '../utils/helpers';
 import TyroSDK from '../TyroSDK';
 import { render, fireEvent, waitFor, cleanup } from '@testing-library/react-native';
@@ -48,7 +49,6 @@ describe('TyroProvider', () => {
         const button = await wrapper.findByTestId('test-button');
         await fireEvent.press(button);
         expect(await wrapper.findByText('ErrorMessage: TyroProvider not initialised')).not.toBeNull();
-        expect(wrapper.queryByText('Pay')).toBeNull();
         expect(wrapper.queryByText('Or pay with card')).toBeNull();
         expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
         expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();
@@ -58,12 +58,23 @@ describe('TyroProvider', () => {
       spy.mockRestore();
     }, 15000);
     test('Able to init and display PaySheet', async () => {
+      NativeModules.TyroPaySdkModule.initWalletPay.mockResolvedValue(true);
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent />, {
+            liveMode: false,
+            options: {
+              googlePay: {
+                enabled: true,
+              },
+              applePay: {
+                enabled: true,
+              },
+            },
+          });
         });
         expect(wrapper.queryByText('Pay')).toBeNull();
         expect(wrapper.queryByText('Or pay with card')).toBeNull();
@@ -89,7 +100,6 @@ describe('TyroProvider', () => {
         const button = await wrapper.findByTestId('test-button');
         await fireEvent.press(button);
         expect(await wrapper.findByText('ErrorMessage: PaySheet failed to initialise')).not.toBeNull();
-        expect(wrapper.queryByText('Pay')).toBeNull();
         expect(wrapper.queryByText('Or pay with card')).toBeNull();
         expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
         expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();

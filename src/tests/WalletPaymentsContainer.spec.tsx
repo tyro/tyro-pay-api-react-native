@@ -63,13 +63,33 @@ describe('WalletPaymentsContainer', () => {
       afterEach(() => {
         jest.clearAllMocks();
       });
+      test('googlePay defaults to be disabled', async () => {
+        await act(async () => {
+          await waitFor(async () => {
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              styleProps: { showSupportedCards: false, googlePayButton: { buttonBorderRadius: 8 } },
+            });
+          }, { timeout: 10000 });
+          // check initial components have rendered, click checkout
+          const checkOutButton = await wrapper.findByTestId('test-button');
+          await fireEvent.press(checkOutButton);
+        });
+        // check google pay button
+        expect(wrapper.queryByTestId('google-pay-button')).toBeNull();
+      });
 
       test('should render google-pay button when google pay is supported', async () => {
         await act(async () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              styleProps: { googlePayButton: { buttonBorderRadius: 8 } },
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
+              styleProps: { showSupportedCards: false, googlePayButton: { buttonBorderRadius: 8 } },
             });
           });
           // check initial components have rendered, click checkout
@@ -87,7 +107,15 @@ describe('WalletPaymentsContainer', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              styleProps: { googlePayButton: { buttonBorderRadius: '6' as unknown as number } },
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
+              styleProps: {
+                showSupportedCards: false,
+                googlePayButton: { buttonBorderRadius: '6' as unknown as number },
+              },
             });
           });
           // check initial components have rendered, click checkout
@@ -103,7 +131,15 @@ describe('WalletPaymentsContainer', () => {
           await waitFor(async () => {
             wrapper = await renderWithProvider(<InitTestComponent />, {
               liveMode: false,
-              styleProps: { googlePayButton: { buttonBorderRadius: 'monkey' as unknown as number } },
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
+              styleProps: {
+                showSupportedCards: false,
+                googlePayButton: { buttonBorderRadius: 'monkey' as unknown as number },
+              },
             });
           });
           // check initial components have rendered, click checkout
@@ -119,7 +155,15 @@ describe('WalletPaymentsContainer', () => {
         mockedFetchPayRequestOnCompletion(PayRequestStatus.AWAITING_PAYMENT_INPUT);
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
+              styleProps: { showSupportedCards: false },
+            });
           });
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');
@@ -139,8 +183,16 @@ describe('WalletPaymentsContainer', () => {
 
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
-          });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
+              styleProps: { showSupportedCards: false },
+            });
+          }, { timeout: 10000 });
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');
           await fireEvent.press(checkOutButton);
@@ -160,8 +212,16 @@ describe('WalletPaymentsContainer', () => {
         mockedFetchPayRequestOnCompletion(PayRequestStatus.SUCCESS);
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
-          });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
+              styleProps: { showSupportedCards: false },
+            });
+          }, { timeout: 10000 });
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');
           await fireEvent.press(checkOutButton);
@@ -188,7 +248,15 @@ describe('WalletPaymentsContainer', () => {
       it('should hide google-pay button when google pay is not supported', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+            wrapper = await renderWithProvider(<InitTestComponent />, {
+              liveMode: false,
+              options: {
+                googlePay: {
+                  enabled: true,
+                },
+              },
+              styleProps: { showSupportedCards: false },
+            });
           });
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');

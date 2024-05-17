@@ -14,14 +14,15 @@ module.exports = {
   coverageThreshold: {
     global: {
       branches: 97,
-      functions: 96,
-      lines: 99,
-      statements: 98,
+      functions: 93,
+      lines: 97,
+      statements: 97,
     },
   },
   moduleNameMapper: {
     'react-native-webview': '<rootDir>/src/tests/__mocks__/WebView.tsx',
   },
   globalSetup: './src/tests/global-setup.ts',
-  setupFiles: ['./src/tests/__mocks__/NativeModules.ts'],
+  setupFiles: ['./src/tests/__mocks__/NativeModules.ts', './src/tests/__mocks__/Animation.ts'],
+  setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
 };

@@ -1,35 +1,28 @@
 import { eventType } from '../utils/validators';
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { ImageSources } from '../@types/images';
 import { getInputStyles } from '../services/style-drawer';
 import { TyroPayOptionsKeys, TyroPayStyleLabelPositions } from '../@types/definitions';
 import { useSDK } from '../SDKSharedContext';
+import { CardImageNames } from '../@types/card-types';
+import CardPreview from './CardPreview';
+import { defaultSupportedNetworks } from '../@types/default';
 
 type InputFieldProps = {
   labelText: string;
   placeholderText: string;
-  value: string;
-  maxLength: number;
   setText;
-  keyboardType;
   img;
   error: string;
   validator;
-};
+} & React.ComponentPropsWithRef<typeof TextInput>;
 
-export const InputField = ({
-  labelText,
-  placeholderText,
-  setText,
-  value,
-  maxLength,
-  keyboardType,
-  img,
-  error,
-  validator,
-}: InputFieldProps): JSX.Element => {
-  const { options } = useSDK();
+export const InputField = forwardRef<TextInput, InputFieldProps>(function InputField(
+  { labelText, placeholderText, setText, img, error, validator, ...TextInputProps },
+  ref
+): JSX.Element {
+  const { options, supportedNetworks } = useSDK();
   const [isFocus, setIsFocus] = useState(false);
   const styles = StyleSheet.create({
     ...getInputStyles(options[TyroPayOptionsKeys.styleProps], {
@@ -48,19 +41,24 @@ export const InputField = ({
             accessibilityState={{ selected: isFocus }}
             style={[styles.textInput]}
             placeholder={!hasPhysicalLabel ? placeholderText : undefined}
-            value={value}
+            placeholderTextColor={styles.placeholder.color}
             onChangeText={setText}
-            maxLength={maxLength}
-            keyboardType={keyboardType}
             onFocus={(): void => setIsFocus(true)}
             onBlur={(): void => {
               setIsFocus(false);
               validator(eventType.BLUR);
             }}
+            ref={ref}
+            {...TextInputProps}
           />
           {img && ImageElement && (
             <View style={styles.image}>
               <ImageElement />
+            </View>
+          )}
+          {img === CardImageNames.PREVIEW && (
+            <View style={styles.image}>
+              <CardPreview supportedNetworks={supportedNetworks ?? defaultSupportedNetworks} />
             </View>
           )}
         </View>
@@ -71,6 +69,6 @@ export const InputField = ({
       </View>
     </View>
   );
-};
+});
 
 export default InputField;
