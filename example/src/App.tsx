@@ -39,7 +39,9 @@ function App(): JSX.Element {
                   },
                   applePay: {
                     enabled: true,
-                  },
+                    merchantIdentifier: 'merchant.tyro-pay-api-sample-app',
+                    supportedNetworks: ['visa', 'amex']
+                  }
                 },
                 styleProps: {
                   fontFamily: 'roboto',
@@ -94,6 +96,11 @@ const styles = StyleSheet.create({
   footerText: {
     fontSize: 16,
     color: '#333',
+  },
+  box: {
+    width: 40,
+    height: 40,
+    marginVertical: 20,
   },
 });
 

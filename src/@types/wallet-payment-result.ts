@@ -17,5 +17,5 @@ export type WalletPaymentResult = {
 };
 
 export type WalletPaymentInitResult = {
-  googlePaySupported?: boolean;
+  paymentSupported: boolean;
 };

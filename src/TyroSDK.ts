@@ -40,26 +40,30 @@ class TyroSDK {
 
   initWalletPay = async (options: TyroPayOptions): Promise<WalletPaymentInitResult> => {
     const walletPaymentConfigs = options?.[TyroPayOptionsKeys.options];
+    const liveMode = options[TyroPayOptionsKeys.liveMode];
+    let walletConfig = {};
     if (walletPaymentConfigs?.googlePay?.enabled) {
-      const liveMode = options[TyroPayOptionsKeys.liveMode];
-      const googlePaySupported: boolean = await TyroPaySdkModule.initWalletPay({
+      walletConfig = {
         googlePay: { ...walletPaymentConfigs.googlePay, liveMode },
-      });
-      return {
-        googlePaySupported,
+      };
+    } else if (walletPaymentConfigs?.applePay?.enabled) {        
+      walletConfig = {
+        ...options.options.applePay,
+        liveMode,
       };
     }
-    return {};
+    const paymentSupported = await TyroPaySdkModule.initWalletPay(walletConfig);
+    return {
+      paymentSupported,
+    };
   };
 
   initPaySheet = async (paySecret: string, liveMode: boolean): Promise<ClientPayRequestResponse> => {
-    const payRequest = await this.initAndVerifyPaySecret(paySecret, liveMode);
-    return payRequest;
+    return this.initAndVerifyPaySecret(paySecret, liveMode);
   };
 
   startWalletPay = async (paySecret: string): Promise<WalletPaymentResult> => {
-    const walletPaymentResult: WalletPaymentResult = await TyroPaySdkModule.startWalletPay(paySecret);
-    return walletPaymentResult;
+    return TyroPaySdkModule.startWalletPay(paySecret);
   };
 
   private payRequestAlreadySubmitted = (status: PayRequestStatus): boolean => {

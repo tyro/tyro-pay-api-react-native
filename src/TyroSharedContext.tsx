@@ -112,10 +112,13 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
       setPayRequestIsLoading(true);
       const payRequest = await TyroSDK.initPaySheet(paySecret, cleanedOptions.liveMode);
       const initWalletPayResult = await TyroSDK.initWalletPay(cleanedOptions);
-      if (initWalletPayResult.googlePaySupported === false) {
+      if (!initWalletPayResult.paymentSupported) {
         setOptions((options) => ({
           ...options,
-          options: { ...options.options, googlePay: { ...options.options.googlePay, enabled: false } },
+          options: { 
+            ...options.options, 
+            googlePay: { ...options.options.googlePay, enabled: false }, 
+            applePay: { ...options.options.applePay, enabled: false } },
         }));
       }
       setPaySecret(paySecret);

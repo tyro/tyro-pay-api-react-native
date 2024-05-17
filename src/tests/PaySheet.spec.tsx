@@ -1,5 +1,6 @@
 import React from 'react';
 import TyroProvider from '../TyroSharedContext';
+import { NativeModules } from 'react-native';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { ClientPayRequestResponse } from '../@types/pay-request-types';
 import { mockFetch } from './utils/mocks';
@@ -1117,6 +1118,7 @@ describe('PaySheet', () => {
           supportedNetworks: null,
         } as ClientPayRequestResponse)
       );
+      NativeModules.TyroPaySdkModule.initWalletPay.mockResolvedValue(true);
     });
     describe('walletPayments', () => {
       it('defaults walletPaymentsDividerText', async () => {
@@ -1126,10 +1128,12 @@ describe('PaySheet', () => {
               liveMode: false,
               options: {
                 googlePay: {
-                  enabled: true,
+                  enabled: false,
                 },
                 applePay: {
                   enabled: true,
+                  merchantIdentifier: "merchantIdentifier",
+                  supportedNetworks: ['visa']
                 },
               },
               styleProps: { showSupportedCards: false },

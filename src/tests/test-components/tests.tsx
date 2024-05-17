@@ -37,18 +37,13 @@ export const InitTestComponent = (): JSX.Element => {
   };
 
   const presentPaySheet = async (): Promise<void> => {
-    setLoadPaySheet(true);
+    setLoadPaySheet(true);    
     await fetchPayRequest();
   };
 
   useEffect(() => {
     if (!payRequest) return;
-
-    if (hasPayRequestCompleted()) {
-      setShowPayResult(true);
-    } else {
-      setShowPayResult(false);
-    }
+    setShowPayResult(hasPayRequestCompleted());
   }, [payRequest]);
 
   return (

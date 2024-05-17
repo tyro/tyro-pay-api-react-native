@@ -45,6 +45,7 @@ local.properties
 .cxx/
 *.keystore
 !debug.keystore
+.java-version
 
 # node.js
 #
