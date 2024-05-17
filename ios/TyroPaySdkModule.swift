@@ -36,6 +36,10 @@ class TyroPaySdkModule: RCTEventEmitter {
 	@objc(initWalletPay:resolve:rejecter:)
 	func initWalletPay(configs: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, rejecter reject: @escaping RCTPromiseRejectBlock) {
 		do {
+			guard TyroApplePay.isApplePayAvailable() else {
+				resolve(false)
+				return
+			} 
 			let merchantIdentifier: String = try getConfigParamOrThrow("merchantIdentifier", configs, "Merchant Identifier is required")
 			let allowedCardNetworks: [String] = try getConfigParamOrThrow("supportedNetworks", configs, "Supported Networks is require")
 			let paymentNetworks: [TyroApplePayCardNetwork] = try self.mapSupportedNetworkStringsToTyroApplePayCardNetwork(allowedCardNetworks)
