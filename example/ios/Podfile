@@ -10,8 +10,6 @@ MIN_IOS_VERSION='16.0'
 source 'https://github.com/tyro/connect-cocoapods.git'
 source 'https://cdn.cocoapods.org/'
 
-pod 'TyroApplePay', :git => 'https://' + ENV['GITHUB_PACKAGES_TOKEN'] +'@github.com/tyro/tyro-pay-api-ios.git'
-
 platform :ios, MIN_IOS_VERSION
 prepare_react_native_project!
 

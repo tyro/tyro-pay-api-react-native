@@ -25,7 +25,6 @@ export type TyroPayContextProps = {
   payRequest: ClientPayRequestResponse | null;
   isPayRequestReady: boolean;
   isPayRequestLoading: boolean;
-  isWalletPaymentReady: boolean;
   isSubmitting: boolean;
   tyroError: ErrorMessage | null;
   initPaySheet: (paySecret: string) => Promise<void>;
@@ -53,7 +52,6 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
   const [initialised, setInitialised] = useState<boolean | null>(null);
   const [payRequest, setPayRequest] = useState<ClientPayRequestResponse | null>(null);
   const [isPayRequestReady, setPayRequestReady] = useState<boolean>(false);
-  const [isWalletPaymentReady, setWalletPaymentSupported] = useState<boolean>(false);
   const [isPayRequestLoading, setPayRequestIsLoading] = useState<boolean>(false);
   const [tyroError, setTyroErrorMessage] = useState<ErrorMessage | null>(null);
   const [paySecret, setPaySecret] = useState<string | null>(null);
@@ -114,9 +112,7 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
       setPayRequestIsLoading(true);
       const payRequest = await TyroSDK.initPaySheet(paySecret, cleanedOptions.liveMode);
       const initWalletPayResult = await TyroSDK.initWalletPay(cleanedOptions);
-      if (initWalletPayResult.paymentSupported) {
-        setWalletPaymentSupported(true);
-      } else {
+      if (!initWalletPayResult.paymentSupported) {
         setOptions((options) => ({
           ...options,
           options: {
@@ -248,6 +244,9 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
   };
 
   const submitPayForm = async (): Promise<void> => {
+    if (isSubmitting) {
+      return;
+    }
     if (!paySecret) {
       setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.NO_PAY_SECRET]));
       return;
@@ -256,7 +255,6 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     if (Object.keys(foundErrors).length) {
       setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.INVALID_CARD_DETAILS]));
       setValidationErrors({ ...validationErrors, ...foundErrors });
-      setIsSubmitting(false);
       return;
     }
     if (supportedNetworks?.length) {
@@ -288,7 +286,6 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     payRequest,
     isPayRequestReady,
     isPayRequestLoading,
-    isWalletPaymentReady,
     isSubmitting,
     tyroError: tyroError,
     initPaySheet,
