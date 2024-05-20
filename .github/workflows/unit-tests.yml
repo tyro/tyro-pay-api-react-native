@@ -44,7 +44,7 @@ jobs:
       - name: setup-cocoapods
         uses: maxim-lobanov/setup-cocoapods@v1
         with:
-          version: 1.14.3
+          version: 1.15.2
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -109,5 +109,3 @@ jobs:
         env:
           GITHUB_PACKAGES_USER: ${{ github.actor }}
           GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}
-
-    

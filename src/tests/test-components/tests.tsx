@@ -37,7 +37,7 @@ export const InitTestComponent = (): JSX.Element => {
   };
 
   const presentPaySheet = async (): Promise<void> => {
-    setLoadPaySheet(true);    
+    setLoadPaySheet(true);
     await fetchPayRequest();
   };
 

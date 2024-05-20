@@ -21,24 +21,27 @@ export const WalletPaymentsContainer = (): JSX.Element => {
   };
 
   return (
-    <TouchableOpacity
-      style={{ ...styles.walletWrapper }}
-      onPress={(): void => {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        launchWalletPayment(paySecret!)
-      }}
-    >
+    <View style={{ ...styles.walletWrapper }}>
       <View style={{ ...styles.walletPadder }}>
-        <View style={{ ...styles.walletContainer }}>
+        <TouchableOpacity
+          style={{ ...styles.walletContainer }}
+          onPress={(): void => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            launchWalletPayment(paySecret!);
+          }}
+        >
           {options?.options?.googlePay?.enabled && (
-            <GooglePayButton buttonStyles={options?.styleProps?.googlePayButton} />
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            <GooglePayButton buttonStyles={options.styleProps.googlePayButton!} />
           )}
+
           {options?.options?.applePay?.enabled && (
-            <ApplePayButton buttonStyles={options?.styleProps?.applePayButton} />
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            <ApplePayButton buttonStyles={options.styleProps.applePayButton!} />
           )}
-        </View>
+        </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

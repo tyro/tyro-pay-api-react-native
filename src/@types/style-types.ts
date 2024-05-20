@@ -140,9 +140,6 @@ export const StyleTypes = {
   fontFamily: {
     pattern: /^[a-z0-9_\- ]*$/gi,
   },
-  cardType: {
-    pattern: '^' + Object.values(CardTypeNames).join('|') + '$',
-  },
   color: {
     pattern: '^#(?:[0-9a-fA-F]{3}){1,2}$',
   },
@@ -173,7 +170,6 @@ export type StyleProcessorType = {
 
 export type StyleProcessor = {
   type: StyleProcessorType;
-  isArray?: boolean;
   process?: (value: StyleProcessValue, styleProps: StyleProps) => string;
   selector?: string;
   style?: string;

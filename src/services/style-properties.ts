@@ -128,7 +128,7 @@ export const StyleProcessors: Record<string, StyleProcessor> = {
 };
 
 export const getSanitizedStyles = (styleProps: Partial<StyleProps>): StyleProps =>
-  cleanStyles(styleProps as Record<string, string[] | string | number | boolean | undefined>, StyleProcessors);
+  cleanStyles(styleProps as Record<string, string | number | boolean | undefined>, StyleProcessors);
 
 export const ApplePayStyleProcessors: Record<string, StyleProcessor> = {
   buttonBorderRadius: {
