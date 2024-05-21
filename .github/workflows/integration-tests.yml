@@ -144,7 +144,7 @@ jobs:
       - name: Install Dependencies
         run: npm run install:all
 
-      - name: Run iOS in Debug mode
+      - name: Run iOS app
         run: |
           npm run ios:release
 
