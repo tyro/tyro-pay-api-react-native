@@ -43,12 +43,7 @@ export const InitTestComponent = (): JSX.Element => {
 
   useEffect(() => {
     if (!payRequest) return;
-
-    if (hasPayRequestCompleted()) {
-      setShowPayResult(true);
-    } else {
-      setShowPayResult(false);
-    }
+    setShowPayResult(hasPayRequestCompleted());
   }, [payRequest]);
 
   return (

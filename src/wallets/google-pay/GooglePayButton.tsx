@@ -4,13 +4,11 @@ import { GooglePayButtonNativeProps, GooglePayButtonStyleProps } from '../../@ty
 const GooglePayButtonComponent = requireNativeComponent<GooglePayButtonNativeProps>('GooglePayButton');
 
 type GooglePayButtonProps = PropsWithChildren<{
-  buttonStyles?: GooglePayButtonStyleProps;
+  buttonStyles: GooglePayButtonStyleProps;
 }>;
 
 const GooglePayButton = ({ buttonStyles }: GooglePayButtonProps): JSX.Element => {
-  if (buttonStyles?.buttonBorderRadius) {
-    buttonStyles.buttonBorderRadius = parseFloat(String(buttonStyles.buttonBorderRadius));
-  }
+  buttonStyles.buttonBorderRadius = parseFloat(String(buttonStyles.buttonBorderRadius));
   return <GooglePayButtonComponent style={{ flex: 1 }} {...buttonStyles} testID="google-pay-button" />;
 };
 

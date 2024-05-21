@@ -5,7 +5,10 @@ require Pod::Executable.execute_command('node', ['-p',
     {paths: [process.argv[1]]},
   )', __dir__]).strip
 
-MIN_IOS_VERSION='15.0'
+MIN_IOS_VERSION='16.0'
+
+source 'https://github.com/tyro/connect-cocoapods.git'
+source 'https://cdn.cocoapods.org/'
 
 platform :ios, MIN_IOS_VERSION
 prepare_react_native_project!
@@ -19,7 +22,7 @@ prepare_react_native_project!
 #   dependencies: {
 #     ...(process.env.NO_FLIPPER ? { 'react-native-flipper': { platforms: { ios: null } } } : {}),
 # ```
-flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
+# flipper_config = ENV['NO_FLIPPER'] == "1" ? FlipperConfiguration.disabled : FlipperConfiguration.enabled
 
 linkage = ENV['USE_FRAMEWORKS']
 if linkage != nil

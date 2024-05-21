@@ -112,10 +112,14 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
       setPayRequestIsLoading(true);
       const payRequest = await TyroSDK.initPaySheet(paySecret, cleanedOptions.liveMode);
       const initWalletPayResult = await TyroSDK.initWalletPay(cleanedOptions);
-      if (initWalletPayResult.googlePaySupported === false) {
+      if (!initWalletPayResult.paymentSupported) {
         setOptions((options) => ({
           ...options,
-          options: { ...options.options, googlePay: { ...options.options.googlePay, enabled: false } },
+          options: {
+            ...options.options,
+            googlePay: { ...options.options.googlePay, enabled: false },
+            applePay: { ...options.options.applePay, enabled: false },
+          },
         }));
       }
       setPaySecret(paySecret);
@@ -240,6 +244,9 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
   };
 
   const submitPayForm = async (): Promise<void> => {
+    if (isSubmitting) {
+      return;
+    }
     if (!paySecret) {
       setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.NO_PAY_SECRET]));
       return;
@@ -248,7 +255,6 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     if (Object.keys(foundErrors).length) {
       setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.INVALID_CARD_DETAILS]));
       setValidationErrors({ ...validationErrors, ...foundErrors });
-      setIsSubmitting(false);
       return;
     }
     if (supportedNetworks?.length) {

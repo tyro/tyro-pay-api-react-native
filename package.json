@@ -1,6 +1,6 @@
 {
   "name": "@tyro/tyro-pay-api-react-native",
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "description": "React Native Library for Tyro's Pay API",
   "author": "Tyro",
   "homepage": "https://github.com/tyro/tyro-pay-api-react-native",
@@ -34,7 +34,7 @@
     "test:unit:android": "cd example/android && chmod +x ./gradlew && ./gradlew --no-daemon test && ./gradlew ktlintFormat && ./gradlew ktlint && ./gradlew lint",
     "test:e2e:ios": "bash ./scripts/run-e2e-tests ios",
     "test:e2e:android": "bash ./scripts/run-e2e-tests android",
-    "test:local:ios": "maestro test src/tests/integration/ios/local-only -e APP_ID=com.tyropayapireactnative",
+    "test:local:ios": "maestro test src/tests/integration/ios/local-only -e APP_ID=com.tyro.example-pay-api-app",
     "test:local:android": "maestro test src/tests/integration/android/local-only -e APP_ID=com.example",
     "android:release": "cd example && react-native run-android --mode=release",
     "ios:release": "cd example && react-native run-ios --mode Release --simulator \"iPhone 15 Pro\"",

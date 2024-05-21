@@ -9,45 +9,39 @@ import { TyroPayOptionsKeys } from '../@types/definitions';
 import { useSDK } from '../SDKSharedContext';
 
 export const WalletPaymentsContainer = (): JSX.Element => {
-  const { options, paySecret, setPayRequestIsLoading, handleWalletPaymentStatusUpdate } = useSDK();
+  const { options, paySecret, handleWalletPaymentStatusUpdate } = useSDK();
 
   const styles = StyleSheet.create({
     ...getWalletPaymentsStyles(options[TyroPayOptionsKeys.styleProps]),
   });
 
   const launchWalletPayment = async (paySecret: string): Promise<void> => {
-    setPayRequestIsLoading(true);
     const walletPaymentResult: WalletPaymentResult = await TyroSDK.startWalletPay(paySecret);
-    setPayRequestIsLoading(false);
     handleWalletPaymentStatusUpdate(paySecret, walletPaymentResult);
   };
 
   return (
-    <TouchableOpacity
-      style={{ ...styles.walletWrapper }}
-      onPress={(): Promise<void> =>
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        launchWalletPayment(paySecret!)
-      }
-    >
+    <View style={{ ...styles.walletWrapper }}>
       <View style={{ ...styles.walletPadder }}>
-        <View style={{ ...styles.walletContainer }}>
+        <TouchableOpacity
+          style={{ ...styles.walletContainer }}
+          onPress={(): void => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            launchWalletPayment(paySecret!);
+          }}
+        >
           {options?.options?.googlePay?.enabled && (
-            <GooglePayButton buttonStyles={options?.styleProps?.googlePayButton} />
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            <GooglePayButton buttonStyles={options.styleProps.googlePayButton!} />
           )}
+
           {options?.options?.applePay?.enabled && (
-            <ApplePayButton
-              title={'IOS Pay Button'}
-              styles={{}}
-              onSubmit={(): void => {
-                // @Todo
-                // Do nothing for now
-              }}
-            />
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            <ApplePayButton buttonStyles={options.styleProps.applePayButton!} />
           )}
-        </View>
+        </TouchableOpacity>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 

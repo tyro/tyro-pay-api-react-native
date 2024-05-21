@@ -1,12 +1,12 @@
 import {
-  ApplePayButtonStyle,
   GooglePayButtonColor,
   GooglePayButtonText,
   StyleLabelPositions,
   StyleProps,
   ApplePayButtonStyleProps,
-  ApplePayButtonType,
   GooglePayButtonStyleProps,
+  ApplePayButtonStyleText,
+  ApplePayButtonTypeText,
 } from './style-types';
 
 export enum ThemeNames {
@@ -35,7 +35,7 @@ export const ThemeStyles: Record<ThemeNames, Partial<StyleProps>> = {
     errorFontColor: '#FE87A1',
     showSupportedCards: true,
     applePayButton: {
-      buttonStyle: ApplePayButtonStyle.WHITE,
+      buttonStyle: ApplePayButtonStyleText.WHITE,
     },
     googlePayButton: {
       buttonColor: GooglePayButtonColor.WHITE,
@@ -59,9 +59,8 @@ export const ThemeStyles: Record<ThemeNames, Partial<StyleProps>> = {
 };
 
 export const applePayButtonDefaultStyles: ApplePayButtonStyleProps = {
-  buttonBorderRadius: '4',
-  buttonStyle: ApplePayButtonStyle.BLACK,
-  buttonType: ApplePayButtonType.PLAIN,
+  buttonStyle: ApplePayButtonStyleText.BLACK,
+  buttonLabel: ApplePayButtonTypeText.PLAIN,
 };
 
 export const googlePayButtonDefaultStyles: GooglePayButtonStyleProps = {

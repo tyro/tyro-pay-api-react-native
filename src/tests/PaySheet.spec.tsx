@@ -1,5 +1,6 @@
 import React from 'react';
 import TyroProvider from '../TyroSharedContext';
+import { NativeModules } from 'react-native';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { ClientPayRequestResponse } from '../@types/pay-request-types';
 import { mockFetch } from './utils/mocks';
@@ -1117,6 +1118,7 @@ describe('PaySheet', () => {
           supportedNetworks: null,
         } as ClientPayRequestResponse)
       );
+      NativeModules.TyroPaySdkModule.initWalletPay.mockResolvedValue(true);
     });
     describe('walletPayments', () => {
       it('defaults walletPaymentsDividerText', async () => {
@@ -1126,10 +1128,12 @@ describe('PaySheet', () => {
               liveMode: false,
               options: {
                 googlePay: {
-                  enabled: true,
+                  enabled: false,
                 },
                 applePay: {
                   enabled: true,
+                  merchantIdentifier: 'merchantIdentifier',
+                  supportedNetworks: ['visa'],
                 },
               },
               styleProps: { showSupportedCards: false },
@@ -1458,6 +1462,27 @@ describe('PaySheet', () => {
           expect(wrapper.queryByPlaceholderText('MM/YY')).toBeNull();
           expect(wrapper.queryByPlaceholderText('CVV')).toBeNull();
         });
+      });
+    });
+  });
+  describe('basic UI/UX responses', () => {
+    it('should focus and blur components on press', async () => {
+      (global.fetch as jest.Mock).mockResolvedValueOnce(
+        mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
+      ); // init and verify paySecret
+      await act(async () => {
+        await waitFor(async () => {
+          wrapper = await renderWithProvider(<TestPayButton title={'Pay'} />, {
+            liveMode: false,
+            styleProps: { showSupportedCards: false },
+          });
+        });
+        checkForPaySheetRenders(wrapper);
+        const cardInputField = wrapper.getByPlaceholderText('Card number');
+        await fireEvent(cardInputField, 'focus');
+        expect(wrapper.getByPlaceholderText('Card number')).toBeSelected();
+        await fireEvent(cardInputField, 'blur');
+        expect(wrapper.getByPlaceholderText('Card number')).not.toBeSelected();
       });
     });
   });

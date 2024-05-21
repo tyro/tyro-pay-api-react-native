@@ -1,6 +1,7 @@
 PODS:
   - boost (1.76.0)
   - DoubleConversion (1.1.6)
+  - Factory (2.3.2)
   - FBLazyVector (0.72.7)
   - FBReactNativeSpec (0.72.7):
     - RCT-Folly (= 2021.07.22.00)
@@ -431,9 +432,14 @@ PODS:
   - RNSVG (14.1.0):
     - React-Core
   - SocketRocket (0.6.1)
-  - tyro-pay-api-react-native (0.0.1-alpha.2):
+  - SwiftyBeaver (2.0.0)
+  - tyro-pay-api-react-native (0.0.1-alpha.3):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
+    - TyroApplePay (= 0.0.1)
+  - TyroApplePay (0.0.1):
+    - Factory
+    - SwiftyBeaver
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -483,10 +489,14 @@ DEPENDENCIES:
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
+  https://github.com/tyro/connect-cocoapods.git:
+    - TyroApplePay
   trunk:
+    - Factory
     - fmt
     - libevent
     - SocketRocket
+    - SwiftyBeaver
 
 EXTERNAL SOURCES:
   boost:
@@ -578,6 +588,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
+  Factory: 3a9d0809910130d609b34d4554828e6ecce519ff
   FBLazyVector: 5fbbff1d7734827299274638deb8ba3024f6c597
   FBReactNativeSpec: 638095fe8a01506634d77b260ef8a322019ac671
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
@@ -619,9 +630,11 @@ SPEC CHECKSUMS:
   ReactCommon: 5f704096ccf7733b390f59043b6fa9cc180ee4f6
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  tyro-pay-api-react-native: e9ccad89ca70def21c2f3231af42701250dee86f
+  SwiftyBeaver: 014b0c12065026b731bac80305294f27d63e27f6
+  tyro-pay-api-react-native: 7ca9270bcde7cc9bc5617c95d3d1f731bcc298d0
+  TyroApplePay: d4fdafd3270c5a5396dd24c338c829a7fdc58bb4
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
-PODFILE CHECKSUM: 3a1b4d899644f35362044e2309f7b5a745627f55
+PODFILE CHECKSUM: 03ca4465b98fb613cb7475b82d91f9b5868b250e
 
 COCOAPODS: 1.15.2

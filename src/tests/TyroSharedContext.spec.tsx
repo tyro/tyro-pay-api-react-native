@@ -1,5 +1,6 @@
 import TyroProvider from '../TyroSharedContext';
 import React from 'react';
+import { NativeModules } from 'react-native';
 import * as helpers from '../utils/helpers';
 import TyroSDK from '../TyroSDK';
 import { render, fireEvent, waitFor, cleanup } from '@testing-library/react-native';
@@ -57,6 +58,7 @@ describe('TyroProvider', () => {
       spy.mockRestore();
     }, 15000);
     test('Able to init and display PaySheet', async () => {
+      NativeModules.TyroPaySdkModule.initWalletPay.mockResolvedValue(true);
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
