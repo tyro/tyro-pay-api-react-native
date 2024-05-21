@@ -103,6 +103,13 @@ yarn add @tyro/tyro-pay-api-react-native
 
 ### Install iOS dependencies
 
+Include the following lines to the Podfile in your iOS folder
+
+```
+source 'https://github.com/tyro/connect-cocoapods.git'
+source 'https://cdn.cocoapods.org/'
+```
+
 ```terminal
 // navigate to your ios directory to install dependencies
 pod install
