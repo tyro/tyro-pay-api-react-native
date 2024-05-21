@@ -42,15 +42,15 @@ run_tests(){
   DEVICE="$1"
   for file in $allTestFiles
     do
-      if ! maestro --device "$DEVICE" test "$file" -e APP_ID="$APPID";
+      if ! maestro --device "$DEVICE" test "$file" -e APP_ID="$APPID" -e MAESTRO_DRIVER_STARTUP_TIMEOUT="$MAESTRO_DRIVER_STARTUP_TIMEOUT";
       then
         echo "Test ${file} failed. Retrying in 30 seconds..."
         sleep 30
-        if ! maestro --device "$DEVICE" test "$file" -e APP_ID="$APPID";
+        if ! maestro --device "$DEVICE" test "$file" -e APP_ID="$APPID" -e MAESTRO_DRIVER_STARTUP_TIMEOUT="$MAESTRO_DRIVER_STARTUP_TIMEOUT";
         then
           echo "Test ${file} failed again. Retrying for the last time in 120 seconds..."
           sleep 120
-          if ! maestro --device "$DEVICE" test "$file" -e APP_ID="$APPID";
+          if ! maestro --device "$DEVICE" test "$file" -e APP_ID="$APPID" -e MAESTRO_DRIVER_STARTUP_TIMEOUT="$MAESTRO_DRIVER_STARTUP_TIMEOUT";
           then
             failedTests+=("$DEVICE-$file")
           fi
