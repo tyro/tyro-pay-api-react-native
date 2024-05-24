@@ -66,5 +66,40 @@ extension PaymentButtonView {
 			context.coordinator.action = action
 		}
 	}
+}
 
+extension PKPaymentButtonStyle {
+	static func stringToPKPaymentButtonStyle(rawValue: String) -> Self {
+		switch rawValue {
+		case "black": return .black
+		case "white": return .white
+		case "whiteOutline": return .whiteOutline
+		default:
+			return .automatic
+		}
+	}
+}
+
+extension PKPaymentButtonType {
+	static func stringToPKPaymentButtonType(rawValue: String) -> Self {
+		switch rawValue {
+		case "addMoney": return .addMoney
+		case "book": return .book
+		case "buy": return .buy
+		case "checkout": return .checkout
+		case "continue": return .continue
+		case "contribute": return .contribute
+		case "donate": return .donate
+		case "inStore": return .inStore
+		case "order": return .order
+		case "reload": return .reload
+		case "rent": return .rent
+		case "setUp": return .setUp
+		case "subscribe": return .subscribe
+		case "support": return .support
+		case "tip": return .tip
+		case "topUp": return .topUp
+		default: return .plain
+		}
+	}
 }

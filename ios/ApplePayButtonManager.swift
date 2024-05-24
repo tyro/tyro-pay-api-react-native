@@ -10,7 +10,7 @@ import SwiftUI
 import PassKit
 
 extension PayWithApplePayButtonStyle {
-	static func stringToPayWithApplePayButtonStyle(rawValue: String) -> PayWithApplePayButtonStyle {
+	static func stringToPayWithApplePayButtonStyle(rawValue: String) -> Self {
 		switch rawValue {
 		case "black": return .black
 		case "white": return .white
@@ -22,11 +22,11 @@ extension PayWithApplePayButtonStyle {
 }
 
 extension PayWithApplePayButtonLabel {
-	static func stringToPayWithApplePayButtonLabel(rawValue: String) -> PayWithApplePayButtonLabel {
+	static func stringToPayWithApplePayButtonLabel(rawValue: String) -> Self {
 		switch rawValue {
-		case "buy": return .buy
 		case "addMoney": return .addMoney
 		case "book": return .book
+		case "buy": return .buy
 		case "checkout": return .checkout
 		case "continue": return .continue
 		case "contribute": return .contribute
@@ -111,7 +111,7 @@ class ApplePayButtonProxy: UIView {
 			if #available(iOS 17, *) {
 				modernDataStore.buttonStyle = PayWithApplePayButtonStyle.stringToPayWithApplePayButtonStyle(rawValue: buttonStyle)
 			} else {
-				oldDataStore.buttonStyle = .black
+				oldDataStore.buttonStyle = PKPaymentButtonStyle.stringToPKPaymentButtonStyle(rawValue: buttonStyle)
 			}
 		}
 	}
@@ -122,7 +122,7 @@ class ApplePayButtonProxy: UIView {
 			if #available(iOS 17, *) {
 				modernDataStore.buttonLabel = PayWithApplePayButtonLabel.stringToPayWithApplePayButtonLabel(rawValue: buttonLabel)
 			} else {
-				oldDataStore.buttonLabel = .book
+				oldDataStore.buttonLabel = PKPaymentButtonType.stringToPKPaymentButtonType(rawValue: buttonLabel)
 			}
 		}
 	}
