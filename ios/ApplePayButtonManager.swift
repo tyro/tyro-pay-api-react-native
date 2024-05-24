@@ -108,7 +108,7 @@ class ApplePayButtonProxy: UIView {
 	@objc
 	var buttonStyle: String = "" {
 		didSet {
-			if #available(iOS 17, *) {
+			if #available(iOS 16, *) {
 				modernDataStore.buttonStyle = PayWithApplePayButtonStyle.stringToPayWithApplePayButtonStyle(rawValue: buttonStyle)
 			} else {
 				oldDataStore.buttonStyle = PKPaymentButtonStyle.stringToPKPaymentButtonStyle(rawValue: buttonStyle)
@@ -119,7 +119,7 @@ class ApplePayButtonProxy: UIView {
 	@objc
 	var buttonLabel: String = "" {
 		didSet {
-			if #available(iOS 17, *) {
+			if #available(iOS 16, *) {
 				modernDataStore.buttonLabel = PayWithApplePayButtonLabel.stringToPayWithApplePayButtonLabel(rawValue: buttonLabel)
 			} else {
 				oldDataStore.buttonLabel = PKPaymentButtonType.stringToPKPaymentButtonType(rawValue: buttonLabel)
