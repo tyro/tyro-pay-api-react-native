@@ -58,25 +58,14 @@ class ApplePayButtonManager: RCTViewManager {
 	}
 }
 
-protocol DS : ObservableObject {
-	associatedtype ButtonLabel
-	associatedtype ButtonStyle
-}
-
-class ModernDataStore: ObservableObject, DS {
-	typealias ButtonLabel = PayWithApplePayButtonLabel
-	typealias ButtonStyle = PayWithApplePayButtonStyle
-
-	@Published var buttonStyle: PayWithApplePayButtonStyle = .automatic
+class ModernDataStore: ObservableObject {
 	@Published var buttonLabel: PayWithApplePayButtonLabel = .plain
+	@Published var buttonStyle: PayWithApplePayButtonStyle = .automatic
 }
 
-class OldDataStore: ObservableObject, DS {
-	typealias ButtonLabel = PKPaymentButtonType
-	typealias ButtonStyle = PKPaymentButtonStyle
-
-	@Published var buttonLabel: ButtonLabel = .plain
-	@Published var buttonStyle: ButtonStyle = .automatic
+class OldDataStore: ObservableObject {
+	@Published var buttonLabel: PKPaymentButtonType = .plain
+	@Published var buttonStyle: PKPaymentButtonStyle = .automatic
 }
 
 class ApplePayButtonProxy: UIView {
