@@ -10,7 +10,7 @@ import SwiftUI
 import PassKit
 
 extension PayWithApplePayButtonStyle {
-	static func stringToPayWithApplePayButtonStyle(rawValue: String) -> PayWithApplePayButtonStyle {
+	static func stringToPayWithApplePayButtonStyle(rawValue: String) -> Self {
 		switch rawValue {
 		case "black": return .black
 		case "white": return .white
@@ -22,11 +22,11 @@ extension PayWithApplePayButtonStyle {
 }
 
 extension PayWithApplePayButtonLabel {
-	static func stringToPayWithApplePayButtonLabel(rawValue: String) -> PayWithApplePayButtonLabel {
+	static func stringToPayWithApplePayButtonLabel(rawValue: String) -> Self {
 		switch rawValue {
-		case "buy": return .buy
 		case "addMoney": return .addMoney
 		case "book": return .book
+		case "buy": return .buy
 		case "checkout": return .checkout
 		case "continue": return .continue
 		case "contribute": return .contribute
@@ -58,15 +58,21 @@ class ApplePayButtonManager: RCTViewManager {
 	}
 }
 
-class DataStore: ObservableObject {
-	@Published var buttonStyle: PayWithApplePayButtonStyle = .automatic
+class ModernDataStore: ObservableObject {
 	@Published var buttonLabel: PayWithApplePayButtonLabel = .plain
+	@Published var buttonStyle: PayWithApplePayButtonStyle = .automatic
+}
+
+class OldDataStore: ObservableObject {
+	@Published var buttonLabel: PKPaymentButtonType = .plain
+	@Published var buttonStyle: PKPaymentButtonStyle = .automatic
 }
 
 class ApplePayButtonProxy: UIView {
 
 	var returningView: UIView?
-	let dataStore: DataStore = .init()
+	let modernDataStore: ModernDataStore = .init()
+	let oldDataStore: OldDataStore = .init()
 
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
@@ -74,7 +80,10 @@ class ApplePayButtonProxy: UIView {
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		let vc = UIHostingController(rootView: ApplePayButton().environmentObject(self.dataStore))
+		let vc = UIHostingController(rootView: ApplePayButton()
+			.environmentObject(self.modernDataStore)
+			.environmentObject(self.oldDataStore)
+		)
 		vc.view.frame = bounds
 		self.addSubview(vc.view)
 		self.returningView = vc.view
@@ -88,14 +97,22 @@ class ApplePayButtonProxy: UIView {
 	@objc
 	var buttonStyle: String = "" {
 		didSet {
-			dataStore.buttonStyle = PayWithApplePayButtonStyle.stringToPayWithApplePayButtonStyle(rawValue: buttonStyle)
+			if #available(iOS 16, *) {
+				modernDataStore.buttonStyle = PayWithApplePayButtonStyle.stringToPayWithApplePayButtonStyle(rawValue: buttonStyle)
+			} else {
+				oldDataStore.buttonStyle = PKPaymentButtonStyle.stringToPKPaymentButtonStyle(rawValue: buttonStyle)
+			}
 		}
 	}
 
 	@objc
 	var buttonLabel: String = "" {
 		didSet {
-			dataStore.buttonLabel = PayWithApplePayButtonLabel.stringToPayWithApplePayButtonLabel(rawValue: buttonLabel)
+			if #available(iOS 16, *) {
+				modernDataStore.buttonLabel = PayWithApplePayButtonLabel.stringToPayWithApplePayButtonLabel(rawValue: buttonLabel)
+			} else {
+				oldDataStore.buttonLabel = PKPaymentButtonType.stringToPKPaymentButtonType(rawValue: buttonLabel)
+			}
 		}
 	}
 }

@@ -10,12 +10,17 @@ import PassKit
 import TyroApplePay
 
 struct ApplePayButton: View {
-	@EnvironmentObject var dataStore: DataStore
+	@EnvironmentObject var modernDataStore: ModernDataStore
+	@EnvironmentObject var oldDataStore: OldDataStore
 
 	var body: some View {
 		VStack {
-			PayWithApplePayButton(self.dataStore.buttonLabel) {}
-				.payWithApplePayButtonStyle(self.dataStore.buttonStyle)
+			if #available(iOS 16, *) {
+				PayWithApplePayButton(self.modernDataStore.buttonLabel) {}
+					.payWithApplePayButtonStyle(self.modernDataStore.buttonStyle)
+			} else {
+				PaymentButtonView(type: self.oldDataStore.buttonLabel, style: self.oldDataStore.buttonStyle)
+			}
 		}
 	}
 }

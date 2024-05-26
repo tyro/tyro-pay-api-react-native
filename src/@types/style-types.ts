@@ -84,7 +84,7 @@ export type ApplePayButtonType = ApplePayButtonTypeText | `${ApplePayButtonTypeT
 
 export enum ApplePayButtonStyleText {
   BLACK = 'black',
-  WHITE_OUTLINE = 'white-outline',
+  WHITE_OUTLINE = 'whiteOutline',
   WHITE = 'white',
 }
 
