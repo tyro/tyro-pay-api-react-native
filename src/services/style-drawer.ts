@@ -80,6 +80,9 @@ export const getFormStyles = (styleProps: TyroPayStyleProps): Record<string, any
   fieldSplitSpacer: {
     padding: 5,
   },
+  inputField: {
+    minHeight: 45,
+  },
 });
 
 interface InputStyleState {

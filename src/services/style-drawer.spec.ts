@@ -113,6 +113,9 @@ describe('Style Drawer Service', () => {
         fieldSplitSpacer: {
           padding: 5,
         },
+        inputField: {
+          minHeight: 45,
+        },
       });
     });
     it('it maps', () => {
@@ -125,6 +128,9 @@ describe('Style Drawer Service', () => {
         },
         fieldSplitSpacer: {
           padding: 5,
+        },
+        inputField: {
+          minHeight: 45,
         },
       });
     });

@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { createContext, createRef, useContext } from 'react';
-import { View } from 'react-native';
+import { createContext, useContext } from 'react';
 import { TyroPayOptions } from './@types/definitions';
 import { ErrorMessage } from './@types/message-types';
 import { ClientPayRequestResponse } from './@types/pay-request-types';
@@ -36,9 +35,6 @@ type SDKContext = {
   children: React.ReactNode;
   tyroProvider: SDKContextProps;
 };
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const sdkReactNativeContextRef = createRef<any>();
 
 const SDKProvider = ({ children, tyroProvider }: SDKContext): JSX.Element => {
   const {
@@ -85,11 +81,7 @@ const SDKProvider = ({ children, tyroProvider }: SDKContext): JSX.Element => {
     handleWalletPaymentStatusUpdate,
   };
 
-  return (
-    <SDKContext.Provider value={providerValues}>
-      <View ref={sdkReactNativeContextRef}>{children}</View>
-    </SDKContext.Provider>
-  );
+  return <SDKContext.Provider value={providerValues}>{children}</SDKContext.Provider>;
 };
 
 export const useSDK = (): SDKUseContextProps => useContext(SDKContext);
