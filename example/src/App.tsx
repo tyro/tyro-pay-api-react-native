@@ -55,7 +55,7 @@ function App(): JSX.Element {
                     buttonColor: 'black',
                     buttonType: 'pay',
                     buttonBorderRadius: 4,
-                  }
+                  },
                 },
               }}
             >
