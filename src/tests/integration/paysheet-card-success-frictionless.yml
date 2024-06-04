@@ -20,8 +20,7 @@ appId: ${APP_ID}
 - tapOn: 
     text: "CVV"
 - inputText: "123"
-- tapOn:
-    text: "Or pay with card"
+- hideKeyboard
 - scrollUntilVisible:
     element:
       id: "pay-button"
