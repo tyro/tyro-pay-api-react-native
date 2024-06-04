@@ -73,7 +73,7 @@ const Store = ({ navigation }: Props): JSX.Element => {
 };
 
 const CheckoutButton = (props: CheckoutButtonProps): JSX.Element => {
-  return <Button disabled={props.disabled} title="Checkout" onPress={props.onCheckout} />;
+  return <Button disabled={props.disabled} title="Checkout" onPress={props.onCheckout} testID="checkout" />;
 };
 
 interface CheckoutButtonProps {

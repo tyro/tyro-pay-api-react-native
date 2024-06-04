@@ -2,7 +2,8 @@ appId: ${APP_ID}
 ---
 - launchApp
 - assertVisible: "Tyro Pay Demo"
-- tapOn: "CHECKOUT"
+- tapOn: "+"
+- tapOn: "checkout"
 - extendedWaitUntil:
     visible: "Or pay with card"
     timeout: 150000
