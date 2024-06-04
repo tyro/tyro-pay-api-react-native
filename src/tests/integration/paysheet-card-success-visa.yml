@@ -1,7 +1,7 @@
 appId: ${APP_ID}
 ---
 - launchApp
-- assertVisible: "Demo Checkout"
+- assertVisible: "Tyro Pay Demo"
 - tapOn: "CHECKOUT"
 - extendedWaitUntil:
     visible: "Or pay with card"
