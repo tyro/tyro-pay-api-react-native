@@ -36,7 +36,9 @@ export const submitPayRequest = async (
     body: JSON.stringify({ cardDetails, paymentType: PaymentType.CARD }),
   });
   if (response.status !== HTTP_ACCEPTED) {
-    throw new Error('Payment failed to submit');
+    const error = new Error('HTTP STATUS Error') as Error & { status: string };
+    error.status = String(response.status);
+    throw error;
   }
 };
 

@@ -21,6 +21,7 @@ export enum ErrorMessageType {
   NO_PAY_SECRET = 'NO_PAY_SECRET',
   UNKNOWN_ERROR = 'UNKNOWN_ERROR',
   ENVIRONMENT_MISMATCH = 'ENVIRONMENT_MISMATCH',
+  FAILED_TO_SUBMIT = 'FAILED_TO_SUBMIT',
 }
 
 export type TyroErrorMessage = { type: ErrorMessageType; message: string };
@@ -81,6 +82,10 @@ export const TyroErrorMessages: Record<ErrorMessageType, TyroErrorMessage> = {
   [ErrorMessageType.ENVIRONMENT_MISMATCH]: {
     type: ErrorMessageType.ENVIRONMENT_MISMATCH,
     message: 'There is an environment mismatch. Check TyroProvider was initialised with the correct value for liveMode',
+  },
+  [ErrorMessageType.FAILED_TO_SUBMIT]: {
+    type: ErrorMessageType.FAILED_TO_SUBMIT,
+    message: 'Failed to submit the payment',
   },
 };
 

@@ -212,10 +212,11 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
 
   const handlePaymentStatusUpdate = async (
     payRequest: ClientPayRequestResponse | null,
-    paySecret: string
+    paySecret: string,
+    errorCode: string | undefined
   ): Promise<void> => {
     if (!payRequest) {
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.SERVER_ERROR]));
+      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.UNKNOWN_ERROR], errorCode));
       return;
     }
     switch (payRequest.status) {
@@ -236,9 +237,12 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
         setPayRequest(payRequest);
         setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAYMENT_FAILED], payRequest.errorCode));
         break;
+      case PayRequestStatus.AWAITING_PAYMENT_INPUT:
+        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.FAILED_TO_SUBMIT], errorCode));
+        break;
       default:
         updatePaySheet(payRequest);
-        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.UNKNOWN_ERROR]));
+        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.UNKNOWN_ERROR], errorCode));
         break;
     }
   };
@@ -267,17 +271,20 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
         return;
       }
     }
-    try {
-      setTyroErrorMessage(null);
-      setIsSubmitting(true);
-      await submitPayRequest(paySecret, cardDetails, options[TyroPayOptionsKeys.liveMode]);
-    } catch (error) {
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAYMENT_FAILED]));
-      setIsSubmitting(false);
-      return;
-    }
+    setTyroErrorMessage(null);
+    setIsSubmitting(true);
+    let submissionError;
+    await submitPayRequest(paySecret, cardDetails, options[TyroPayOptionsKeys.liveMode]).catch((error) => {
+      if (error instanceof Error && 'status' in error) {
+        submissionError = error;
+      }
+    });
+    await pollAndHandlePayment(paySecret, submissionError?.status);
+  };
+
+  const pollAndHandlePayment = async (paySecret: string, errorCode: string | undefined): Promise<void> => {
     const payRequest = await pollPayCompletion(paySecret);
-    await handlePaymentStatusUpdate(payRequest, paySecret);
+    await handlePaymentStatusUpdate(payRequest, paySecret, errorCode);
     setIsSubmitting(false);
   };
 

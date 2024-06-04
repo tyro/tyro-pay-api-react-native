@@ -76,7 +76,11 @@ export const InitTestComponent = (): JSX.Element => {
   );
 };
 
-export const TestPayButton = (): JSX.Element => {
+type testPayButtonProps = {
+  title: string;
+};
+
+export const TestPayButton = ({ title }: testPayButtonProps): JSX.Element => {
   const { tyroError, isSubmitting, submitPayForm } = useTyro();
   return (
     <View>
@@ -91,7 +95,7 @@ export const TestPayButton = (): JSX.Element => {
           accessibilityLabel="Submit the Pay Form"
           testID="pay-button"
         >
-          <Text style={styles.buttonText}>{'Pay'}</Text>
+          <Text style={styles.buttonText}>{title}</Text>
         </TouchableOpacity>
       )}
       <Text>{tyroError ? tyroError.errorType + ': ' + tyroError.errorMessage : 'no error'}</Text>
