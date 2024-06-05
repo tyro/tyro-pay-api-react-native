@@ -8,6 +8,7 @@ import {
   POLL_INTERVAL_MS,
 } from './config/pay-request-client-config';
 import { LIVE_INBOUND_BASE_URL, SANDBOX_INBOUND_BASE_URL, TYRO_BASE_URL } from './constants';
+import { HttpStatusError } from '../@types/http-error-types';
 
 const setHeader = (paySecret: string): RequestInit => {
   return { headers: { 'Pay-Secret': paySecret } };
@@ -36,7 +37,7 @@ export const submitPayRequest = async (
     body: JSON.stringify({ cardDetails, paymentType: PaymentType.CARD }),
   });
   if (response.status !== HTTP_ACCEPTED) {
-    const error = new Error('HTTP STATUS Error') as Error & { status: string };
+    const error = new Error('Http Status Error') as HttpStatusError;
     error.status = String(response.status);
     throw error;
   }

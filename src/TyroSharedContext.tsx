@@ -274,11 +274,13 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     setTyroErrorMessage(null);
     setIsSubmitting(true);
     let submissionError;
-    await submitPayRequest(paySecret, cardDetails, options[TyroPayOptionsKeys.liveMode]).catch((error) => {
+    try {
+      await submitPayRequest(paySecret, cardDetails, options[TyroPayOptionsKeys.liveMode]);
+    } catch (error) {
       if (error instanceof Error && 'status' in error) {
         submissionError = error;
       }
-    });
+    }
     await pollAndHandlePayment(paySecret, submissionError?.status);
   };
 
