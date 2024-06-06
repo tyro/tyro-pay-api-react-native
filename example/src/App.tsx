@@ -6,10 +6,17 @@
  */
 
 import { TyroProvider } from '@tyro/tyro-pay-api-react-native';
-import CheckOut from './checkout';
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import CheckOut from './Checkout';
+import Store from './Store';
+import { RootStackParamList } from './@types/navigation';
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 // Demo App
 function App(): JSX.Element {
@@ -17,17 +24,16 @@ function App(): JSX.Element {
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    flex: 1,
   };
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <ScrollView>
+      <ScrollView contentContainerStyle={{ flex: 1 }}>
         <View style={styles.container}>
-          {/* Title */}
           <View style={styles.titleContainer}>
-            <Text style={styles.titleText}>Demo Checkout</Text>
+            <Text style={styles.titleText}>Tyro Pay Demo</Text>
           </View>
-          {/* Content */}
           <View style={styles.contentContainer}>
             <TyroProvider
               options={{
@@ -53,10 +59,14 @@ function App(): JSX.Element {
                 },
               }}
             >
-              <CheckOut />
+              <NavigationContainer>
+                <Stack.Navigator initialRouteName="Store">
+                  <Stack.Screen name="Store" component={Store} />
+                  <Stack.Screen name="CheckOut" component={CheckOut} />
+                </Stack.Navigator>
+              </NavigationContainer>
             </TyroProvider>
           </View>
-          {/* Footer */}
           <View style={styles.footerContainer}>
             <Text style={styles.footerText}>Tyro Pay API React Native SDK</Text>
           </View>
@@ -84,7 +94,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    padding: 20,
+    padding: 0,
   },
   footerContainer: {
     justifyContent: 'center',

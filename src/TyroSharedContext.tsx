@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { useState, createContext, useEffect, createRef, useContext } from 'react';
+import { useState, createContext, useEffect, useContext } from 'react';
 import { TyroPayOptions, TyroPayOptionsKeys, TyroPayOptionsProps } from './@types/definitions';
-import { View } from 'react-native';
 import { ClientPayRequestResponse, PayRequestStatus, ThreeDSecureStatus } from './@types/pay-request-types';
 import TyroSDK from './TyroSDK';
 import { ErrorMessage, ErrorMessageType, TyroErrorMessages } from './@types/message-types';
@@ -33,9 +32,6 @@ export type TyroPayContextProps = {
 };
 
 export const TyroPayContext = createContext({} as TyroPayContextProps);
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const tyroReactNativeContextRef = createRef<any>();
 
 type TyroPayContext = {
   children: React.ReactNode;
@@ -318,9 +314,7 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
 
   return (
     <TyroPayContext.Provider value={providerValues}>
-      <View ref={tyroReactNativeContextRef}>
-        <SDKProvider tyroProvider={sdkProviderValues}>{children}</SDKProvider>
-      </View>
+      <SDKProvider tyroProvider={sdkProviderValues}>{children}</SDKProvider>
     </TyroPayContext.Provider>
   );
 };

@@ -1,8 +1,9 @@
 appId: ${APP_ID}
 ---
 - launchApp
-- assertVisible: "Demo Checkout"
-- tapOn: "CHECKOUT"
+- assertVisible: "Tyro Pay Demo"
+- tapOn: "+"
+- tapOn: "checkout"
 - extendedWaitUntil:
     visible: "Or pay with card"
     timeout: 150000
@@ -12,15 +13,14 @@ appId: ${APP_ID}
 - tapOn: 
     text: "Name on card"
 - inputText: "ABC"
-- hideKeyboard
+- tapOn: "CheckOut"
 - tapOn: 
     text: "MM/YY"
 - inputText: "0125"
 - tapOn: 
     text: "CVV"
 - inputText: "123"
-- tapOn:
-    text: "Or pay with card"
+- tapOn: "CheckOut"
 - scrollUntilVisible:
     element:
       id: "pay-button"
@@ -28,5 +28,5 @@ appId: ${APP_ID}
 - tapOn:
     id: "pay-button"
 - extendedWaitUntil:
-    visible: "Pay Request Status: SUCCESS"
+    visible: "SUCCESS"
     timeout: 150000
