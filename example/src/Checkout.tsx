@@ -59,7 +59,6 @@ const CheckOut = ({ route }: Props): JSX.Element => {
 
   return (
     <ScrollView style={styles.outerContainer}>
-      {isPayRequestLoading && <ActivityIndicator />}
       {isPayRequestReady && !showPayResult && (
         <View style={styles.contentContainer}>
           <PaySheet />
