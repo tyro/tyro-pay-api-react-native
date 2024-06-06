@@ -13,14 +13,14 @@ appId: ${APP_ID}
 - tapOn: 
     text: "Name on card"
 - inputText: "ABC"
-- hideKeyboard
+- tapOn: "CheckOut"
 - tapOn: 
     text: "MM/YY"
 - inputText: "0125"
 - tapOn: 
     text: "CVV"
 - inputText: "123"
-- hideKeyboard
+- tapOn: "CheckOut"
 - scrollUntilVisible:
     element:
       id: "pay-button"

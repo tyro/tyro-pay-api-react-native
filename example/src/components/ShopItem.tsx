@@ -36,9 +36,7 @@ const ShopItem = (props: ShopItemProps): JSX.Element => {
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>${(item.price / 100).toFixed(2)}</Text>
       </View>
       <TouchableOpacity onPress={onPress} style={{ ...styles.shopItemButton, backgroundColor: buttonColor }}>
-        <Text style={styles.shopItemButtonText}>
-          {buttonText}
-        </Text>
+        <Text style={styles.shopItemButtonText}>{buttonText}</Text>
       </TouchableOpacity>
     </View>
   );
