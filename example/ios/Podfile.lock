@@ -439,7 +439,7 @@ PODS:
     - React-Core
   - SocketRocket (0.6.1)
   - SwiftyBeaver (2.1.1)
-  - tyro-pay-api-react-native (0.0.1-alpha.3):
+  - tyro-pay-api-react-native (0.0.1-alpha.4):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - TyroApplePay (= 0.0.2)
@@ -645,7 +645,7 @@ SPEC CHECKSUMS:
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SwiftyBeaver: ade157e4f857812e7d7f15f2e3396bb8733f8a1c
-  tyro-pay-api-react-native: ed9a9bc7f5d9f4a0976a83f8a54310632dd93f20
+  tyro-pay-api-react-native: 0f31c3f6692f12d1b86a21fd7f0e3b3e69450829
   TyroApplePay: 0d93fec9780f7a713fa0db4ee4c4c64ddc16c010
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 

@@ -121,7 +121,6 @@ export const CreditCardForm = (): JSX.Element => {
         returnKeyType={Platform.OS === 'ios' ? 'done' : 'next'}
         onSubmitEditing={(): void => focusNextField('refName')}
         blurOnSubmit={false}
-        style={styles.inputField}
       />
       <InputField
         labelText="Name on card"
@@ -139,7 +138,6 @@ export const CreditCardForm = (): JSX.Element => {
         ref={fieldRefs['refName']}
         onSubmitEditing={(): void => focusNextField('refExpiry')}
         blurOnSubmit={false}
-        style={styles.inputField}
       />
       <View style={styles.fieldSplit}>
         <InputField
@@ -158,7 +156,6 @@ export const CreditCardForm = (): JSX.Element => {
           ref={fieldRefs['refExpiry']}
           onSubmitEditing={(): void => focusNextField('refCvv')}
           blurOnSubmit={false}
-          style={styles.inputField}
         />
         <View style={styles.fieldSplitSpacer} />
         <InputField
@@ -175,7 +172,6 @@ export const CreditCardForm = (): JSX.Element => {
           }}
           returnKeyType="done"
           ref={fieldRefs['refCvv']}
-          style={styles.inputField}
         />
       </View>
     </View>

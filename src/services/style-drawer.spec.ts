@@ -113,9 +113,6 @@ describe('Style Drawer Service', () => {
         fieldSplitSpacer: {
           padding: 5,
         },
-        inputField: {
-          minHeight: 45,
-        },
       });
     });
     it('it maps', () => {
@@ -128,9 +125,6 @@ describe('Style Drawer Service', () => {
         },
         fieldSplitSpacer: {
           padding: 5,
-        },
-        inputField: {
-          minHeight: 45,
         },
       });
     });
@@ -171,6 +165,7 @@ describe('Style Drawer Service', () => {
           borderRadius: 5,
           borderWidth: 1,
           width: 'auto',
+          minHeight: 38,
         },
         labelContainer: {
           color: '#303030',
@@ -231,6 +226,7 @@ describe('Style Drawer Service', () => {
           borderRadius: 26,
           borderWidth: 25,
           width: 'auto',
+          minHeight: 38,
         },
         labelContainer: {
           color: 'purple',
@@ -290,6 +286,7 @@ describe('Style Drawer Service', () => {
           borderRadius: 5,
           borderWidth: 1,
           width: 'auto',
+          minHeight: 38,
         },
         labelContainer: {
           color: '#303030',
@@ -350,6 +347,7 @@ describe('Style Drawer Service', () => {
           borderRadius: 26,
           borderWidth: 27,
           width: 'auto',
+          minHeight: 38,
         },
         labelContainer: {
           color: 'purple',
@@ -409,6 +407,7 @@ describe('Style Drawer Service', () => {
           borderRadius: 5,
           borderWidth: 1,
           width: 'auto',
+          minHeight: 38,
         },
         labelContainer: {
           color: '#303030',
@@ -469,6 +468,7 @@ describe('Style Drawer Service', () => {
           borderRadius: 26,
           borderWidth: 28,
           width: 'auto',
+          minHeight: 38,
         },
         labelContainer: {
           color: 'purple',
@@ -528,6 +528,7 @@ describe('Style Drawer Service', () => {
           borderRadius: 5,
           borderWidth: 1,
           width: 'auto',
+          minHeight: 38,
         },
         labelContainer: {
           color: '#303030',
@@ -588,6 +589,7 @@ describe('Style Drawer Service', () => {
           borderRadius: 26,
           borderWidth: 28,
           width: 'auto',
+          minHeight: 38,
         },
         labelContainer: {
           color: 'purple',
@@ -658,6 +660,7 @@ describe('Style Drawer Service', () => {
           borderRadius: 26,
           borderWidth: 28,
           width: 'auto',
+          minHeight: 38,
         },
         labelContainer: {
           color: 'purple',
@@ -799,6 +802,7 @@ describe('Style Drawer Service', () => {
           borderRadius: 20,
           borderWidth: 10,
           width: 'auto',
+          minHeight: 38,
         },
         labelContainer: {
           color: '#303030',
@@ -865,6 +869,7 @@ describe('Style Drawer Service', () => {
           borderRadius: 20,
           borderWidth: 10,
           width: 'auto',
+          minHeight: 38,
         },
         labelContainer: {
           color: '#303030',
