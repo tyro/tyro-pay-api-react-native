@@ -19,7 +19,7 @@ const ShopItem = (props: ShopItemProps): JSX.Element => {
     const buttonText = inCart ? '-' : '+';
     setButtonText(buttonText);
 
-    const buttonColor = inCart ? 'red' : 'blue';
+    const buttonColor = inCart ? '#ae0000' : '#06f';
     setButtonColor(buttonColor);
   }, [inCart]);
 
@@ -36,7 +36,7 @@ const ShopItem = (props: ShopItemProps): JSX.Element => {
         <Text style={{ fontSize: 16, fontWeight: 'bold' }}>${(item.price / 100).toFixed(2)}</Text>
       </View>
       <TouchableOpacity onPress={onPress} style={{ ...styles.shopItemButton, backgroundColor: buttonColor }}>
-        <Text style={styles.shopItemButtonText} testID={`item-${item.id}-button`}>
+        <Text style={styles.shopItemButtonText}>
           {buttonText}
         </Text>
       </TouchableOpacity>
