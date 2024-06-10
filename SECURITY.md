@@ -6,7 +6,7 @@
 
 If you find a security issue, or evidence of one, please report it privately using [Github's privately reporting a vulnerability feature](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing/privately-reporting-a-security-vulnerability#privately-reporting-a-security-vulnerability).
 
-[Report a vulnerability](https://github.com/tyro/<YOU_REPO_HERE>/security)
+[Report a vulnerability](https://github.com/tyro/tyro-pay-api-react-native/security)
 
 Please include the requested information listed below (best effort) to help us better investigate, triage and resolve the issue:
 
