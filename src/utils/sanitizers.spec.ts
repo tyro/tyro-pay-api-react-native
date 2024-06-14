@@ -1,5 +1,11 @@
 import { CardTypeNames } from '../@types/card-types';
-import { SupportedNetworks, SupportedNetworksApplePay, SupportedNetworksGooglePay } from '../@types/network-types';
+import {
+  SupportedCardsApplePay,
+  SupportedCardsGooglePay,
+  SupportedNetworks,
+  SupportedNetworksApplePay,
+  SupportedNetworksGooglePay,
+} from '../@types/network-types';
 import {
   parseSupportedNetworks,
   parseSupportedNetworksApplePay,
@@ -30,9 +36,11 @@ const defaultedOptionsExpectation = {
   options: {
     applePay: {
       enabled: expect.any(Boolean),
+      supportedNetworks: [...SupportedCardsApplePay],
     },
     googlePay: {
       enabled: expect.any(Boolean),
+      supportedNetworks: [...SupportedCardsGooglePay],
     },
     creditCardForm: {
       enabled: true,
@@ -130,7 +138,7 @@ describe('sanitizers', () => {
           },
         },
       });
-      expect(result.options.applePay).toEqual({ enabled: false });
+      expect(result.options.applePay).toEqual({ enabled: false, supportedNetworks: [...SupportedCardsApplePay] });
     });
 
     it('disables googlePay on iOS platform', () => {
@@ -143,7 +151,7 @@ describe('sanitizers', () => {
           },
         },
       });
-      expect(result.options.googlePay).toEqual({ enabled: false });
+      expect(result.options.googlePay).toEqual({ enabled: false, supportedNetworks: [...SupportedCardsGooglePay] });
     });
   });
   describe('parseSupportedNetworks', () => {
@@ -193,6 +201,10 @@ describe('sanitizers', () => {
       const parsed = parseSupportedNetworksApplePay(invalidSN);
       expect(parsed).toEqual([CardTypeNames.MASTERCARD, CardTypeNames.VISA, CardTypeNames.MAESTRO]);
     });
+    it('should return the default supported cards when none supplied in options', () => {
+      const parsed = parseSupportedNetworksApplePay(undefined);
+      expect(parsed).toEqual([...SupportedCardsApplePay]);
+    });
   });
 
   describe('parseSupportedNetworksGooglePay', () => {
@@ -212,6 +224,10 @@ describe('sanitizers', () => {
     it('should clean the array when input contains valid value', () => {
       const parsed = parseSupportedNetworksGooglePay(invalidSN);
       expect(parsed).toEqual([CardTypeNames.MASTERCARD, CardTypeNames.VISA]);
+    });
+    it('should return the default supported cards when none supplied in options', () => {
+      const parsed = parseSupportedNetworksGooglePay(undefined);
+      expect(parsed).toEqual([...SupportedCardsGooglePay]);
     });
   });
 });

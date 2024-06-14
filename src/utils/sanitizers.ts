@@ -115,16 +115,16 @@ export const parseSupportedNetworks = (
 
 export const parseSupportedNetworksApplePay = (
   fromOptions: SupportedNetworksApplePay[] | undefined
-): SupportedNetworksApplePay[] | undefined => {
+): SupportedNetworksApplePay[] => {
   return Array.isArray(fromOptions)
     ? (SupportedCardsApplePay.filter((value) => fromOptions.includes(value)) as SupportedNetworksApplePay[])
-    : undefined;
+    : [...SupportedCardsApplePay];
 };
 
 export const parseSupportedNetworksGooglePay = (
   fromOptions: SupportedNetworksGooglePay[] | undefined
-): SupportedNetworksGooglePay[] | undefined => {
+): SupportedNetworksGooglePay[] => {
   return Array.isArray(fromOptions)
     ? (SupportedCardsGooglePay.filter((value) => fromOptions.includes(value)) as SupportedNetworksGooglePay[])
-    : undefined;
+    : [...SupportedCardsGooglePay];
 };
