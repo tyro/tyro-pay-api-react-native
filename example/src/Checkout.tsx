@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { useTyro, PaySheet } from '@tyro/tyro-pay-api-react-native';
 import { createPayRequest } from './clients/pay-request-client';
@@ -21,7 +21,6 @@ const CheckOut = ({ route }: Props): JSX.Element => {
     submitPayForm,
     isSubmitting,
     isPayRequestReady,
-    isPayRequestLoading,
   } = useTyro();
 
   useEffect(() => {

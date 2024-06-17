@@ -60,12 +60,15 @@ export const sanitizeOptions = (options: TyroPayOptionsProps): TyroPayOptions =>
   useOptions.options.creditCardForm.supportedNetworks = supportedNetworks ?? undefined;
 
   // Parse walletPay supportedNetworks
-  useOptions.options.applePay.supportedNetworks = parseSupportedNetworksApplePay(
-    useOptions?.options?.applePay?.supportedNetworks
-  );
-  useOptions.options.googlePay.supportedNetworks = parseSupportedNetworksGooglePay(
-    useOptions?.options?.googlePay?.supportedNetworks
-  );
+  useOptions.options.applePay.supportedNetworks = parseWalletSupportedNetworks(
+    useOptions?.options?.applePay?.supportedNetworks,
+    [...SupportedCardsApplePay]
+  ) as SupportedNetworksApplePay[];
+
+  useOptions.options.googlePay.supportedNetworks = parseWalletSupportedNetworks(
+    useOptions?.options?.googlePay?.supportedNetworks,
+    [...SupportedCardsGooglePay]
+  ) as SupportedNetworksGooglePay[];
 
   // Apply theme defaults
   if (!useOptions?.theme || !Object.values(ThemeNames).includes(useOptions.theme as ThemeNames)) {
@@ -113,18 +116,13 @@ export const parseSupportedNetworks = (
     : null;
 };
 
-export const parseSupportedNetworksApplePay = (
-  fromOptions: SupportedNetworksApplePay[] | undefined
-): SupportedNetworksApplePay[] | undefined => {
-  return Array.isArray(fromOptions)
-    ? (SupportedCardsApplePay.filter((value) => fromOptions.includes(value)) as SupportedNetworksApplePay[])
-    : undefined;
-};
-
-export const parseSupportedNetworksGooglePay = (
-  fromOptions: SupportedNetworksGooglePay[] | undefined
-): SupportedNetworksGooglePay[] | undefined => {
-  return Array.isArray(fromOptions)
-    ? (SupportedCardsGooglePay.filter((value) => fromOptions.includes(value)) as SupportedNetworksGooglePay[])
-    : undefined;
+export const parseWalletSupportedNetworks = (
+  fromOptions: SupportedNetworks[] | undefined,
+  supportedWalletNetworks: SupportedNetworksApplePay[] | SupportedNetworksGooglePay[]
+): SupportedNetworksApplePay[] | SupportedNetworksGooglePay[] => {
+  let supportedNetworks;
+  if (Array.isArray(fromOptions)) {
+    supportedNetworks = supportedWalletNetworks.filter((value) => fromOptions.includes(value));
+  }
+  return supportedNetworks?.length > 0 ? supportedNetworks : [...supportedWalletNetworks];
 };

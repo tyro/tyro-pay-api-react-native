@@ -1,11 +1,12 @@
 import { CardTypeNames } from '../@types/card-types';
-import { SupportedNetworks, SupportedNetworksApplePay, SupportedNetworksGooglePay } from '../@types/network-types';
 import {
-  parseSupportedNetworks,
-  parseSupportedNetworksApplePay,
-  parseSupportedNetworksGooglePay,
-  sanitizeOptions,
-} from './sanitizers';
+  SupportedCardsApplePay,
+  SupportedCardsGooglePay,
+  SupportedNetworks,
+  SupportedNetworksApplePay,
+  SupportedNetworksGooglePay,
+} from '../@types/network-types';
+import { parseSupportedNetworks, parseWalletSupportedNetworks, sanitizeOptions } from './sanitizers';
 import { ThemeNames } from '../@types/theme-styles';
 import { TyroPayOptionsProps } from '../@types/definitions';
 import { Platform } from 'react-native';
@@ -30,9 +31,11 @@ const defaultedOptionsExpectation = {
   options: {
     applePay: {
       enabled: expect.any(Boolean),
+      supportedNetworks: [...SupportedCardsApplePay],
     },
     googlePay: {
       enabled: expect.any(Boolean),
+      supportedNetworks: [...SupportedCardsGooglePay],
     },
     creditCardForm: {
       enabled: true,
@@ -130,7 +133,7 @@ describe('sanitizers', () => {
           },
         },
       });
-      expect(result.options.applePay).toEqual({ enabled: false });
+      expect(result.options.applePay).toEqual({ enabled: false, supportedNetworks: [...SupportedCardsApplePay] });
     });
 
     it('disables googlePay on iOS platform', () => {
@@ -143,7 +146,7 @@ describe('sanitizers', () => {
           },
         },
       });
-      expect(result.options.googlePay).toEqual({ enabled: false });
+      expect(result.options.googlePay).toEqual({ enabled: false, supportedNetworks: [...SupportedCardsGooglePay] });
     });
   });
   describe('parseSupportedNetworks', () => {
@@ -175,43 +178,59 @@ describe('sanitizers', () => {
       expect(parsedSupportedNetworks).toEqual([CardTypeNames.VISA]);
     });
   });
-  describe('parseSupportedNetworksApplePay', () => {
-    const validSN = [CardTypeNames.VISA, CardTypeNames.MASTERCARD] as SupportedNetworksApplePay[];
-    const invalidSN = [
-      CardTypeNames.VISA,
-      CardTypeNames.MASTERCARD,
-      CardTypeNames.MAESTRO,
-      CardTypeNames.DINERS,
-      'random',
-    ] as unknown as SupportedNetworksApplePay[];
-
-    it('should return original when input is valid', () => {
-      const parsed = parseSupportedNetworksApplePay(validSN);
-      expect(parsed).toEqual([CardTypeNames.MASTERCARD, CardTypeNames.VISA]);
+  describe('parseWalletSupportedNetworks', () => {
+    describe('Apple Pay', () => {
+      const validSN = [CardTypeNames.VISA, CardTypeNames.MASTERCARD] as SupportedNetworksApplePay[];
+      const invalidSN = [
+        CardTypeNames.VISA,
+        CardTypeNames.MASTERCARD,
+        CardTypeNames.MAESTRO,
+        CardTypeNames.DINERS,
+        'random',
+      ] as unknown as SupportedNetworksApplePay[];
+      it('should return original when input is valid', () => {
+        const parsed = parseWalletSupportedNetworks(validSN, [...SupportedCardsApplePay]);
+        expect(parsed).toEqual([CardTypeNames.MASTERCARD, CardTypeNames.VISA]);
+      });
+      it('should clean the array when input contains valid value', () => {
+        const parsed = parseWalletSupportedNetworks(invalidSN, [...SupportedCardsApplePay]);
+        expect(parsed).toEqual([CardTypeNames.MASTERCARD, CardTypeNames.VISA, CardTypeNames.MAESTRO]);
+      });
+      it('should return the default supported cards when none supplied in options', () => {
+        const parsed = parseWalletSupportedNetworks(undefined, [...SupportedCardsApplePay]);
+        expect(parsed).toEqual([...SupportedCardsApplePay]);
+      });
+      it('should return the default supported cards when supported card not in supported cards for Apple Pay', () => {
+        const parsed = parseWalletSupportedNetworks(['diners'], [...SupportedCardsApplePay]);
+        expect(parsed).toEqual([...SupportedCardsApplePay]);
+      });
     });
-    it('should clean the array when input contains valid value', () => {
-      const parsed = parseSupportedNetworksApplePay(invalidSN);
-      expect(parsed).toEqual([CardTypeNames.MASTERCARD, CardTypeNames.VISA, CardTypeNames.MAESTRO]);
-    });
-  });
+    describe('Google Pay', () => {
+      const validSN = [CardTypeNames.VISA, CardTypeNames.MASTERCARD] as SupportedNetworksGooglePay[];
+      const invalidSN = [
+        CardTypeNames.VISA,
+        CardTypeNames.MASTERCARD,
+        CardTypeNames.MAESTRO,
+        CardTypeNames.DINERS,
+        'random',
+      ] as unknown as SupportedNetworksGooglePay[];
 
-  describe('parseSupportedNetworksGooglePay', () => {
-    const validSN = [CardTypeNames.VISA, CardTypeNames.MASTERCARD] as SupportedNetworksGooglePay[];
-    const invalidSN = [
-      CardTypeNames.VISA,
-      CardTypeNames.MASTERCARD,
-      CardTypeNames.MAESTRO,
-      CardTypeNames.DINERS,
-      'random',
-    ] as unknown as SupportedNetworksGooglePay[];
-
-    it('should return original when input is valid', () => {
-      const parsed = parseSupportedNetworksGooglePay(validSN);
-      expect(parsed).toEqual([CardTypeNames.MASTERCARD, CardTypeNames.VISA]);
-    });
-    it('should clean the array when input contains valid value', () => {
-      const parsed = parseSupportedNetworksGooglePay(invalidSN);
-      expect(parsed).toEqual([CardTypeNames.MASTERCARD, CardTypeNames.VISA]);
+      it('should return original when input is valid', () => {
+        const parsed = parseWalletSupportedNetworks(validSN, [...SupportedCardsGooglePay]);
+        expect(parsed).toEqual([CardTypeNames.MASTERCARD, CardTypeNames.VISA]);
+      });
+      it('should clean the array when input contains valid value', () => {
+        const parsed = parseWalletSupportedNetworks(invalidSN, [...SupportedCardsGooglePay]);
+        expect(parsed).toEqual([CardTypeNames.MASTERCARD, CardTypeNames.VISA]);
+      });
+      it('should return the default supported cards when none supplied in options', () => {
+        const parsed = parseWalletSupportedNetworks(undefined, [...SupportedCardsGooglePay]);
+        expect(parsed).toEqual([...SupportedCardsGooglePay]);
+      });
+      it('should return the default supported cards when supported cards not in supported cards for Google Pay', () => {
+        const parsed = parseWalletSupportedNetworks(['maestro'], [...SupportedCardsGooglePay]);
+        expect(parsed).toEqual([...SupportedCardsGooglePay]);
+      });
     });
   });
 });
