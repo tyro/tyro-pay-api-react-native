@@ -1,8 +1,6 @@
 import { getPayRequest } from './clients/pay-request-client';
 import { ClientPayRequestResponse, PayRequestStatus } from './@types/pay-request-types';
 import { TyroPayOptions, TyroPayOptionsKeys } from './@types/definitions';
-import { isAndroid } from './utils/helpers';
-import { Platform } from 'react-native';
 import { NativeModules } from 'react-native';
 import { WalletPaymentInitResult, WalletPaymentResult } from './@types/wallet-payment-result';
 
@@ -11,17 +9,6 @@ const { TyroPaySdkModule } = NativeModules;
 class TyroSDK {
   private payRequest: ClientPayRequestResponse | undefined;
   private payStatus: PayRequestStatus | undefined;
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  init = async (options: TyroPayOptions): Promise<void> => {
-    // eslint-disable-next-line no-empty
-    if (isAndroid(Platform.OS)) {
-      // eslint-disable-next-line no-empty
-    } else {
-    }
-
-    // TO DO: initialise native ios with config
-  };
 
   initAndVerifyPaySecret = async (paySecret: string, liveMode: boolean): Promise<ClientPayRequestResponse> => {
     if (!paySecret) {

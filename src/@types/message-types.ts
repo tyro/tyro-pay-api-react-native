@@ -11,7 +11,7 @@ export enum ErrorMessageType {
   INVALID_PAY_SECRET = 'INVALID_PAY_SECRET',
   NOT_INITIALISED = 'NOT_INITIALISED',
   PAYMENT_FAILED = 'PAYMENT_FAILED',
-  NO_FORM = 'NO_FORM',
+  MISSING_MERCHANT_CONFIG = 'MISSING_MERCHANT_CONFIG',
   INVALID_CARD_TYPE = 'INVALID_CARD_TYPE',
   INVALID_CARD_DETAILS = 'INVALID_CARD_DETAILS',
   SERVER_ERROR = 'SERVER_ERROR',
@@ -43,9 +43,9 @@ export const TyroErrorMessages: Record<ErrorMessageType, TyroErrorMessage> = {
     type: ErrorMessageType.PAYMENT_FAILED,
     message: 'Payment failed',
   },
-  [ErrorMessageType.NO_FORM]: {
-    type: ErrorMessageType.NO_FORM,
-    message: 'No form',
+  [ErrorMessageType.MISSING_MERCHANT_CONFIG]: {
+    type: ErrorMessageType.MISSING_MERCHANT_CONFIG,
+    message: 'TyroProvider Failed to init due to missing Google and/or Apple Pay merchant details',
   },
   [ErrorMessageType.INVALID_CARD_TYPE]: {
     type: ErrorMessageType.INVALID_CARD_TYPE,

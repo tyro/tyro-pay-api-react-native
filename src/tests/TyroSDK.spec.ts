@@ -1,5 +1,4 @@
 import tyroSdk from '../TyroSDK';
-import { defaultOptions } from '../@types/default';
 import {
   CaptureMethod,
   ClientPayRequestResponse,
@@ -48,10 +47,6 @@ global.fetch = jest.fn(() =>
 describe('TyroSDK', () => {
   beforeAll(() => {
     jest.clearAllMocks();
-  });
-  // TO DO: add more tests for the init method when we add functionality for apple/google pay
-  it('inits', async () => {
-    await expect(tyroSdk.init(defaultOptions)).resolves.not.toThrow();
   });
 
   it('inits and verifies the pay secret and returns the PayRequestSimplifiedStatus', async () => {
