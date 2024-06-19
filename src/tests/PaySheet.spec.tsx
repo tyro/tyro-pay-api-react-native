@@ -42,6 +42,9 @@ jest.mock('../@types/images.tsx', () => {
   };
 });
 
+const merchantIdentifier = 'merId';
+const merchantName = 'merName';
+
 const renderWithProvider = async (component, options: TyroPayOptionsProps): Promise<any> => {
   return render(<TyroProvider options={options}>{component}</TyroProvider>);
 };
@@ -1203,10 +1206,11 @@ describe('PaySheet', () => {
               options: {
                 googlePay: {
                   enabled: false,
+                  merchantName,
                 },
                 applePay: {
                   enabled: true,
-                  merchantIdentifier: 'merchantIdentifier',
+                  merchantIdentifier,
                   supportedNetworks: ['visa'],
                 },
               },
@@ -1226,9 +1230,11 @@ describe('PaySheet', () => {
               options: {
                 googlePay: {
                   enabled: true,
+                  merchantName,
                 },
                 applePay: {
                   enabled: true,
+                  merchantIdentifier,
                 },
               },
               styleProps: { walletPaymentsDividerText: 'My Custom Divider Text', showSupportedCards: false },
@@ -1247,9 +1253,11 @@ describe('PaySheet', () => {
               options: {
                 googlePay: {
                   enabled: true,
+                  merchantName,
                 },
                 applePay: {
                   enabled: true,
+                  merchantIdentifier,
                 },
               },
               styleProps: { walletPaymentsDividerEnabled: false, showSupportedCards: false },

@@ -36,11 +36,13 @@ describe('errorMessage()', () => {
     expect(error.errorMessage).toEqual('Payment failed');
   });
 
-  it('Should return a message when no form', () => {
-    const error = errorMessage(TyroErrorMessages[ErrorMessageType.NO_FORM]);
-    expect(error.errorType).toEqual(ErrorMessageType.NO_FORM);
+  it('Should return a message when missing merchant details', () => {
+    const error = errorMessage(TyroErrorMessages[ErrorMessageType.MISSING_MERCHANT_CONFIG]);
+    expect(error.errorType).toEqual(ErrorMessageType.MISSING_MERCHANT_CONFIG);
     expect(error.errorCode).toEqual(undefined);
-    expect(error.errorMessage).toEqual('No form');
+    expect(error.errorMessage).toEqual(
+      'TyroProvider Failed to init due to missing Google and/or Apple Pay merchant details'
+    );
   });
   it('Should return a message when invalid card details', () => {
     const error = errorMessage(TyroErrorMessages[ErrorMessageType.INVALID_CARD_DETAILS]);

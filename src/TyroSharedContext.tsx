@@ -1,6 +1,14 @@
 import * as React from 'react';
 import { useState, createContext, useEffect, useContext } from 'react';
-import { TyroPayOptions, TyroPayOptionsKeys, TyroPayOptionsProps } from './@types/definitions';
+import {
+  TyroPayApplePayOptionKeys,
+  TyroPayGooglePayOptionKeys,
+  TyroPayOptions,
+  TyroPayOptionsKeys,
+  TyroPayOptionsOptionsKeys,
+  TyroPayOptionsOptionsProps,
+  TyroPayOptionsProps,
+} from './@types/definitions';
 import { ClientPayRequestResponse, PayRequestStatus, ThreeDSecureStatus } from './@types/pay-request-types';
 import TyroSDK from './TyroSDK';
 import { ErrorMessage, ErrorMessageType, TyroErrorMessages } from './@types/message-types';
@@ -65,20 +73,47 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     securityCode: '',
   });
 
-  useEffect(() => {
-    const initTyroSDK = async (options: TyroPayOptions): Promise<void> => {
-      await TyroSDK.init(options);
-    };
-    if (!initialised) {
-      initTyroSDK(cleanedOptions)
-        .then(() => {
-          setInitialised(true);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+  const missingMerchantIdentifier = (options: TyroPayOptionsOptionsProps): boolean => {
+    if (
+      options[TyroPayOptionsOptionsKeys.applePay]?.[TyroPayApplePayOptionKeys.enabled] &&
+      !options[TyroPayOptionsOptionsKeys.applePay]?.[TyroPayApplePayOptionKeys.merchantIdentifier]
+    ) {
+      return true;
     }
+    return false;
+  };
+
+  const missingMerchantName = (options: TyroPayOptionsOptionsProps): boolean => {
+    if (
+      options[TyroPayOptionsOptionsKeys.googlePay]?.[TyroPayGooglePayOptionKeys.enabled] &&
+      !options[TyroPayOptionsOptionsKeys.googlePay][TyroPayGooglePayOptionKeys.merchantName]
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const missingMerchantDetails = (options: TyroPayOptionsOptionsProps): boolean => {
+    if (missingMerchantIdentifier(options) || missingMerchantName(options)) {
+      return true;
+    }
+    return false;
+  };
+
+  const initProvider = (cleanedOptions: TyroPayOptions): void => {
+    if (missingMerchantDetails(cleanedOptions[TyroPayOptionsKeys.options])) {
+      setInitialised(false);
+      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.MISSING_MERCHANT_CONFIG]));
+      return;
+    }
+    setInitialised(true);
+  };
+
+  useEffect(() => {
     setTyroErrorMessage(null);
+    if (!initialised) {
+      initProvider(cleanedOptions);
+    }
   }, [paySecret]);
 
   useEffect(() => {

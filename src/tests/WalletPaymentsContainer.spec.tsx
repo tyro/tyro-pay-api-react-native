@@ -36,6 +36,9 @@ const mockedFailedResult = {
   },
 } as WalletPaymentResult;
 
+const merchantIdentifier = 'merId';
+const merchantName = 'merName';
+
 describe('WalletPaymentsContainer', () => {
   let wrapper;
 
@@ -85,6 +88,7 @@ describe('WalletPaymentsContainer', () => {
               options: {
                 googlePay: {
                   enabled: true,
+                  merchantName,
                 },
               },
               styleProps: { showSupportedCards: false, googlePayButton: { buttonBorderRadius: 8 } },
@@ -109,6 +113,7 @@ describe('WalletPaymentsContainer', () => {
               options: {
                 googlePay: {
                   enabled: true,
+                  merchantName,
                 },
               },
               styleProps: { showSupportedCards: false },
@@ -134,6 +139,7 @@ describe('WalletPaymentsContainer', () => {
               options: {
                 googlePay: {
                   enabled: true,
+                  merchantName,
                 },
               },
               styleProps: {
@@ -158,6 +164,7 @@ describe('WalletPaymentsContainer', () => {
               options: {
                 googlePay: {
                   enabled: true,
+                  merchantName,
                 },
               },
               styleProps: {
@@ -184,6 +191,7 @@ describe('WalletPaymentsContainer', () => {
               options: {
                 googlePay: {
                   enabled: true,
+                  merchantName,
                 },
               },
               styleProps: { showSupportedCards: false },
@@ -213,6 +221,7 @@ describe('WalletPaymentsContainer', () => {
                 options: {
                   googlePay: {
                     enabled: true,
+                    merchantName,
                   },
                 },
                 styleProps: { showSupportedCards: false },
@@ -245,6 +254,7 @@ describe('WalletPaymentsContainer', () => {
                 options: {
                   googlePay: {
                     enabled: true,
+                    merchantName,
                   },
                 },
                 styleProps: { showSupportedCards: false },
@@ -281,6 +291,7 @@ describe('WalletPaymentsContainer', () => {
               options: {
                 googlePay: {
                   enabled: true,
+                  merchantName,
                 },
               },
               styleProps: { showSupportedCards: false },
@@ -340,6 +351,7 @@ describe('WalletPaymentsContainer', () => {
               options: {
                 applePay: {
                   enabled: true,
+                  merchantIdentifier,
                 },
               },
               styleProps: { showSupportedCards: false },
@@ -364,6 +376,7 @@ describe('WalletPaymentsContainer', () => {
               options: {
                 applePay: {
                   enabled: true,
+                  merchantIdentifier,
                 },
               },
               styleProps: { showSupportedCards: false },
@@ -393,6 +406,7 @@ describe('WalletPaymentsContainer', () => {
                 options: {
                   applePay: {
                     enabled: true,
+                    merchantIdentifier,
                   },
                 },
                 styleProps: { showSupportedCards: false },
@@ -425,6 +439,7 @@ describe('WalletPaymentsContainer', () => {
                 options: {
                   applePay: {
                     enabled: true,
+                    merchantIdentifier,
                   },
                 },
                 styleProps: { showSupportedCards: false },
