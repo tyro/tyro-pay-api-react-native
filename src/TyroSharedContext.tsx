@@ -74,30 +74,21 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
   });
 
   const missingMerchantIdentifier = (options: TyroPayOptionsOptionsProps): boolean => {
-    if (
+    return !!(
       options[TyroPayOptionsOptionsKeys.applePay]?.[TyroPayApplePayOptionKeys.enabled] &&
       !options[TyroPayOptionsOptionsKeys.applePay]?.[TyroPayApplePayOptionKeys.merchantIdentifier]
-    ) {
-      return true;
-    }
-    return false;
+    );
   };
 
   const missingMerchantName = (options: TyroPayOptionsOptionsProps): boolean => {
-    if (
+    return !!(
       options[TyroPayOptionsOptionsKeys.googlePay]?.[TyroPayGooglePayOptionKeys.enabled] &&
       !options[TyroPayOptionsOptionsKeys.googlePay][TyroPayGooglePayOptionKeys.merchantName]
-    ) {
-      return true;
-    }
-    return false;
+    );
   };
 
   const missingMerchantDetails = (options: TyroPayOptionsOptionsProps): boolean => {
-    if (missingMerchantIdentifier(options) || missingMerchantName(options)) {
-      return true;
-    }
-    return false;
+    return missingMerchantIdentifier(options) || missingMerchantName(options);
   };
 
   const initProvider = (cleanedOptions: TyroPayOptions): void => {
