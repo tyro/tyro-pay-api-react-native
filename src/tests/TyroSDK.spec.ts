@@ -5,6 +5,8 @@ import {
   PayRequestStatus,
   ThreeDSecureStatus,
 } from '../@types/pay-request-types';
+import { PaySheetInitError } from '../@types/sdk-errors/pay-sheet-init-error';
+import { ErrorCodes } from '../@types/error-message-types';
 
 const mockFetch = async (status: number, payload: ClientPayRequestResponse): Promise<Response> => {
   return {
@@ -81,13 +83,15 @@ describe('TyroSDK', () => {
   });
 
   it('throws an error if there was an environment mismatch', async () => {
-    await expect(tyroSdk.initPaySheet('secret', true)).rejects.toThrowError(new Error('ENVIRONMENT_MISMATCH'));
+    await expect(tyroSdk.initPaySheet('secret', true)).rejects.toThrowError(
+      new PaySheetInitError(ErrorCodes.ENVIRONMENT_MISMATCH)
+    );
   });
 
   it('throws an error if the pay request was already submitted successfully', async () => {
     global.fetch = jest.fn(() => mockFetch(200, { status: 'SUCCESS', isLive: false } as ClientPayRequestResponse));
     await expect(tyroSdk.initPaySheet('secret', false)).rejects.toThrowError(
-      new Error('Pay Request already submitted')
+      new PaySheetInitError(ErrorCodes.PAY_REQUEST_INVALID_STATUS)
     );
   });
 
@@ -95,17 +99,31 @@ describe('TyroSDK', () => {
     global.fetch = jest.fn(() =>
       mockFetch(403, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
     );
-    await expect(tyroSdk.initPaySheet('secret', false)).rejects.toThrowError(new Error('Invalid Pay Secret.'));
+    try {
+      await tyroSdk.initPaySheet('secret', false);
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error);
+      expect(error).toHaveProperty('status', '403');
+      expect(error.message).toBe('Http Status Error');
+    }
   });
 
   it('throws an error if the something went wrong with fetching pay request', async () => {
     global.fetch = jest.fn(() =>
       mockFetch(500, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
     );
-    await expect(tyroSdk.initPaySheet('secret', false)).rejects.toThrowError(new Error('Something went wrong.'));
+    try {
+      await tyroSdk.initPaySheet('secret', false);
+    } catch (error) {
+      expect(error).toBeInstanceOf(Error);
+      expect(error).toHaveProperty('status', '500');
+      expect(error.message).toBe('Http Status Error');
+    }
   });
 
   it('throws an error if the pay secret is an empty string', async () => {
-    await expect(tyroSdk.initPaySheet('', false)).rejects.toThrowError(new Error('NO_PAY_SECRET'));
+    await expect(tyroSdk.initPaySheet('', false)).rejects.toThrowError(
+      new PaySheetInitError(ErrorCodes.PAY_REQUEST_SECRET_REQUIRED)
+    );
   });
 });
