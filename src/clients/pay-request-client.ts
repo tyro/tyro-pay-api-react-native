@@ -1,6 +1,6 @@
 import { ClientPayRequestResponse } from '../@types/pay-request-types';
 import { CardDetails } from '../@types/card-types';
-import { HTTP_ACCEPTED, HTTP_FORBIDDEN, HTTP_OK } from '../@types/http-status-codes';
+import { HTTP_ACCEPTED, HTTP_OK } from '../@types/http-status-codes';
 import { PaymentType } from '../@types/payment-types';
 import {
   INITIAL_UPDATED_STATUSES,
@@ -19,10 +19,9 @@ export const getPayRequest = async (paySecret: string): Promise<ClientPayRequest
   if (data.status === HTTP_OK) {
     return data.json();
   }
-  if (data.status === HTTP_FORBIDDEN) {
-    throw new Error('Invalid Pay Secret.');
-  }
-  throw new Error('Something went wrong.');
+  const error = new Error('Http Status Error') as HttpStatusError;
+  error.status = String(data.status);
+  throw error;
 };
 
 export const submitPayRequest = async (
