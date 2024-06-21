@@ -317,7 +317,6 @@ describe('TyroProvider', () => {
 
     test('Able to init and display PaySheet for iOS', async () => {
       NativeModules.TyroPaySdkModule.initWalletPay.mockResolvedValue(true);
-      // NativeModules.TyroPaySdkModule.initWalletPay.mockRejectedValueOnce(new Error('Error'));
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );

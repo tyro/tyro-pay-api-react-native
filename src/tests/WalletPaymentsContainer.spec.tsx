@@ -228,7 +228,7 @@ describe('WalletPaymentsContainer', () => {
                 styleProps: { showSupportedCards: false },
               });
             },
-            { timeout: 305000 }
+            { timeout: 10000 }
           );
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');
