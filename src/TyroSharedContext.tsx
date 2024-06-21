@@ -139,8 +139,7 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
 
   const handlePaySheetError = (error: unknown): void => {
     if (error instanceof PaySheetInitError) {
-      const errorCode = (error as PaySheetInitError).errorCode;
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAYSHEET_INIT_FAILED], errorCode));
+      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAYSHEET_INIT_FAILED], error.errorCode));
       return;
     }
     if (error instanceof Error) {
