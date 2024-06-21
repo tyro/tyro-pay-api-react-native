@@ -11,7 +11,7 @@ import {
 } from './@types/definitions';
 import { ClientPayRequestResponse, PayRequestStatus, ThreeDSecureStatus } from './@types/pay-request-types';
 import TyroSDK from './TyroSDK';
-import { ErrorMessage, ErrorMessageType, TyroErrorMessages } from './@types/message-types';
+import { ErrorMessage, ErrorMessageType, TyroErrorMessages } from './@types/error-message-types';
 import { errorMessage } from './utils/error-message';
 import { SupportedNetworks } from './@types/network-types';
 import { parseSupportedNetworks, sanitizeOptions } from './utils/sanitizers';
@@ -26,6 +26,8 @@ import {
 import { submitPayRequest, pollPayCompletion } from './clients/pay-request-client';
 import { invoke3DSecureAuth } from './services/3dsecure-auth-service';
 import { getCardType, UNKNOWN_CARD_TYPE } from './utils/card-formatting';
+import { PaySheetInitError } from './@types/sdk-errors/pay-sheet-init-error';
+import { HTTP_SERVICE_UNAVAILABLE } from './@types/http-status-codes';
 
 export type TyroPayContextProps = {
   initialised: boolean | null;
@@ -125,6 +127,28 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     setPayRequestIsLoading(false);
   };
 
+  const handleHttpError = (error: Error): void => {
+    if ('status' in error) {
+      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAYSHEET_INIT_FAILED], String(error.status)));
+      return;
+    }
+    setTyroErrorMessage(
+      errorMessage(TyroErrorMessages[ErrorMessageType.PAYSHEET_INIT_FAILED], String(HTTP_SERVICE_UNAVAILABLE))
+    );
+  };
+
+  const handlePaySheetError = (error: unknown): void => {
+    if (error instanceof PaySheetInitError) {
+      const errorCode = (error as PaySheetInitError).errorCode;
+      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAYSHEET_INIT_FAILED], errorCode));
+      return;
+    }
+    if (error instanceof Error) {
+      handleHttpError(error);
+      return;
+    }
+  };
+
   async function initPaySheet(paySecret: string): Promise<void> {
     if (!verifyInitialisation()) {
       setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.NOT_INITIALISED]));
@@ -149,7 +173,7 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     } catch (error) {
       setPayRequestIsLoading(false);
       setPayRequestReady(false);
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAYSHEET_INIT_FAILED]));
+      handlePaySheetError(error);
     }
   }
 
