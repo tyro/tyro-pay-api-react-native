@@ -8,7 +8,7 @@ import { act } from 'react-test-renderer';
 import { InitTestComponent, TestPayButton, useYear } from './test-components/tests';
 import { CardTypeNames } from '../@types/card-types';
 import { TyroPayOptionsProps, TyroPayStyleLabelPositions } from '../@types/definitions';
-import { ErrorMessageType, TyroErrorMessages } from '../@types/message-types';
+import { ErrorMessageType, TyroErrorMessages } from '../@types/error-message-types';
 
 jest.mock('../clients/config/pay-request-client-config.ts', () => {
   return {
@@ -152,7 +152,7 @@ describe('PaySheet', () => {
           ); // pollPayCompletion
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: { creditCardForm: { supportedNetworks: [CardTypeNames.VISA] } },
               styleProps: { showSupportedCards: false },
@@ -193,7 +193,7 @@ describe('PaySheet', () => {
           ); // pollPayCompletion
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: { creditCardForm: { supportedNetworks: [CardTypeNames.VISA] } },
               styleProps: { showSupportedCards: false },
@@ -224,7 +224,7 @@ describe('PaySheet', () => {
         ); // init and verify paySecret
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: { creditCardForm: { supportedNetworks: [CardTypeNames.VISA] } },
               styleProps: { showSupportedCards: false },
@@ -255,7 +255,7 @@ describe('PaySheet', () => {
 
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: { creditCardForm: { supportedNetworks: [CardTypeNames.VISA] } },
               styleProps: { showSupportedCards: false },
@@ -291,7 +291,7 @@ describe('PaySheet', () => {
         ); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -325,7 +325,7 @@ describe('PaySheet', () => {
         ); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -366,7 +366,7 @@ describe('PaySheet', () => {
         ); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -403,7 +403,7 @@ describe('PaySheet', () => {
         ); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -431,7 +431,7 @@ describe('PaySheet', () => {
         .mockResolvedValueOnce(null); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -469,7 +469,7 @@ describe('PaySheet', () => {
         ); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -502,7 +502,7 @@ describe('PaySheet', () => {
         ); // pollPayCompletion
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -565,7 +565,7 @@ describe('PaySheet', () => {
         ); // pollFor3DSecureChallengeAndFinalResult
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -628,7 +628,7 @@ describe('PaySheet', () => {
         ); // pollFor3DSecureChallengeAndFinalResult
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -677,7 +677,7 @@ describe('PaySheet', () => {
         .mockResolvedValueOnce(mockFetch(500, {} as unknown as ClientPayRequestResponse)); // pollFor3DSecureAuthResult
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -730,7 +730,7 @@ describe('PaySheet', () => {
         .mockResolvedValueOnce(mockFetch(500, {} as unknown as ClientPayRequestResponse)); // pollFor3DSecureChallengeAndFinalResult
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -777,7 +777,7 @@ describe('PaySheet', () => {
         );
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -824,7 +824,7 @@ describe('PaySheet', () => {
         );
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -871,7 +871,7 @@ describe('PaySheet', () => {
         .mockResolvedValueOnce(mockFetch(400, { want: 'this' } as unknown as ClientPayRequestResponse)); // pollFor3DSecureMethodResult
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -896,7 +896,7 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -920,7 +920,7 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -955,7 +955,7 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -981,7 +981,7 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -1007,7 +1007,7 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -1033,7 +1033,7 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -1059,7 +1059,7 @@ describe('PaySheet', () => {
       ); // init and verify paySecret
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -1089,7 +1089,7 @@ describe('PaySheet', () => {
       );
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: { creditCardForm: { supportedNetworks: [CardTypeNames.VISA] } },
           });
@@ -1122,7 +1122,7 @@ describe('PaySheet', () => {
         ); // poll for pay request
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -1163,7 +1163,7 @@ describe('PaySheet', () => {
         ); // init and verify paySecret again // submitPayRequest
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             styleProps: { showSupportedCards: false },
           });
@@ -1201,7 +1201,7 @@ describe('PaySheet', () => {
       it('defaults walletPaymentsDividerText', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: {
                 googlePay: {
@@ -1225,7 +1225,7 @@ describe('PaySheet', () => {
       it('handles walletPaymentsDividerText', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: {
                 googlePay: {
@@ -1248,7 +1248,7 @@ describe('PaySheet', () => {
       it('can disable walletPaymentsDividerEnabled', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: {
                 googlePay: {
@@ -1273,7 +1273,7 @@ describe('PaySheet', () => {
       it('defaults to showing blank card icon', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { showSupportedCards: false },
             });
@@ -1289,7 +1289,7 @@ describe('PaySheet', () => {
       it('it shows visa card when a visa is entered', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { showSupportedCards: false },
             });
@@ -1305,7 +1305,7 @@ describe('PaySheet', () => {
       it('it shows mastercard card when a mastercard is entered', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { showSupportedCards: false },
             });
@@ -1322,7 +1322,7 @@ describe('PaySheet', () => {
       it('it shows error when credit card invalid', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { showSupportedCards: false },
             });
@@ -1338,7 +1338,7 @@ describe('PaySheet', () => {
       it('it shows error when cvc invalid', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { showSupportedCards: false },
             });
@@ -1354,7 +1354,7 @@ describe('PaySheet', () => {
       it('it shows nothing when disabled and nothing entered', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { showCardIcon: false },
             });
@@ -1369,7 +1369,7 @@ describe('PaySheet', () => {
       it('it shows nothing when disabled and something entered', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { showCardIcon: false },
             });
@@ -1397,7 +1397,7 @@ describe('PaySheet', () => {
       it('it shows card preview', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
             });
           });
@@ -1417,7 +1417,7 @@ describe('PaySheet', () => {
       it('it shows card preview when showCardIcon is false', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { showCardIcon: false },
             });
@@ -1432,7 +1432,7 @@ describe('PaySheet', () => {
       it('it shows relative card icon when start entering card number', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
             });
           });
@@ -1452,7 +1452,7 @@ describe('PaySheet', () => {
       it('it shows error when credit card invalid', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
             });
           });
@@ -1469,7 +1469,7 @@ describe('PaySheet', () => {
       it('defaults to enable error spacing on all input fields', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { showSupportedCards: false },
             });
@@ -1482,7 +1482,7 @@ describe('PaySheet', () => {
       it('setting true enables error spacing', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { showErrorSpacing: true, showSupportedCards: false },
             });
@@ -1495,7 +1495,7 @@ describe('PaySheet', () => {
       it('can disable error spacing', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { showErrorSpacing: false, showSupportedCards: false },
             });
@@ -1510,7 +1510,7 @@ describe('PaySheet', () => {
       it('defaults to use placeholder text with labelPosition=floating', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { showSupportedCards: false },
             });
@@ -1529,7 +1529,7 @@ describe('PaySheet', () => {
       it('supports label text with labelPosition=block', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               styleProps: { labelPosition: TyroPayStyleLabelPositions.BLOCK, showSupportedCards: false },
             });

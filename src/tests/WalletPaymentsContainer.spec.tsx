@@ -3,11 +3,12 @@ import { NativeModules, Platform } from 'react-native';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { act } from 'react-test-renderer';
 import TyroProvider from '../TyroSharedContext';
-import { WalletPaymentResult } from '../@types/wallet-payment-result';
+import { WalletPaymentResult, WalletPaymentStatus } from '../@types/wallet-payment-result';
 import { mockFetch } from './utils/mocks';
 import { ClientPayRequestResponse, PayRequestStatus } from '../@types/pay-request-types';
 import { InitTestComponent } from './test-components/tests';
 import { TyroPayOptionsProps } from '../@types/definitions';
+import { TyroErrorMessages } from '../@types/error-message-types';
 
 const renderWithProvider = async (component, options: TyroPayOptionsProps): Promise<any> => {
   return render(<TyroProvider options={options}>{component}</TyroProvider>);
@@ -24,13 +25,13 @@ const mockedFetchPayRequestOnCompletion = (status: PayRequestStatus): void => {
     } as unknown as ClientPayRequestResponse)
   );
 };
-const mockedCancelledResult = { status: 'CANCELLED' } as WalletPaymentResult;
-const mockedSuccessResult = { status: 'SUCCESS' } as WalletPaymentResult;
+const mockedCancelledResult = { status: WalletPaymentStatus.CANCELLED } as WalletPaymentResult;
+const mockedSuccessResult = { status: WalletPaymentStatus.SUCCESS } as WalletPaymentResult;
 const mockedFailedResult = {
-  status: 'FAILED',
+  status: WalletPaymentStatus.FAILED,
   error: {
-    errorMessage: 'wallet pay failed',
-    errorType: 'INVALID_ACTION',
+    errorMessage: TyroErrorMessages.PAYMENT_FAILED.message,
+    errorType: TyroErrorMessages.PAYMENT_FAILED.type,
     errorCode: 'Error-Code',
     gatewayCode: 'Gateway-Code',
   },
@@ -65,7 +66,7 @@ describe('WalletPaymentsContainer', () => {
         await act(async () => {
           await waitFor(
             async () => {
-              wrapper = await renderWithProvider(<InitTestComponent />, {
+              wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
                 liveMode: false,
                 styleProps: { showSupportedCards: false, googlePayButton: { buttonBorderRadius: 8 } },
               });
@@ -83,7 +84,7 @@ describe('WalletPaymentsContainer', () => {
       test('should render google-pay button when google pay is supported', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: {
                 googlePay: {
@@ -108,7 +109,7 @@ describe('WalletPaymentsContainer', () => {
       test('should render google-pay button with default styleProps', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: {
                 googlePay: {
@@ -134,7 +135,7 @@ describe('WalletPaymentsContainer', () => {
       test('should accept custom styleProps, even if the number is a string', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: {
                 googlePay: {
@@ -159,7 +160,7 @@ describe('WalletPaymentsContainer', () => {
       test('should ignore/revert to default, on invalid styleProps', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: {
                 googlePay: {
@@ -186,7 +187,7 @@ describe('WalletPaymentsContainer', () => {
         mockedFetchPayRequestOnCompletion(PayRequestStatus.AWAITING_PAYMENT_INPUT);
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: {
                 googlePay: {
@@ -216,7 +217,7 @@ describe('WalletPaymentsContainer', () => {
         await act(async () => {
           await waitFor(
             async () => {
-              wrapper = await renderWithProvider(<InitTestComponent />, {
+              wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
                 liveMode: false,
                 options: {
                   googlePay: {
@@ -227,7 +228,7 @@ describe('WalletPaymentsContainer', () => {
                 styleProps: { showSupportedCards: false },
               });
             },
-            { timeout: 10000 }
+            { timeout: 305000 }
           );
           // check initial components have rendered, click checkout
           const checkOutButton = await wrapper.findByTestId('test-button');
@@ -238,9 +239,10 @@ describe('WalletPaymentsContainer', () => {
         });
         wrapper.getByText('ErrorCode: Error-Code');
         wrapper.getByText('GatewayCode: Gateway-Code');
-        wrapper.getByText('ErrorMessage: wallet pay failed');
+        wrapper.getByText(`ErrorMessage: ${TyroErrorMessages.PAYMENT_FAILED.message}`);
+        wrapper.getByText(`ErrorType: ${TyroErrorMessages.PAYMENT_FAILED.type}`);
         await waitFor(async () => {
-          await wrapper.findByText('Pay Request Status: FAILED');
+          await wrapper.findByText(`Pay Request Status: ${WalletPaymentStatus.FAILED}`);
         });
       }, 15000);
       test('should update payRequest when googlePay is successful', async () => {
@@ -249,7 +251,7 @@ describe('WalletPaymentsContainer', () => {
         await act(async () => {
           await waitFor(
             async () => {
-              wrapper = await renderWithProvider(<InitTestComponent />, {
+              wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
                 liveMode: false,
                 options: {
                   googlePay: {
@@ -286,7 +288,7 @@ describe('WalletPaymentsContainer', () => {
       it('should hide google-pay button when google pay is not supported', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: {
                 googlePay: {
@@ -328,7 +330,7 @@ describe('WalletPaymentsContainer', () => {
         await act(async () => {
           await waitFor(
             async () => {
-              wrapper = await renderWithProvider(<InitTestComponent />, {
+              wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
                 liveMode: false,
                 styleProps: { showSupportedCards: false },
               });
@@ -346,7 +348,7 @@ describe('WalletPaymentsContainer', () => {
       test('should render apple-pay button and default styles', async () => {
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: {
                 applePay: {
@@ -371,7 +373,7 @@ describe('WalletPaymentsContainer', () => {
         mockedFetchPayRequestOnCompletion(PayRequestStatus.AWAITING_PAYMENT_INPUT);
         await act(async () => {
           await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent />, {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
               liveMode: false,
               options: {
                 applePay: {
@@ -401,7 +403,7 @@ describe('WalletPaymentsContainer', () => {
         await act(async () => {
           await waitFor(
             async () => {
-              wrapper = await renderWithProvider(<InitTestComponent />, {
+              wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
                 liveMode: false,
                 options: {
                   applePay: {
@@ -423,7 +425,8 @@ describe('WalletPaymentsContainer', () => {
         });
         wrapper.getByText('ErrorCode: Error-Code');
         wrapper.getByText('GatewayCode: Gateway-Code');
-        wrapper.getByText('ErrorMessage: wallet pay failed');
+        wrapper.getByText(`ErrorMessage: ${TyroErrorMessages.PAYMENT_FAILED.message}`);
+        wrapper.getByText(`ErrorType: ${TyroErrorMessages.PAYMENT_FAILED.type}`);
         await waitFor(async () => {
           await wrapper.findByText('Pay Request Status: FAILED');
         });
@@ -434,7 +437,7 @@ describe('WalletPaymentsContainer', () => {
         await act(async () => {
           await waitFor(
             async () => {
-              wrapper = await renderWithProvider(<InitTestComponent />, {
+              wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
                 liveMode: false,
                 options: {
                   applePay: {

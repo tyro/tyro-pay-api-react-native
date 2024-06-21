@@ -22,13 +22,20 @@ export const ProviderTestComponent = (): JSX.Element => {
   );
 };
 
-export const InitTestComponent = (): JSX.Element => {
+type InitTestComponentProps = {
+  passPaySecret: boolean;
+};
+
+export const InitTestComponent = ({ passPaySecret }: InitTestComponentProps): JSX.Element => {
   const [loadPaySheet, setLoadPaySheet] = useState(false);
   const [showPayResult, setShowPayResult] = useState(false);
   const { initPaySheet, tyroError, payRequest, isSubmitting, hasPayRequestCompleted, submitPayForm } = useTyro();
 
   const fetchPayRequest = async (): Promise<void> => {
-    const { paySecret } = await genNewPayRequest();
+    let paySecret;
+    if (passPaySecret) {
+      paySecret = { paySecret } = await genNewPayRequest();
+    }
     try {
       await initPaySheet(paySecret);
     } catch (error) {
