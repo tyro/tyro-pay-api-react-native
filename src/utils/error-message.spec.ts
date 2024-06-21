@@ -1,4 +1,4 @@
-import { ErrorMessageType, TyroErrorMessages } from '../@types/message-types';
+import { ErrorMessageType, TyroErrorMessages } from '../@types/error-message-types';
 import { errorMessage } from './error-message';
 describe('errorMessage()', () => {
   it('Should return a message when not initialised', () => {
@@ -58,24 +58,11 @@ describe('errorMessage()', () => {
     expect(error.errorMessage).toEqual('Server error');
   });
 
-  it('Should return a message when already processed', () => {
-    const error = errorMessage(TyroErrorMessages[ErrorMessageType.ALREADY_PROCESSED]);
-    expect(error.errorType).toEqual(ErrorMessageType.ALREADY_PROCESSED);
-    expect(error.errorCode).toEqual(undefined);
-    expect(error.errorMessage).toEqual('PayRequest already processed');
-  });
-
   it('Should return a message when timeout', () => {
     const error = errorMessage(TyroErrorMessages[ErrorMessageType.TIMEOUT]);
     expect(error.errorType).toEqual(ErrorMessageType.TIMEOUT);
     expect(error.errorCode).toEqual(undefined);
     expect(error.errorMessage).toEqual('Timeout');
-  });
-  it('Should return a message when invalid action', () => {
-    const error = errorMessage(TyroErrorMessages[ErrorMessageType.INVALID_ACTION]);
-    expect(error.errorType).toEqual(ErrorMessageType.INVALID_ACTION);
-    expect(error.errorCode).toEqual(undefined);
-    expect(error.errorMessage).toEqual('Invalid action');
   });
 
   it('Should return a message when no pay secret', () => {
@@ -90,14 +77,5 @@ describe('errorMessage()', () => {
     expect(error.errorType).toEqual(ErrorMessageType.UNKNOWN_ERROR);
     expect(error.errorCode).toEqual(undefined);
     expect(error.errorMessage).toEqual('Unknown error occurred');
-  });
-
-  it('Should return a message when environment mismatch', () => {
-    const error = errorMessage(TyroErrorMessages[ErrorMessageType.ENVIRONMENT_MISMATCH]);
-    expect(error.errorType).toEqual(ErrorMessageType.ENVIRONMENT_MISMATCH);
-    expect(error.errorCode).toEqual(undefined);
-    expect(error.errorMessage).toEqual(
-      'There is an environment mismatch. Check TyroProvider was initialised with the correct value for liveMode'
-    );
   });
 });

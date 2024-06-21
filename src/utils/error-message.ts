@@ -1,4 +1,4 @@
-import { ErrorMessage, TyroErrorMessage } from '../@types/message-types';
+import { ErrorMessage, TyroErrorMessage } from '../@types/error-message-types';
 
 export const errorMessage = (error: TyroErrorMessage, errorCode?: string, gatewayCode?: string): ErrorMessage => {
   return {

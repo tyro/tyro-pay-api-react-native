@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createContext, useContext } from 'react';
 import { TyroPayOptions } from './@types/definitions';
-import { ErrorMessage } from './@types/message-types';
+import { ErrorMessage } from './@types/error-message-types';
 import { ClientPayRequestResponse } from './@types/pay-request-types';
 import { SupportedNetworks } from './@types/network-types';
 import { CardDetails } from './@types/card-types';

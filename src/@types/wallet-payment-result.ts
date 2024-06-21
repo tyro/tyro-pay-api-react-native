@@ -1,4 +1,4 @@
-import { ErrorMessageType } from './message-types';
+import { ErrorMessageType } from './error-message-types';
 
 export enum WalletPaymentStatus {
   SUCCESS = 'SUCCESS',
