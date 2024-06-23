@@ -1,6 +1,6 @@
 import { ClientPayRequestResponse } from '../@types/pay-request-types';
 import { CardDetails } from '../@types/card-types';
-import { HTTP_ACCEPTED, HTTP_FORBIDDEN, HTTP_OK } from '../@types/http-status-codes';
+import { HTTP_ACCEPTED, HTTP_OK } from '../@types/http-status-codes';
 import { PaymentType } from '../@types/payment-types';
 import {
   INITIAL_UPDATED_STATUSES,
@@ -14,15 +14,18 @@ const setHeader = (paySecret: string): RequestInit => {
   return { headers: { 'Pay-Secret': paySecret } };
 };
 
+const httpStatusError = (data: Response): HttpStatusError => {
+  const error = new Error('Http Status Error') as HttpStatusError;
+  error.status = String(data.status);
+  return error;
+};
+
 export const getPayRequest = async (paySecret: string): Promise<ClientPayRequestResponse> => {
   const data = await fetch(`${TYRO_BASE_URL}/pay/client/requests`, setHeader(paySecret) as RequestInit);
   if (data.status === HTTP_OK) {
     return data.json();
   }
-  if (data.status === HTTP_FORBIDDEN) {
-    throw new Error('Invalid Pay Secret.');
-  }
-  throw new Error('Something went wrong.');
+  throw httpStatusError(data);
 };
 
 export const submitPayRequest = async (
@@ -37,9 +40,7 @@ export const submitPayRequest = async (
     body: JSON.stringify({ cardDetails, paymentType: PaymentType.CARD }),
   });
   if (response.status !== HTTP_ACCEPTED) {
-    const error = new Error('Http Status Error') as HttpStatusError;
-    error.status = String(response.status);
-    throw error;
+    throw httpStatusError(response);
   }
 };
 

@@ -8,7 +8,7 @@ import { mockFetch } from './utils/mocks';
 import { act } from 'react-test-renderer';
 import { ProviderTestComponent, InitTestComponent } from './test-components/tests';
 import { TyroPayOptionsProps } from '../@types/definitions';
-import { ErrorMessageType, TyroErrorMessages } from '../@types/message-types';
+import { ErrorCodes, ErrorMessageType, TyroErrorMessages } from '../@types/error-message-types';
 
 jest.mock('../utils/helpers', () => {
   return {
@@ -43,7 +43,7 @@ describe('TyroProvider', () => {
       mockedHelpers.isiOS.mockReturnValue(false);
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: { googlePay: { enabled: true } },
           });
@@ -69,7 +69,7 @@ describe('TyroProvider', () => {
       mockedHelpers.isiOS.mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: { applePay: { enabled: true } },
           });
@@ -95,7 +95,7 @@ describe('TyroProvider', () => {
       mockedHelpers.isiOS.mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: { applePay: { enabled: true, merchantIdentifier } },
           });
@@ -121,7 +121,7 @@ describe('TyroProvider', () => {
       mockedHelpers.isiOS.mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: { googlePay: { enabled: true, merchantName } },
           });
@@ -147,7 +147,7 @@ describe('TyroProvider', () => {
       mockedHelpers.isiOS.mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: {
               googlePay: { enabled: true, merchantName },
@@ -175,7 +175,7 @@ describe('TyroProvider', () => {
       mockedHelpers.isiOS.mockReturnValue(false);
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: {
               googlePay: { enabled: true, merchantName },
@@ -204,7 +204,7 @@ describe('TyroProvider', () => {
       mockedHelpers.isiOS.mockReturnValue(false);
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: {
               googlePay: { enabled: true, merchantName },
@@ -231,7 +231,7 @@ describe('TyroProvider', () => {
       mockedHelpers.isiOS.mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: {
               googlePay: { enabled: true },
@@ -258,7 +258,7 @@ describe('TyroProvider', () => {
       mockedHelpers.isiOS.mockReturnValue(false);
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
           });
         });
@@ -288,7 +288,7 @@ describe('TyroProvider', () => {
       mockedHelpers.isiOS.mockReturnValueOnce(false);
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: {
               googlePay: {
@@ -324,7 +324,7 @@ describe('TyroProvider', () => {
       mockedHelpers.isiOS.mockReturnValueOnce(true);
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: {
               googlePay: {
@@ -351,17 +351,107 @@ describe('TyroProvider', () => {
       });
     }, 15000);
 
-    test('PaySheet is not displayed when error with initPaySheet and tyroError has the error message', async () => {
+    test('PaySheet is not displayed and there is an error when the pay request has an invalid status', async () => {
       global.fetch = jest.fn(() => mockFetch(200, { status: 'SUCCESS', isLive: false } as ClientPayRequestResponse));
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, { liveMode: false });
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, { liveMode: false });
         });
         expect(wrapper.queryByText('Pay')).toBeNull();
         expect(wrapper.queryByText('Or pay with card')).toBeNull();
         const button = await wrapper.findByTestId('test-button');
         await fireEvent.press(button);
-        expect(await wrapper.findByText('ErrorMessage: PaySheet failed to initialise')).not.toBeNull();
+        expect(
+          await wrapper.findByText(`ErrorMessage: ${TyroErrorMessages.PAYSHEET_INIT_FAILED.message}`)
+        ).not.toBeNull();
+        expect(await wrapper.findByText(`ErrorType: ${TyroErrorMessages.PAYSHEET_INIT_FAILED.type}`)).not.toBeNull();
+        expect(await wrapper.findByText(`ErrorCode: ${ErrorCodes.PAY_REQUEST_INVALID_STATUS}`)).not.toBeNull();
+        expect(wrapper.queryByText('Or pay with card')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('MM/YY')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('CVV')).toBeNull();
+      });
+    }, 15000);
+
+    test('PaySheet is not displayed and there is an error when there is an environment mismatch on the pay request', async () => {
+      global.fetch = jest.fn(() => mockFetch(200, { status: 'SUCCESS', isLive: false } as ClientPayRequestResponse));
+      await act(async () => {
+        await waitFor(async () => {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, { liveMode: true });
+        });
+        expect(wrapper.queryByText('Pay')).toBeNull();
+        expect(wrapper.queryByText('Or pay with card')).toBeNull();
+        const button = await wrapper.findByTestId('test-button');
+        await fireEvent.press(button);
+        expect(
+          await wrapper.findByText(`ErrorMessage: ${TyroErrorMessages.PAYSHEET_INIT_FAILED.message}`)
+        ).not.toBeNull();
+        expect(await wrapper.findByText(`ErrorType: ${TyroErrorMessages.PAYSHEET_INIT_FAILED.type}`)).not.toBeNull();
+        expect(await wrapper.findByText(`ErrorCode: ${ErrorCodes.ENVIRONMENT_MISMATCH}`)).not.toBeNull();
+        expect(wrapper.queryByText('Or pay with card')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('MM/YY')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('CVV')).toBeNull();
+      });
+    }, 15000);
+
+    test('PaySheet is not displayed and there is an error when no paySecret provided', async () => {
+      global.fetch = jest.fn(() => mockFetch(200, { status: 'SUCCESS', isLive: false } as ClientPayRequestResponse));
+      await act(async () => {
+        await waitFor(async () => {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={false} />, { liveMode: true });
+        });
+        expect(wrapper.queryByText('Pay')).toBeNull();
+        expect(wrapper.queryByText('Or pay with card')).toBeNull();
+        const button = await wrapper.findByTestId('test-button');
+        await fireEvent.press(button);
+        expect(
+          await wrapper.findByText(`ErrorMessage: ${TyroErrorMessages.PAYSHEET_INIT_FAILED.message}`)
+        ).not.toBeNull();
+        expect(await wrapper.findByText(`ErrorType: ${TyroErrorMessages.PAYSHEET_INIT_FAILED.type}`)).not.toBeNull();
+        expect(await wrapper.findByText(`ErrorCode: ${ErrorCodes.PAY_REQUEST_SECRET_REQUIRED}`)).not.toBeNull();
+        expect(wrapper.queryByText('Or pay with card')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('MM/YY')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('CVV')).toBeNull();
+      });
+    }, 15000);
+
+    test('PaySheet is not displayed when there is an error initialising the wallet', async () => {
+      NativeModules.TyroPaySdkModule.initWalletPay.mockRejectedValueOnce(new Error('Error'));
+      global.fetch = jest.fn(() =>
+        mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
+      );
+      mockedHelpers.isAndroid.mockReturnValueOnce(false);
+      mockedHelpers.isiOS.mockReturnValueOnce(true);
+      await act(async () => {
+        await waitFor(async () => {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+            liveMode: false,
+            options: {
+              googlePay: {
+                enabled: true,
+                merchantName,
+              },
+              applePay: {
+                enabled: true,
+                merchantIdentifier,
+              },
+            },
+          });
+        });
+        expect(wrapper.queryByText('Pay')).toBeNull();
+        expect(wrapper.queryByText('Or pay with card')).toBeNull();
+        const button = await wrapper.findByTestId('test-button');
+        await fireEvent.press(button);
+        expect(
+          await wrapper.findByText(`ErrorMessage: ${TyroErrorMessages.PAYSHEET_INIT_FAILED.message}`)
+        ).not.toBeNull();
+        expect(await wrapper.findByText(`ErrorType: ${TyroErrorMessages.PAYSHEET_INIT_FAILED.type}`)).not.toBeNull();
+        expect(await wrapper.findByText(`ErrorCode: ${ErrorCodes.WALLET_INIT_FAILED}`)).not.toBeNull();
         expect(wrapper.queryByText('Or pay with card')).toBeNull();
         expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
         expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();
@@ -376,7 +466,7 @@ describe('TyroProvider', () => {
       );
       await act(async () => {
         await waitFor(async () => {
-          wrapper = await renderWithProvider(<InitTestComponent />, {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: {
               googlePay: { enabled: true },

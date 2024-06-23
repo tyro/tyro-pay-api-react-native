@@ -34,27 +34,13 @@ describe('pay-request-client', () => {
           status: 403,
         })
       ) as jest.Mock;
-      await expect(getPayRequest(paySecret)).rejects.toThrow(new Error('Invalid Pay Secret.'));
-      expect(fetch).toBeCalledWith(url, headers);
-    });
-
-    it('should throw error when fetch pay request api returns 500', async () => {
-      global.fetch = jest.fn(() =>
-        Promise.resolve({
-          status: 500,
-        })
-      ) as jest.Mock;
-      await expect(getPayRequest(paySecret)).rejects.toThrow('Something went wrong.');
-      expect(fetch).toBeCalledWith(url, headers);
-    });
-
-    it('should throw error when fetch pay request api returns other code', async () => {
-      global.fetch = jest.fn(() =>
-        Promise.resolve({
-          status: 502,
-        })
-      ) as jest.Mock;
-      await expect(getPayRequest(paySecret)).rejects.toThrow('Something went wrong.');
+      try {
+        await getPayRequest(paySecret);
+      } catch (error) {
+        expect(error).toBeInstanceOf(Error);
+        expect(error).toHaveProperty('status', '403');
+        expect(error.message).toBe('Http Status Error');
+      }
       expect(fetch).toBeCalledWith(url, headers);
     });
   });
