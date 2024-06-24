@@ -33,7 +33,7 @@ appId: ${APP_ID}
 - tapOn: 
     text: "Cancel"
 - extendedWaitUntil:
-    visible: "ErrorType: PAYMENT_FAILED" 
+    visible: "ErrorType: PAY_REQUEST_ERROR" 
     timeout: 150000 
 - assertVisible: "ErrorCode: THREED_SECURE_FAILED"
-- assertVisible: "ErrorMessage: Payment failed"
+- assertVisible: "ErrorMessage: There was an error with the pay request, either validation error or payment failed."

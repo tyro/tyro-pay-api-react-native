@@ -30,8 +30,8 @@ const mockedSuccessResult = { status: WalletPaymentStatus.SUCCESS } as WalletPay
 const mockedFailedResult = {
   status: WalletPaymentStatus.FAILED,
   error: {
-    errorMessage: TyroErrorMessages.PAYMENT_FAILED.message,
-    errorType: TyroErrorMessages.PAYMENT_FAILED.type,
+    errorMessage: TyroErrorMessages.PAY_REQUEST_ERROR.message,
+    errorType: TyroErrorMessages.PAY_REQUEST_ERROR.type,
     errorCode: 'Error-Code',
     gatewayCode: 'Gateway-Code',
   },
@@ -239,8 +239,8 @@ describe('WalletPaymentsContainer', () => {
         });
         wrapper.getByText('ErrorCode: Error-Code');
         wrapper.getByText('GatewayCode: Gateway-Code');
-        wrapper.getByText(`ErrorMessage: ${TyroErrorMessages.PAYMENT_FAILED.message}`);
-        wrapper.getByText(`ErrorType: ${TyroErrorMessages.PAYMENT_FAILED.type}`);
+        wrapper.getByText(`ErrorMessage: ${TyroErrorMessages.PAY_REQUEST_ERROR.message}`);
+        wrapper.getByText(`ErrorType: ${TyroErrorMessages.PAY_REQUEST_ERROR.type}`);
         await waitFor(async () => {
           await wrapper.findByText(`Pay Request Status: ${WalletPaymentStatus.FAILED}`);
         });
@@ -425,8 +425,8 @@ describe('WalletPaymentsContainer', () => {
         });
         wrapper.getByText('ErrorCode: Error-Code');
         wrapper.getByText('GatewayCode: Gateway-Code');
-        wrapper.getByText(`ErrorMessage: ${TyroErrorMessages.PAYMENT_FAILED.message}`);
-        wrapper.getByText(`ErrorType: ${TyroErrorMessages.PAYMENT_FAILED.type}`);
+        wrapper.getByText(`ErrorMessage: ${TyroErrorMessages.PAY_REQUEST_ERROR.message}`);
+        wrapper.getByText(`ErrorType: ${TyroErrorMessages.PAY_REQUEST_ERROR.type}`);
         await waitFor(async () => {
           await wrapper.findByText('Pay Request Status: FAILED');
         });
