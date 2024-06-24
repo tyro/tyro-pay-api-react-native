@@ -309,7 +309,10 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     }
     if (!paySecret) {
       setTyroErrorMessage(
-        errorMessage(TyroErrorMessages[ErrorMessageType.CLIENT_INITIALISATION_ERROR], ErrorCodes.NO_PAY_SECRET)
+        errorMessage(
+          TyroErrorMessages[ErrorMessageType.CLIENT_INITIALISATION_ERROR],
+          ErrorCodes.PAY_REQUEST_SECRET_REQUIRED
+        )
       );
       return;
     }
