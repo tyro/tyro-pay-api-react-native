@@ -23,7 +23,7 @@ class TyroSDK {
 
   initAndVerifyPaySecret = async (paySecret: string, liveMode: boolean): Promise<ClientPayRequestResponse> => {
     if (!paySecret) {
-      throw new PaySheetInitError(ErrorCodes.PAY_REQUEST_SECRET_REQUIRED);
+      throw new PaySheetInitError(ErrorCodes.NO_PAY_SECRET);
     }
     const payRequest = await getPayRequest(paySecret);
     this.throwIfEnvironmentMismatch(payRequest.isLive, liveMode);

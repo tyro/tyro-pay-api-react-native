@@ -386,7 +386,7 @@ describe('TyroProvider', () => {
         expect(
           await wrapper.findByText(`ErrorType: ${TyroErrorMessages.CLIENT_INITIALISATION_ERROR.type}`)
         ).not.toBeNull();
-        expect(await wrapper.findByText(`ErrorCode: ${ErrorCodes.PAY_REQUEST_SECRET_REQUIRED}`)).not.toBeNull();
+        expect(await wrapper.findByText(`ErrorCode: ${ErrorCodes.NO_PAY_SECRET}`)).not.toBeNull();
         expect(wrapper.queryByText('Or pay with card')).toBeNull();
         expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
         expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();
