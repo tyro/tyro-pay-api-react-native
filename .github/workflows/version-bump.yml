@@ -41,19 +41,13 @@ jobs:
       - name: 'print current version'
         run: npm pkg get version
 
-      # - name: Bump SDK version and commit to version-bump branch
-      #   run: |
-      #     npm version ${{ inputs.bump-mode }} -m "update package to version %s [skip cli]"
-      #   id: update
-
       - name: Bump SDK version and commit to version-bump branch
         run: |
-          chmod +x ./.ci_steps/version-bump.sh
-          ./.ci_steps/version-bump.sh ${{ env.PATCH }}
+          git config user.name $GITHUB_ACTOR
+          git config user.email ${GITHUB_ACTOR}@users.noreply.github.com
+          npm version "$bump_type" -m "update package to version %s [skip cli]"
+          npm version ${{ env.PATCH }} -m "update package to version %s [skip cli]"
+          git push "https://$GITHUB_ACTOR:$TOKEN@github.com/$GITHUB_REPOSITORY.git"
           
       - name: 'print updated version'
         run: npm pkg get version
-
-
-# chmod +x ./.ci_steps/version-bump.sh
-# ./.ci_steps/version-bump.sh ${{ env.PATCH }}
