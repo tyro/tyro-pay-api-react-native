@@ -19,8 +19,6 @@ on:
 
 env:
   PATCH: patch
-  GITHUB_PACKAGES_USER: ${{ github.actor }}
-  GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}
 
 jobs:
   bump-version:
