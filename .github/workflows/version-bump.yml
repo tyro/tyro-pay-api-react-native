@@ -40,11 +40,6 @@ jobs:
       - name: Print Current Branch
         run: echo "$(git branch --show-current)"
 
-      - name: Print current directory
-        run: |
-          cd ./.ci_steps
-          ls -a
-
       - name: 'print current version'
         run: npm pkg get version
 
@@ -55,8 +50,14 @@ jobs:
 
       - name: Bump SDK version and commit to version-bump branch
         run: |
-          chmod +x ./.ci_steps/version-bump.sh
-          ./.ci_steps/version-bump.sh ${{ env.PATCH }}
-
+          git config user.name $GITHUB_ACTOR
+          git config user.email ${GITHUB_ACTOR}@users.noreply.github.com
+          npm version "$bump_type" -m "update package to version %s [skip cli]"
+          git push "https://$GITHUB_ACTOR:$TOKEN@github.com/$GITHUB_REPOSITORY.git"
+          
       - name: 'print updated version'
         run: npm pkg get version
+
+
+# chmod +x ./.ci_steps/version-bump.sh
+# ./.ci_steps/version-bump.sh ${{ env.PATCH }}
