@@ -11,7 +11,7 @@ import {
 } from './@types/definitions';
 import { ClientPayRequestResponse, PayRequestStatus, ThreeDSecureStatus } from './@types/pay-request-types';
 import TyroSDK from './TyroSDK';
-import { ErrorMessage, ErrorMessageType, TyroErrorMessages } from './@types/error-message-types';
+import { ErrorCodes, ErrorMessage, ErrorMessageType, TyroErrorMessages } from './@types/error-message-types';
 import { errorMessage } from './utils/error-message';
 import { SupportedNetworks } from './@types/network-types';
 import { parseSupportedNetworks, sanitizeOptions } from './utils/sanitizers';
@@ -96,7 +96,12 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
   const initProvider = (cleanedOptions: TyroPayOptions): void => {
     if (missingMerchantDetails(cleanedOptions[TyroPayOptionsKeys.options])) {
       setInitialised(false);
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.MISSING_MERCHANT_CONFIG]));
+      setTyroErrorMessage(
+        errorMessage(
+          TyroErrorMessages[ErrorMessageType.CLIENT_INITIALISATION_ERROR],
+          ErrorCodes.MISSING_MERCHANT_CONFIG
+        )
+      );
       return;
     }
     setInitialised(true);
@@ -129,17 +134,19 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
 
   const handleHttpError = (error: Error): void => {
     if ('status' in error) {
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAYSHEET_INIT_FAILED], String(error.status)));
+      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.SERVER_ERROR], String(error.status)));
       return;
     }
     setTyroErrorMessage(
-      errorMessage(TyroErrorMessages[ErrorMessageType.PAYSHEET_INIT_FAILED], String(HTTP_SERVICE_UNAVAILABLE))
+      errorMessage(TyroErrorMessages[ErrorMessageType.SERVER_ERROR], String(HTTP_SERVICE_UNAVAILABLE))
     );
   };
 
   const handlePaySheetError = (error: unknown): void => {
     if (error instanceof PaySheetInitError) {
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAYSHEET_INIT_FAILED], error.errorCode));
+      setTyroErrorMessage(
+        errorMessage(TyroErrorMessages[ErrorMessageType.CLIENT_INITIALISATION_ERROR], error.errorCode)
+      );
       return;
     }
     if (error instanceof Error) {
@@ -150,7 +157,9 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
 
   async function initPaySheet(paySecret: string): Promise<void> {
     if (!verifyInitialisation()) {
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.NOT_INITIALISED]));
+      setTyroErrorMessage(
+        errorMessage(TyroErrorMessages[ErrorMessageType.CLIENT_INITIALISATION_ERROR], ErrorCodes.NOT_INITIALISED)
+      );
       return;
     }
     try {
@@ -206,7 +215,7 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     }
     updatePaySheet(payRequest);
     setPayRequest(payRequest);
-    setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAYMENT_FAILED], payRequest.errorCode));
+    setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAY_REQUEST_ERROR], payRequest.errorCode));
     return;
   };
 
@@ -215,13 +224,13 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     if (payRequest) {
       if (payRequest.threeDSecure?.status === ThreeDSecureStatus.FAILED) {
         updatePaySheet(payRequest);
-        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAYMENT_FAILED], payRequest.errorCode));
+        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAY_REQUEST_ERROR], payRequest.errorCode));
         return;
       }
       handleCompletedPayRequest(payRequest);
       return;
     }
-    setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.TIMEOUT]));
+    setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.SERVER_ERROR], ErrorCodes.TIMEOUT));
   };
 
   const handleFrictionless = (payRequest: ClientPayRequestResponse): void => {
@@ -249,9 +258,9 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
           return;
         }
       }
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.TIMEOUT]));
+      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.SERVER_ERROR], ErrorCodes.TIMEOUT));
     } else {
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.SERVER_ERROR]));
+      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.SERVER_ERROR], ErrorCodes.TIMEOUT));
     }
   };
 
@@ -261,12 +270,12 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     errorCode: string | undefined
   ): Promise<void> => {
     if (!payRequest) {
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.UNKNOWN_ERROR], errorCode));
+      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.SERVER_ERROR], errorCode));
       return;
     }
     switch (payRequest.status) {
       case PayRequestStatus.PROCESSING:
-        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.TIMEOUT]));
+        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.SERVER_ERROR], ErrorCodes.TIMEOUT));
         break;
       case PayRequestStatus.AWAITING_AUTHENTICATION:
         await do3DSAuth(paySecret);
@@ -280,14 +289,16 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
       case PayRequestStatus.VOIDED:
         updatePaySheet(payRequest);
         setPayRequest(payRequest);
-        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAYMENT_FAILED], payRequest.errorCode));
+        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.PAY_REQUEST_ERROR], payRequest.errorCode));
         break;
       case PayRequestStatus.AWAITING_PAYMENT_INPUT:
-        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.FAILED_TO_SUBMIT], errorCode));
+        setTyroErrorMessage(
+          errorMessage(TyroErrorMessages[ErrorMessageType.SERVER_ERROR], ErrorCodes.FAILED_TO_SUBMIT)
+        );
         break;
       default:
         updatePaySheet(payRequest);
-        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.UNKNOWN_ERROR], errorCode));
+        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.SERVER_ERROR], ErrorCodes.UNKNOWN_ERROR));
         break;
     }
   };
@@ -297,12 +308,16 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
       return;
     }
     if (!paySecret) {
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.NO_PAY_SECRET]));
+      setTyroErrorMessage(
+        errorMessage(TyroErrorMessages[ErrorMessageType.CLIENT_INITIALISATION_ERROR], ErrorCodes.NO_PAY_SECRET)
+      );
       return;
     }
     const foundErrors = validateAllInputs(cardDetails);
     if (Object.keys(foundErrors).length) {
-      setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.INVALID_CARD_DETAILS]));
+      setTyroErrorMessage(
+        errorMessage(TyroErrorMessages[ErrorMessageType.CARD_ERROR], ErrorCodes.INVALID_CARD_DETAILS)
+      );
       setValidationErrors({ ...validationErrors, ...foundErrors });
       return;
     }
@@ -312,7 +327,7 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
         cardType.type !== UNKNOWN_CARD_TYPE.type &&
         !supportedNetworks.includes(cardType.type as unknown as SupportedNetworks)
       ) {
-        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.INVALID_CARD_TYPE]));
+        setTyroErrorMessage(errorMessage(TyroErrorMessages[ErrorMessageType.CARD_ERROR], ErrorCodes.INVALID_CARD_TYPE));
         return;
       }
     }
