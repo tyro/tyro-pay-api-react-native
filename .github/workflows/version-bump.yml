@@ -40,6 +40,10 @@ jobs:
       - name: Print Current Branch
         run: echo "$(git branch --show-current)"
 
+      - name: Print current directory
+        run: |
+          ls -a
+
       - name: 'print current version'
         run: npm pkg get version
 
