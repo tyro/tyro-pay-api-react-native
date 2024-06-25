@@ -50,10 +50,8 @@ jobs:
 
       - name: Bump SDK version and commit to version-bump branch
         run: |
-          git config user.name $GITHUB_ACTOR
-          git config user.email gh-actions-${GITHUB_ACTOR}@github.com
-          npm version ${{ env.PATCH }} -m "update package to version %s [skip cli]"
-          git push "https://$GITHUB_ACTOR:$TOKEN@github.com/$GITHUB_REPOSITORY.git"
+          chmod +x ./.ci_steps/version-bump.sh
+          ./.ci_steps/version-bump.sh ${{ env.PATCH }}
 
       - name: 'print updated version'
         run: npm pkg get version
