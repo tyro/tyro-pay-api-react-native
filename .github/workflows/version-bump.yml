@@ -42,6 +42,7 @@ jobs:
 
       - name: Print current directory
         run: |
+          cd ./.ci_steps
           ls -a
 
       - name: 'print current version'
