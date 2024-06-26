@@ -85,7 +85,7 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
   const missingMerchantName = (options: TyroPayOptionsOptionsProps): boolean => {
     return !!(
       options[TyroPayOptionsOptionsKeys.googlePay]?.[TyroPayGooglePayOptionKeys.enabled] &&
-      !options[TyroPayOptionsOptionsKeys.googlePay][TyroPayGooglePayOptionKeys.merchantName]
+      !options[TyroPayOptionsOptionsKeys.googlePay]?.[TyroPayGooglePayOptionKeys.merchantName]
     );
   };
 
@@ -109,10 +109,8 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
 
   useEffect(() => {
     setTyroErrorMessage(null);
-    if (!initialised) {
-      initProvider(cleanedOptions);
-    }
-  }, [paySecret]);
+    initProvider(cleanedOptions);
+  }, [paySecret, cleanedOptions]);
 
   useEffect(() => {
     if (payRequest) {
