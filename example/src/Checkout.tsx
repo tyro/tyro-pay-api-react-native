@@ -74,20 +74,19 @@ const CheckOut = ({ route }: Props): JSX.Element => {
           </ButtonWithLoader>
         </View>
       )}
-      {showPayResult ||
-        (tyroError && (
-          <View style={{ flex: 1, justifyContent: 'center' }}>
-            {tyroError && (
-              <>
-                <Text>ErrorType: {tyroError.errorType}</Text>
-                <Text>ErrorCode: {tyroError.errorCode}</Text>
-                <Text>GatewayCode: {tyroError.gatewayCode}</Text>
-                <Text>ErrorMessage: {tyroError.errorMessage}</Text>
-              </>
-            )}
-            {showPayResult && <Text style={styles.statusText}>{payRequest?.status}</Text>}
-          </View>
-        ))}
+      {showPayResult && (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text style={styles.statusText}>{payRequest?.status}</Text>
+        </View>
+      )}
+      {tyroError && (
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Text>ErrorType: {tyroError.errorType}</Text>
+          <Text>ErrorCode: {tyroError.errorCode}</Text>
+          <Text>GatewayCode: {tyroError.gatewayCode}</Text>
+          <Text>ErrorMessage: {tyroError.errorMessage}</Text>
+        </View>
+      )}
     </ScrollView>
   );
 };
