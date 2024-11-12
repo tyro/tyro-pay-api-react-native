@@ -61,17 +61,22 @@ class TyroPaySdkModule: RCTEventEmitter {
 		Task.detached { @MainActor in
 			do {
 				let result = try await self.tyroApplePay?.startPayment(paySecret: paySecret)
-
 				switch result {
 				case .cancelled:
-					resolve("cancelled")
+					let jsonString = try WalletPaymentResult(status: .cancelled, error: nil).toJSON()
+					resolve(jsonString)
 				case .success:
-					resolve("successed")
+					let jsonString = try WalletPaymentResult(status: .success, error: nil).toJSON()
+					resolve(jsonString)
 				default:
-					throw TyroPaySdkModuleError.initializationFailed("SDK not initialized")
+					let walletPaymentError = WalletPaymentErrorInfo(errorMessage: "Unknown error")
+					let jsonString = try WalletPaymentResult(status: .failed, error: walletPaymentError).toJSON()
+					resolve(jsonString)
 				}
-			} catch {
-				reject("500", error.localizedDescription, error)
+			} catch let error as TyroApplePayError {
+				let walletPaymentError = WalletPaymentErrorInfo(errorMessage: error.localizedDescription)
+				let jsonString = try WalletPaymentResult(status: .failed, error: walletPaymentError).toJSON()
+				resolve(jsonString)
 			}
 		}
 	}
