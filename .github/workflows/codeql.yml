@@ -71,7 +71,9 @@ jobs:
       name: Build Java
       run: |
         npm ci
-        cd example/android
+        cd example
+        npm ci
+        cd android
         chmod +x ./gradlew
         ./gradlew --no-daemon -S -Dorg.gradle.dependency.verification=off clean build
       env:
