@@ -73,7 +73,7 @@ jobs:
         npm ci
         cd android
         chmod +x ./gradlew
-        ./gradlew --info --debug --scan --no-daemon -S -Dorg.gradle.dependency.verification=off clean build
+        ./gradlew --info --no-daemon -S -Dorg.gradle.dependency.verification=off clean build
       env:
         GITHUB_PACKAGES_USER: ${{ github.actor }}
         GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}
