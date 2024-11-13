@@ -51,7 +51,7 @@ jobs:
     #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
@@ -73,7 +73,7 @@ jobs:
         npm ci
         cd android
         chmod +x ./gradlew
-        ./gradlew --no-daemon -S -Dorg.gradle.dependency.verification=off clean build
+        ./gradlew --info --debug --scan --no-daemon -S -Dorg.gradle.dependency.verification=off clean build
       env:
         GITHUB_PACKAGES_USER: ${{ github.actor }}
         GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}
