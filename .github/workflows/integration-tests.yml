@@ -83,7 +83,7 @@ jobs:
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
           script: |
-            npm run android
+            npm run android:debug
             npm run test:e2e:android
         env:
           GITHUB_PACKAGES_USER: ${{ github.actor }}
