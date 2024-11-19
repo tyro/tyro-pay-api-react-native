@@ -1,6 +1,5 @@
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
-apply plugin: "com.facebook.react:react-native"
 apply plugin: "kotlin-android"
 
 /**

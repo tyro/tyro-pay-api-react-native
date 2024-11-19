@@ -4,6 +4,7 @@ plugins {
 
 apply plugin: "com.android.library"
 apply plugin: "com.facebook.react"
+apply plugin: "com.facebook.react:react-native"
 apply plugin: "kotlin-android"
 
 apply from: "./coverage.gradle"
@@ -111,7 +112,7 @@ allprojects {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     //noinspection GradleDynamicVersion
-    api "com.facebook.react:react-native"
+    api "com.facebook.react:react-native:+"
     implementation "com.tyro:tyro-pay-api-sdk-android:1.0.0"
     implementation 'com.google.android.gms:play-services-wallet:19.2.1'
 
