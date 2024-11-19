@@ -83,7 +83,7 @@ jobs:
           force-avd-creation: false
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
-          disk-size: 2048M
+          disk-size: 4096M
           script: |
             npm run android:release
             npm run test:e2e:android
