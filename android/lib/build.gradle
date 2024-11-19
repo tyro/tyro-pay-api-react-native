@@ -111,7 +111,7 @@ allprojects {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     //noinspection GradleDynamicVersion
-    api "com.facebook.react:react-native:0.70.5"
+    api "com.facebook.react:react-native:v0.72.10"
     implementation "com.tyro:tyro-pay-api-sdk-android:1.0.0"
     implementation 'com.google.android.gms:play-services-wallet:19.2.1'
 
