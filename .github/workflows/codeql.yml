@@ -13,6 +13,7 @@ name: ":static-code-analysis:CodeQL"
 run-name: ":static-code-analysis"
 
 on:
+  workflow_dispatch:
   push:
     branches: [master]
   pull_request:

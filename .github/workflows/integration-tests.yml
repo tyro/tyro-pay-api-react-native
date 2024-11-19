@@ -2,6 +2,7 @@ name: e2e:tests
 run-name: :integration:tests
 
 on:
+  workflow_dispatch:
   push:
     branches: [master]
   pull_request:
@@ -82,6 +83,7 @@ jobs:
           force-avd-creation: false
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           disable-animations: true
+          disk-size: 2048M
           script: |
             npm run android:release
             npm run test:e2e:android
