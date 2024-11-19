@@ -4,7 +4,6 @@ plugins {
 
 apply plugin: "com.android.library"
 apply plugin: "com.facebook.react"
-apply plugin: "com.facebook.react:react-native"
 apply plugin: "kotlin-android"
 
 apply from: "./coverage.gradle"
