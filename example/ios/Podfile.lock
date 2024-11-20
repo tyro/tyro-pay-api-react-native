@@ -1,7 +1,7 @@
 PODS:
   - boost (1.76.0)
   - DoubleConversion (1.1.6)
-  - Factory (2.3.2)
+  - Factory (2.4.1)
   - FBLazyVector (0.72.7)
   - FBReactNativeSpec (0.72.7):
     - RCT-Folly (= 2021.07.22.00)
@@ -442,8 +442,8 @@ PODS:
   - tyro-pay-api-react-native (1.0.1):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-    - TyroApplePay (= 0.0.3)
-  - TyroApplePay (0.0.3):
+    - TyroApplePay (= 0.0.4)
+  - TyroApplePay (0.0.4):
     - Factory
     - SwiftyBeaver
   - Yoga (1.14.0)
@@ -600,7 +600,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost: 57d2868c099736d80fcd648bf211b4431e51a558
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
-  Factory: 3a9d0809910130d609b34d4554828e6ecce519ff
+  Factory: 13e63ac988c73f13c55c251b0748a9518e078710
   FBLazyVector: 5fbbff1d7734827299274638deb8ba3024f6c597
   FBReactNativeSpec: 638095fe8a01506634d77b260ef8a322019ac671
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
@@ -645,8 +645,8 @@ SPEC CHECKSUMS:
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SwiftyBeaver: ade157e4f857812e7d7f15f2e3396bb8733f8a1c
-  tyro-pay-api-react-native: 362ce3deb32f76f2b62da442b34ddadf5ba368df
-  TyroApplePay: f83f287bebf665c1a0dc68bee6e8daf799c30ea4
+  tyro-pay-api-react-native: 07517cf983e2b37b13b00851aaf8782a650e71ed
+  TyroApplePay: eadbfb8c857581decafb598cdea474d39a278628
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
 PODFILE CHECKSUM: 03ca4465b98fb613cb7475b82d91f9b5868b250e

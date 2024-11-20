@@ -55,7 +55,8 @@ const SDKProvider = ({ children, tyroProvider }: SDKContext): JSX.Element => {
     paySecret: string,
     walletPaymentResult: WalletPaymentResult
   ): Promise<void> => {
-    const { status, error } = walletPaymentResult;
+    // TODO: Find a way to remove this conditional
+    const { status, error } = typeof walletPaymentResult === 'string' ? JSON.parse(walletPaymentResult) : walletPaymentResult;
     if (error) {
       const { errorMessage: message, errorType: type, errorCode, gatewayCode } = error;
       setTyroErrorMessage(errorMessage({ type, message }, errorCode, gatewayCode));
