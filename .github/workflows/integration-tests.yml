@@ -102,7 +102,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: example/ios/Pods
           key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
