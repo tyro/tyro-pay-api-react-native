@@ -46,6 +46,7 @@ jest.mock('../@types/images.tsx', () => {
 const merchantIdentifier = 'merId';
 const merchantName = 'merName';
 const cardDeclined = 'Card Declined';
+const appleTotalLabel = 'Total Label';
 
 const renderWithProvider = async (component, options: TyroPayOptionsProps): Promise<any> => {
   return render(<TyroProvider options={options}>{component}</TyroProvider>);
@@ -1299,6 +1300,7 @@ describe('PaySheet', () => {
                 applePay: {
                   enabled: true,
                   merchantIdentifier,
+                  totalLabel: appleTotalLabel,
                   supportedNetworks: ['visa'],
                 },
               },
@@ -1323,6 +1325,7 @@ describe('PaySheet', () => {
                 applePay: {
                   enabled: true,
                   merchantIdentifier,
+                  totalLabel: appleTotalLabel
                 },
               },
               styleProps: { walletPaymentsDividerText: 'My Custom Divider Text', showSupportedCards: false },
@@ -1346,6 +1349,7 @@ describe('PaySheet', () => {
                 applePay: {
                   enabled: true,
                   merchantIdentifier,
+                  totalLabel: appleTotalLabel
                 },
               },
               styleProps: { walletPaymentsDividerEnabled: false, showSupportedCards: false },

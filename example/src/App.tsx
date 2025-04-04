@@ -46,7 +46,7 @@ function App(): JSX.Element {
                   applePay: {
                     enabled: true,
                     merchantIdentifier: 'merchant.tyro-pay-api-sample-app',
-                    merchantName: 'Example Merchant',
+                    totalLabel: 'Example (Via Merchant Restaurant)',
                   },
                 },
                 styleProps: {

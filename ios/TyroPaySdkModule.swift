@@ -41,7 +41,7 @@ class TyroPaySdkModule: RCTEventEmitter {
 				return
 			} 
 			let merchantIdentifier: String = try getConfigParamOrThrow("merchantIdentifier", configs, "Merchant Identifier is required")
-			let merchantName: String = try getConfigParamOrThrow("merchantName", configs, "Merchant Name is required")
+			let merchantName: String = try getConfigParamOrThrow("totalLabel", configs, "Merchant Name is required")
 			let allowedCardNetworks: [String] = try getConfigParamOrThrow("supportedNetworks", configs, "Supported Networks is require")
 			let paymentNetworks: [TyroApplePayCardNetwork] = try self.mapSupportedNetworkStringsToTyroApplePayCardNetwork(allowedCardNetworks)
 
