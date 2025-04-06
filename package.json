@@ -39,7 +39,7 @@
     "android:release": "cd example && react-native run-android --mode=release",
     "ios:release": "cd example && react-native run-ios --mode Release --simulator \"iPhone 15 Pro\"",
     "install:all": "npm run install:no-pods && npm run install:pods && npm run prepack",
-    "install:pods": "cd example/ios && pod install",
+    "install:pods": "cd example/ios && pod cache clean --all && pod install --verbose",
     "install:no-pods": "npm install && cd example && npm install",
     "gradlew:build:all": "npm run gradlew:build:sdk && npm run gradlew:build:example",
     "gradlew:build:example": "cd example/android && chmod +x ./gradlew && ./gradlew --no-daemon -S -Dorg.gradle.dependency.verification=off clean build",
