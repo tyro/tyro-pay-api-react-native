@@ -439,7 +439,7 @@ PODS:
     - React-Core
   - SocketRocket (0.6.1)
   - SwiftyBeaver (2.1.1)
-  - tyro-pay-api-react-native (1.0.1):
+  - tyro-pay-api-react-native (1.0.2):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
     - TyroApplePay (= 0.0.4)
@@ -598,7 +598,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  boost: 57d2868c099736d80fcd648bf211b4431e51a558
+  boost: 7dcd2de282d72e344012f7d6564d024930a6a440
   DoubleConversion: 5189b271737e1565bdce30deb4a08d647e3f5f54
   Factory: 13e63ac988c73f13c55c251b0748a9518e078710
   FBLazyVector: 5fbbff1d7734827299274638deb8ba3024f6c597
@@ -645,10 +645,10 @@ SPEC CHECKSUMS:
   RNSVG: ba3e7232f45e34b7b47e74472386cf4e1a676d0a
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   SwiftyBeaver: ade157e4f857812e7d7f15f2e3396bb8733f8a1c
-  tyro-pay-api-react-native: 07517cf983e2b37b13b00851aaf8782a650e71ed
+  tyro-pay-api-react-native: 993b878f6bd29578fb61a133b7e8c83416e44fc4
   TyroApplePay: eadbfb8c857581decafb598cdea474d39a278628
   Yoga: 4c3aa327e4a6a23eeacd71f61c81df1bcdf677d5
 
-PODFILE CHECKSUM: 03ca4465b98fb613cb7475b82d91f9b5868b250e
+PODFILE CHECKSUM: 8bcc1b808214f11bdc1a3c6c79b0c5bf4213233e
 
 COCOAPODS: 1.15.2
