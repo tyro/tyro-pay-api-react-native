@@ -30,6 +30,17 @@ if linkage != nil
   use_frameworks! :linkage => linkage.to_sym
 end
 
+# Custom script to update boost.podspec source URL
+boost_podspec_path = File.join(__dir__, '../node_modules/react-native/third-party-podspecs/boost.podspec')
+if File.exist?(boost_podspec_path)
+  boost_podspec = File.read(boost_podspec_path)
+  updated_boost_podspec = boost_podspec.gsub(
+    'https://boostorg.jfrog.io/artifactory/main/release/1.76.0/source/boost_1_76_0.tar.bz2',
+    'https://archives.boost.io/release/1.76.0/source/boost_1_76_0.tar.bz2'
+  )
+  File.write(boost_podspec_path, updated_boost_podspec)
+end
+
 target 'example' do
   config = use_native_modules!
 
