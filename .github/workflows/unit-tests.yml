@@ -28,6 +28,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-tyro-
 
+      - name: Pod clear cache
+        run: |
+          pod cache clean --all
+
       - name: Install dependencies, lint and jest test
         run: | 
           chmod +x ./.ci_steps/test.sh
@@ -58,6 +62,10 @@ jobs:
           key: ${{ runner.os }}-tyro-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-tyro-
+
+      - name: Pod clear cache
+        run: |
+          pod cache clean --all
 
       - name: Install React Native CLI
         run: npm install react-native-cli
