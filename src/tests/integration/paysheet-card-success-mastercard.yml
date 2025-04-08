@@ -16,7 +16,7 @@ appId: ${APP_ID}
 - tapOn: "CheckOut"
 - tapOn: 
     text: "MM/YY"
-- inputText: "0125"
+- inputText: "01/99"
 - tapOn: 
     text: "CVV"
 - inputText: "123"
