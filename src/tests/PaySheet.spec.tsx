@@ -1325,7 +1325,7 @@ describe('PaySheet', () => {
                 applePay: {
                   enabled: true,
                   merchantIdentifier,
-                  totalLabel: appleTotalLabel
+                  totalLabel: appleTotalLabel,
                 },
               },
               styleProps: { walletPaymentsDividerText: 'My Custom Divider Text', showSupportedCards: false },
@@ -1349,7 +1349,7 @@ describe('PaySheet', () => {
                 applePay: {
                   enabled: true,
                   merchantIdentifier,
-                  totalLabel: appleTotalLabel
+                  totalLabel: appleTotalLabel,
                 },
               },
               styleProps: { walletPaymentsDividerEnabled: false, showSupportedCards: false },
