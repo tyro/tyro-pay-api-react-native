@@ -33,12 +33,14 @@ export type TyroPayOptionsProps = {
 export enum TyroPayApplePayOptionKeys {
   enabled = 'enabled',
   merchantIdentifier = 'merchantIdentifier',
+  totalLabel = 'totalLabel',
   supportedNetworks = 'supportedNetworks',
 }
 
 export type TyroPayApplePayOptions = {
   [TyroPayApplePayOptionKeys.enabled]?: boolean;
   [TyroPayApplePayOptionKeys.merchantIdentifier]?: string;
+  [TyroPayApplePayOptionKeys.totalLabel]?: string;
   [TyroPayApplePayOptionKeys.supportedNetworks]?: SupportedNetworksApplePay[];
 };
 

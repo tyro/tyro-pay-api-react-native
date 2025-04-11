@@ -41,7 +41,9 @@ export const pollFor3DSecureChallengeAndFinalResult = async (
   // poll for 10 mins
   const updatedPayRequest = await pollForResult(
     paySecret,
-    (payRequestStatus) => COMPLETION_STATUSES.includes(payRequestStatus.status),
+    (payRequestStatus) =>
+      COMPLETION_STATUSES.includes(payRequestStatus.status) ||
+      payRequestStatus.threeDSecure?.status === ThreeDSecureStatus.FAILED,
     CHALLENGE_POLL_INTERVAL_MS,
     CHALLENGE_MAX_RETRIES
   );
