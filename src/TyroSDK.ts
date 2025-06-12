@@ -1,10 +1,11 @@
 import { getPayRequest } from './clients/pay-request-client';
 import { ClientPayRequestResponse, PayRequestStatus } from './@types/pay-request-types';
 import { TyroPayOptions, TyroPayOptionsKeys } from './@types/definitions';
-import { NativeModules } from 'react-native';
+import { NativeModules, Platform } from 'react-native';
 import { WalletPaymentInitResult, WalletPaymentResult } from './@types/wallet-payment-result';
 import { ErrorCodes } from './@types/error-message-types';
 import { PaySheetInitError } from './@types/sdk-errors/pay-sheet-init-error';
+import { isAndroid, isiOS } from './utils/helpers';
 
 const { TyroPaySdkModule } = NativeModules;
 
@@ -35,23 +36,24 @@ class TyroSDK {
     const walletPaymentConfigs = options?.[TyroPayOptionsKeys.options];
     const liveMode = options[TyroPayOptionsKeys.liveMode];
     let walletConfig = {};
-    if (walletPaymentConfigs?.googlePay?.enabled) {
+    // Only proceed if the relevant wallet pay is enabled for the platform
+    if (
+      (isiOS(Platform.OS) && walletPaymentConfigs?.applePay?.enabled) ||
+      (isAndroid(Platform.OS) && walletPaymentConfigs?.googlePay?.enabled)
+    ) {
       walletConfig = {
         googlePay: { ...walletPaymentConfigs.googlePay, liveMode },
+        applePay: { ...walletPaymentConfigs.applePay, liveMode },
       };
-    } else if (walletPaymentConfigs?.applePay?.enabled) {
-      walletConfig = {
-        ...options.options.applePay,
-        liveMode,
-      };
-    }
-    try {
-      const paymentSupported = await TyroPaySdkModule.initWalletPay(walletConfig);
-      return {
-        paymentSupported,
-      };
-    } catch (error) {
-      throw new PaySheetInitError(ErrorCodes.WALLET_INIT_FAILED);
+      try {
+        const paymentSupported = await TyroPaySdkModule.initWalletPay(walletConfig);
+        return { paymentSupported };
+      } catch (error) {
+        throw new PaySheetInitError(ErrorCodes.WALLET_INIT_FAILED);
+      }
+    } else {
+      // If not enabled, just return paymentSupported: false
+      return { paymentSupported: false };
     }
   };
 

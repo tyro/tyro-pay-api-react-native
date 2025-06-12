@@ -14,6 +14,7 @@ export const defaultOptions = {
   options: {
     applePay: {
       enabled: false,
+      supportedNetworks: ['mastercard', 'visa', 'amex', 'jcb', 'maestro'],
     },
     googlePay: {
       enabled: false,

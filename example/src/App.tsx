@@ -39,8 +39,11 @@ function App(): JSX.Element {
               options={{
                 liveMode: false,
                 options: {
+                  creditCardForm: {
+                    enabled: false,
+                  },
                   googlePay: {
-                    enabled: true,
+                    enabled: false,
                     merchantName: 'Example Merchant',
                   },
                   applePay: {
@@ -56,6 +59,7 @@ function App(): JSX.Element {
                     buttonType: 'pay',
                     buttonBorderRadius: 4,
                   },
+                  walletPaymentsDividerEnabled: false,
                 },
               }}
             >

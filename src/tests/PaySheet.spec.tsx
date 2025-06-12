@@ -1,5 +1,5 @@
-import React from 'react';
 import TyroProvider from '../TyroSharedContext';
+import React from 'react';
 import { NativeModules } from 'react-native';
 import { fireEvent, render, waitFor } from '@testing-library/react-native';
 import { ClientPayRequestResponse, PayRequestStatus, ThreeDSecureStatus } from '../@types/pay-request-types';
