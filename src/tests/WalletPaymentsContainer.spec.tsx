@@ -39,6 +39,7 @@ const mockedFailedResult = {
 
 const merchantIdentifier = 'merId';
 const merchantName = 'merName';
+const totalLabel = 'Total Label';
 
 describe('WalletPaymentsContainer', () => {
   let wrapper;
@@ -354,6 +355,7 @@ describe('WalletPaymentsContainer', () => {
                 applePay: {
                   enabled: true,
                   merchantIdentifier,
+                  totalLabel,
                 },
               },
               styleProps: { showSupportedCards: false },
@@ -367,6 +369,60 @@ describe('WalletPaymentsContainer', () => {
         const button = await wrapper.findByTestId('apple-pay-button');
         expect(button._fiber.memoizedProps.buttonStyle).toEqual('black');
         expect(button._fiber.memoizedProps.buttonLabel).toEqual('plain');
+        expect(NativeModules.TyroPaySdkModule.initWalletPay).toHaveBeenCalledWith({
+          applePay: {
+            enabled: true,
+            liveMode: false,
+            merchantIdentifier: 'merId',
+            supportedNetworks: ['amex', 'jcb', 'mastercard', 'visa', 'maestro'],
+            totalLabel: 'Total Label',
+          },
+          googlePay: {
+            enabled: false,
+            liveMode: false,
+            supportedNetworks: ['amex', 'jcb', 'mastercard', 'visa'],
+          },
+        });
+      }, 15000);
+
+      test('should pass supportedNetworks to native module when defined in apple pay options', async () => {
+        await act(async () => {
+          await waitFor(async () => {
+            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+              liveMode: false,
+              options: {
+                applePay: {
+                  enabled: true,
+                  merchantIdentifier,
+                  totalLabel,
+                  supportedNetworks: ['visa', 'mastercard'],
+                },
+              },
+              styleProps: { showSupportedCards: false },
+            });
+          });
+          // check initial components have rendered, click checkout
+          const checkOutButton = await wrapper.findByTestId('test-button');
+          await fireEvent.press(checkOutButton);
+        });
+        // check apple pay button
+        const button = await wrapper.findByTestId('apple-pay-button');
+        expect(button._fiber.memoizedProps.buttonStyle).toEqual('black');
+        expect(button._fiber.memoizedProps.buttonLabel).toEqual('plain');
+        expect(NativeModules.TyroPaySdkModule.initWalletPay).toHaveBeenCalledWith({
+          applePay: {
+            enabled: true,
+            liveMode: false,
+            merchantIdentifier: 'merId',
+            supportedNetworks: ['mastercard', 'visa'],
+            totalLabel: 'Total Label',
+          },
+          googlePay: {
+            enabled: false,
+            liveMode: false,
+            supportedNetworks: ['amex', 'jcb', 'mastercard', 'visa'],
+          },
+        });
       }, 15000);
       test('should do nothing when applePay is cancelled', async () => {
         NativeModules.TyroPaySdkModule.startWalletPay.mockResolvedValue(mockedCancelledResult);
@@ -379,6 +435,7 @@ describe('WalletPaymentsContainer', () => {
                 applePay: {
                   enabled: true,
                   merchantIdentifier,
+                  totalLabel,
                 },
               },
               styleProps: { showSupportedCards: false },
@@ -409,6 +466,7 @@ describe('WalletPaymentsContainer', () => {
                   applePay: {
                     enabled: true,
                     merchantIdentifier,
+                    totalLabel,
                   },
                 },
                 styleProps: { showSupportedCards: false },
@@ -443,6 +501,7 @@ describe('WalletPaymentsContainer', () => {
                   applePay: {
                     enabled: true,
                     merchantIdentifier,
+                    totalLabel,
                   },
                 },
                 styleProps: { showSupportedCards: false },

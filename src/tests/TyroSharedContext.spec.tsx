@@ -1,7 +1,7 @@
 import TyroProvider from '../TyroSharedContext';
 import React from 'react';
 import { NativeModules } from 'react-native';
-import * as helpers from '../utils/helpers';
+import { isAndroid, isiOS } from '../utils/helpers';
 import { render, fireEvent, waitFor, cleanup } from '@testing-library/react-native';
 import { ClientPayRequestResponse } from '../@types/pay-request-types';
 import { mockFetch } from './utils/mocks';
@@ -11,16 +11,10 @@ import { TyroPayOptionsProps } from '../@types/definitions';
 import { ErrorCodes, TyroErrorMessages } from '../@types/error-message-types';
 import { HTTP_FORBIDDEN, HTTP_OK, HTTP_SERVICE_UNAVAILABLE } from '../@types/http-status-codes';
 
-jest.mock('../utils/helpers', () => {
-  return {
-    __esModule: true,
-    ...jest.requireActual('../utils/helpers'),
-    isAndroid: jest.fn(),
-    isiOS: jest.fn(),
-  };
-});
-
-const mockedHelpers = helpers as jest.Mocked<typeof helpers>;
+jest.mock('../utils/helpers', () => ({
+  isAndroid: jest.fn(),
+  isiOS: jest.fn(),
+}));
 
 const renderWithProvider = async (component, options: TyroPayOptionsProps): Promise<any> => {
   return render(<TyroProvider options={options}>{component}</TyroProvider>);
@@ -30,6 +24,7 @@ let wrapper;
 
 const merchantIdentifier = 'merId';
 const merchantName = 'merName';
+const totalLabel = 'Total Label';
 
 describe('TyroProvider', () => {
   describe('init TyroProvider', () => {
@@ -40,8 +35,8 @@ describe('TyroProvider', () => {
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValue(true);
-      mockedHelpers.isiOS.mockReturnValue(false);
+      (isAndroid as jest.Mock).mockReturnValue(true);
+      (isiOS as jest.Mock).mockReturnValue(false);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
@@ -62,13 +57,13 @@ describe('TyroProvider', () => {
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValue(false);
-      mockedHelpers.isiOS.mockReturnValue(true);
+      (isAndroid as jest.Mock).mockReturnValue(false);
+      (isiOS as jest.Mock).mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
-            options: { applePay: { enabled: true } },
+            options: { applePay: { enabled: true, totalLabel } },
           });
         });
         expect(await wrapper.findByText(`ErrorCode: ${ErrorCodes.MISSING_MERCHANT_CONFIG}`)).not.toBeNull();
@@ -80,17 +75,39 @@ describe('TyroProvider', () => {
       });
     }, 15000);
 
-    test('TyroProvider does initialise when applePay enabled with merchantIdentifier', async () => {
+    test('TyroProvider does not initialise when applePay enabled and missing totalLabel', async () => {
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValue(false);
-      mockedHelpers.isiOS.mockReturnValue(true);
+      (isAndroid as jest.Mock).mockReturnValue(false);
+      (isiOS as jest.Mock).mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: { applePay: { enabled: true, merchantIdentifier } },
+          });
+        });
+        expect(await wrapper.findByText(`ErrorCode: ${ErrorCodes.MISSING_MERCHANT_CONFIG}`)).not.toBeNull();
+        expect(wrapper.queryByText('Or pay with card')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('MM/YY')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('CVV')).toBeNull();
+      });
+    }, 15000);
+
+    test('TyroProvider does initialise when applePay enabled with merchantIdentifier and totalLabel', async () => {
+      global.fetch = jest.fn(() =>
+        mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
+      );
+      (isAndroid as jest.Mock).mockReturnValue(false);
+      (isiOS as jest.Mock).mockReturnValue(true);
+      await act(async () => {
+        await waitFor(async () => {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+            liveMode: false,
+            options: { applePay: { enabled: true, merchantIdentifier, totalLabel } },
           });
         });
         expect(await wrapper.queryByText(`ErrorCode: ${ErrorCodes.MISSING_MERCHANT_CONFIG}`)).toBeNull();
@@ -106,8 +123,8 @@ describe('TyroProvider', () => {
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValue(false);
-      mockedHelpers.isiOS.mockReturnValue(true);
+      (isAndroid as jest.Mock).mockReturnValue(true);
+      (isiOS as jest.Mock).mockReturnValue(false);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
@@ -128,15 +145,15 @@ describe('TyroProvider', () => {
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValue(false);
-      mockedHelpers.isiOS.mockReturnValue(true);
+      (isAndroid as jest.Mock).mockReturnValue(false);
+      (isiOS as jest.Mock).mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: {
               googlePay: { enabled: true, merchantName },
-              applePay: { enabled: true, merchantIdentifier },
+              applePay: { enabled: true, merchantIdentifier, totalLabel },
             },
           });
         });
@@ -152,15 +169,15 @@ describe('TyroProvider', () => {
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValue(true);
-      mockedHelpers.isiOS.mockReturnValue(false);
+      (isAndroid as jest.Mock).mockReturnValue(true);
+      (isiOS as jest.Mock).mockReturnValue(false);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: {
               googlePay: { enabled: true, merchantName },
-              applePay: { enabled: true, merchantIdentifier },
+              applePay: { enabled: true, merchantIdentifier, totalLabel },
             },
           });
         });
@@ -173,12 +190,12 @@ describe('TyroProvider', () => {
       });
     }, 15000);
 
-    test('TyroProvider does initialise when googlePay/applePay enabled and merchantIdentifier missing for apple pay on android', async () => {
+    test('TyroProvider does initialise when googlePay/applePay enabled and merchantIdentifier and totalLabel missing for apple pay on android', async () => {
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValue(true);
-      mockedHelpers.isiOS.mockReturnValue(false);
+      (isAndroid as jest.Mock).mockReturnValue(true);
+      (isiOS as jest.Mock).mockReturnValue(false);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
@@ -202,15 +219,15 @@ describe('TyroProvider', () => {
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValue(false);
-      mockedHelpers.isiOS.mockReturnValue(true);
+      (isAndroid as jest.Mock).mockReturnValue(false);
+      (isiOS as jest.Mock).mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
             liveMode: false,
             options: {
               googlePay: { enabled: true },
-              applePay: { enabled: true, merchantIdentifier },
+              applePay: { enabled: true, merchantIdentifier, totalLabel },
             },
           });
         });
@@ -223,12 +240,33 @@ describe('TyroProvider', () => {
       });
     }, 15000);
 
-    test('TyroProvider does initialise when googlePay/applePay disabled', async () => {
+    test('TyroProvider does initialise when googlePay/applePay disabled on android', async () => {
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValue(true);
-      mockedHelpers.isiOS.mockReturnValue(false);
+      (isAndroid as jest.Mock).mockReturnValue(true);
+      (isiOS as jest.Mock).mockReturnValue(false);
+      await act(async () => {
+        await waitFor(async () => {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+            liveMode: false,
+          });
+        });
+        expect(await wrapper.queryByText(`ErrorCode: ${ErrorCodes.MISSING_MERCHANT_CONFIG}`)).toBeNull();
+        expect(wrapper.queryByText('Or pay with card')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('Card number')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('Name on card')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('MM/YY')).toBeNull();
+        expect(wrapper.queryByPlaceholderText('CVV')).toBeNull();
+      });
+    }, 15000);
+
+    test('TyroProvider does initialise when googlePay/applePay disabled on ios', async () => {
+      global.fetch = jest.fn(() =>
+        mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
+      );
+      (isAndroid as jest.Mock).mockReturnValue(false);
+      (isiOS as jest.Mock).mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
@@ -253,8 +291,8 @@ describe('TyroProvider', () => {
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValueOnce(true);
-      mockedHelpers.isiOS.mockReturnValueOnce(false);
+      (isAndroid as jest.Mock).mockReturnValue(true);
+      (isiOS as jest.Mock).mockReturnValue(false);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
@@ -263,10 +301,6 @@ describe('TyroProvider', () => {
               googlePay: {
                 enabled: true,
                 merchantName,
-              },
-              applePay: {
-                enabled: true,
-                merchantIdentifier,
               },
             },
           });
@@ -284,13 +318,13 @@ describe('TyroProvider', () => {
       });
     }, 15000);
 
-    test('Able to init and display PaySheet for iOS', async () => {
+    test('Able to init and display just google pay for android', async () => {
       NativeModules.TyroPaySdkModule.initWalletPay.mockResolvedValue(true);
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValueOnce(false);
-      mockedHelpers.isiOS.mockReturnValueOnce(true);
+      (isAndroid as jest.Mock).mockReturnValue(true);
+      (isiOS as jest.Mock).mockReturnValue(false);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
@@ -300,9 +334,45 @@ describe('TyroProvider', () => {
                 enabled: true,
                 merchantName,
               },
+              creditCardForm: {
+                enabled: false,
+              },
+            },
+            styleProps: {
+              walletPaymentsDividerEnabled: false,
+            },
+          });
+        });
+        expect(wrapper.queryByText('Pay')).toBeNull();
+        expect(wrapper.queryByText('Or pay with card')).toBeNull();
+        const button = await wrapper.findByTestId('test-button');
+        await fireEvent.press(button);
+        expect(await wrapper.findByText('Pay')).not.toBeNull();
+        expect(await wrapper.queryByText('Or pay with card')).toBeNull();
+        expect(await wrapper.queryByPlaceholderText('Card number')).toBeNull();
+        expect(await wrapper.queryByPlaceholderText('Name on card')).toBeNull();
+        expect(await wrapper.queryByPlaceholderText('MM/YY')).toBeNull();
+        expect(await wrapper.queryByPlaceholderText('CVV')).toBeNull();
+        expect(wrapper.queryByTestId('google-pay-button')).not.toBeNull();
+      });
+    }, 15000);
+
+    test('Able to init and display PaySheet for iOS', async () => {
+      NativeModules.TyroPaySdkModule.initWalletPay.mockResolvedValue(true);
+      global.fetch = jest.fn(() =>
+        mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
+      );
+      (isAndroid as jest.Mock).mockReturnValue(false);
+      (isiOS as jest.Mock).mockReturnValue(true);
+      await act(async () => {
+        await waitFor(async () => {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+            liveMode: false,
+            options: {
               applePay: {
                 enabled: true,
                 merchantIdentifier,
+                totalLabel,
               },
             },
           });
@@ -317,6 +387,46 @@ describe('TyroProvider', () => {
         expect(await wrapper.findByPlaceholderText('Name on card')).not.toBeNull();
         expect(await wrapper.findByPlaceholderText('MM/YY')).not.toBeNull();
         expect(await wrapper.findByPlaceholderText('CVV')).not.toBeNull();
+      });
+    }, 15000);
+
+    test('Able to init and display just Apple Pay for iOS', async () => {
+      NativeModules.TyroPaySdkModule.initWalletPay.mockResolvedValue(true);
+      global.fetch = jest.fn(() =>
+        mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
+      );
+      (isAndroid as jest.Mock).mockReturnValue(false);
+      (isiOS as jest.Mock).mockReturnValue(true);
+      await act(async () => {
+        await waitFor(async () => {
+          wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+            liveMode: false,
+            options: {
+              applePay: {
+                enabled: true,
+                merchantIdentifier,
+                totalLabel,
+              },
+              creditCardForm: {
+                enabled: false,
+              },
+            },
+            styleProps: {
+              walletPaymentsDividerEnabled: false,
+            },
+          });
+        });
+        expect(wrapper.queryByText('Pay')).toBeNull();
+        expect(wrapper.queryByText('Or pay with card')).toBeNull();
+        const button = await wrapper.findByTestId('test-button');
+        await fireEvent.press(button);
+        expect(await wrapper.findByText('Pay')).not.toBeNull();
+        expect(await wrapper.queryByText('Or pay with card')).toBeNull();
+        expect(await wrapper.queryByPlaceholderText('Card number')).toBeNull();
+        expect(await wrapper.queryByPlaceholderText('Name on card')).toBeNull();
+        expect(await wrapper.queryByPlaceholderText('MM/YY')).toBeNull();
+        expect(await wrapper.queryByPlaceholderText('CVV')).toBeNull();
+        expect(await wrapper.findByTestId('apple-pay-button')).not.toBeNull();
       });
     }, 15000);
 
@@ -396,12 +506,13 @@ describe('TyroProvider', () => {
     }, 15000);
 
     test('PaySheet is not displayed when there is an error initialising the wallet', async () => {
+      (isAndroid as jest.Mock).mockReturnValue(false);
+      (isiOS as jest.Mock).mockReturnValue(true);
       NativeModules.TyroPaySdkModule.initWalletPay.mockRejectedValueOnce(new Error('Error'));
       global.fetch = jest.fn(() =>
         mockFetch(200, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValueOnce(false);
-      mockedHelpers.isiOS.mockReturnValueOnce(true);
+
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
@@ -414,6 +525,7 @@ describe('TyroProvider', () => {
               applePay: {
                 enabled: true,
                 merchantIdentifier,
+                totalLabel,
               },
             },
           });
@@ -445,8 +557,8 @@ describe('TyroProvider', () => {
       global.fetch = jest.fn(() =>
         mockFetch(HTTP_FORBIDDEN, { status: 'AWAITING_PAYMENT_INPUT', isLive: false } as ClientPayRequestResponse)
       );
-      mockedHelpers.isAndroid.mockReturnValueOnce(false);
-      mockedHelpers.isiOS.mockReturnValueOnce(true);
+      (isAndroid as jest.Mock).mockReturnValue(false);
+      (isiOS as jest.Mock).mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
@@ -459,6 +571,7 @@ describe('TyroProvider', () => {
               applePay: {
                 enabled: true,
                 merchantIdentifier,
+                totalLabel,
               },
             },
           });
@@ -486,8 +599,8 @@ describe('TyroProvider', () => {
       global.fetch = jest.fn(() => {
         throw new Error('Fetch Error');
       });
-      mockedHelpers.isAndroid.mockReturnValueOnce(false);
-      mockedHelpers.isiOS.mockReturnValueOnce(true);
+      (isAndroid as jest.Mock).mockReturnValue(false);
+      (isiOS as jest.Mock).mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
@@ -500,6 +613,7 @@ describe('TyroProvider', () => {
               applePay: {
                 enabled: true,
                 merchantIdentifier,
+                totalLabel,
               },
             },
           });
@@ -550,7 +664,7 @@ describe('TyroProvider', () => {
       cleanup();
     });
     test('Provider is able to provide the default options to its children on Android', async () => {
-      mockedHelpers.isAndroid.mockReturnValue(true);
+      (isAndroid as jest.Mock).mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<ProviderTestComponent />, { liveMode: false });
@@ -563,7 +677,7 @@ describe('TyroProvider', () => {
       });
     }, 15000);
     test('Provider is able to provide the default options to its children on iOS', async () => {
-      mockedHelpers.isiOS.mockReturnValue(true);
+      (isiOS as jest.Mock).mockReturnValue(true);
       await act(async () => {
         await waitFor(async () => {
           wrapper = await renderWithProvider(<ProviderTestComponent />, { liveMode: true });

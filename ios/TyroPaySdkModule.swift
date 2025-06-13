@@ -39,10 +39,11 @@ class TyroPaySdkModule: RCTEventEmitter {
 			guard TyroApplePay.isApplePayAvailable() else {
 				resolve(false)
 				return
-			} 
-			let merchantIdentifier: String = try getConfigParamOrThrow("merchantIdentifier", configs, "Merchant Identifier is required")
-			let merchantName: String = try getConfigParamOrThrow("totalLabel", configs, "Merchant Name is required")
-			let allowedCardNetworks: [String] = try getConfigParamOrThrow("supportedNetworks", configs, "Supported Networks is require")
+			}
+			let applePayConfigs: NSDictionary = try getConfigParamOrThrow("applePay", configs, "applePay config is required")
+			let merchantIdentifier: String = try getConfigParamOrThrow("merchantIdentifier", applePayConfigs, "Merchant Identifier is required")
+			let merchantName: String = try getConfigParamOrThrow("totalLabel", applePayConfigs, "Merchant Name is required")
+			let allowedCardNetworks: [String] = try getConfigParamOrThrow("supportedNetworks", applePayConfigs, "Supported Networks is require")
 			let paymentNetworks: [TyroApplePayCardNetwork] = try self.mapSupportedNetworkStringsToTyroApplePayCardNetwork(allowedCardNetworks)
 
 			self.config = TyroApplePay.Configuration(

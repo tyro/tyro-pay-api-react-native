@@ -89,8 +89,15 @@ const TyroProvider = ({ children, options }: TyroPayContext): JSX.Element => {
     );
   };
 
+  const missingTotalLabel = (options: TyroPayOptionsOptionsProps): boolean => {
+    return !!(
+      options[TyroPayOptionsOptionsKeys.applePay]?.[TyroPayApplePayOptionKeys.enabled] &&
+      !options[TyroPayOptionsOptionsKeys.applePay]?.[TyroPayApplePayOptionKeys.totalLabel]
+    );
+  };
+
   const missingMerchantDetails = (options: TyroPayOptionsOptionsProps): boolean => {
-    return missingMerchantIdentifier(options) || missingMerchantName(options);
+    return missingMerchantIdentifier(options) || missingMerchantName(options) || missingTotalLabel(options);
   };
 
   const initProvider = (cleanedOptions: TyroPayOptions): void => {
