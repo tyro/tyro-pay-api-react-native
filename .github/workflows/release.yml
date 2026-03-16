@@ -16,7 +16,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.0.0
+          node-version: 22.18.0
           registry-url: 'https://npm.pkg.github.com'
 
       - name: Install dependencies, lint and jest test

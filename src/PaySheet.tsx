@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import CreditCardForm from './components/CreditCardForm';
 import Divider from './components/Divider';

@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node.js env
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: 18.0.0
+          node-version: 22.18.0
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -79,7 +79,7 @@ jobs:
       - name: Setup Node.js env
         uses: actions/setup-node@v2.1.5
         with:
-          node-version: 18.0.0
+          node-version: v2.18.0
           
       - name: setup-cocoapods
         uses: maxim-lobanov/setup-cocoapods@v1

@@ -1,7 +1,9 @@
 {
+  "extends": "@react-native/typescript-config",
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {},
+    "types": ["jest"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "inlineSources": true,
     "sourceMap": true,
@@ -24,5 +26,5 @@
     "resolveJsonModule": true
   },
   "include": ["./src/**/*.tsx", "./src/**/*.ts", "./src/*.tsx"],
-  "exclude": ["node_modules", "lib", "./src/**/__test__", "./src/**/*.test.*", "./src/**/*.spec.*"]
+  "exclude": ["node_modules", "lib", "./src/**/__test__", "./src/**/*.test.*", "./src/**/*.spec.*", "**/Pods"]
 }

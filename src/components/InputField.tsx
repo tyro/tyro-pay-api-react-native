@@ -1,5 +1,5 @@
 import { eventType } from '../utils/validators';
-import React, { useState, forwardRef } from 'react';
+import React, { useState, forwardRef, JSX } from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import { ImageSources } from '../@types/images';
 import { getInputStyles } from '../services/style-drawer';

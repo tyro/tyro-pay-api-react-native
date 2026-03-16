@@ -12,6 +12,7 @@ coverage
 go
 .DS_Store
 .vscode
+.history
 
 # Xcode
 #
@@ -31,7 +32,7 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-ios/.xcode.env.local
+**/.xcode.env.local
 
 # Android/IntelliJ
 #
@@ -46,6 +47,7 @@ local.properties
 *.keystore
 !debug.keystore
 .java-version
+.kotlin/
 
 # node.js
 #
@@ -57,7 +59,7 @@ yarn-error.log
 *.jsbundle
 
 # Ruby / CocoaPods
-ios/Pods/*
+**/Pods/*
 vendor/bundle/
 Gemfile.lock
 
@@ -74,4 +76,12 @@ lib/
 example/ios/Pods
 example/vendor/
 example/android/build/
+
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 

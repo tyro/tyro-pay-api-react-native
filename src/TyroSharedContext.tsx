@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, createContext, useEffect, useContext } from 'react';
+import { useState, createContext, useEffect, useContext, JSX } from 'react';
 import {
   TyroPayApplePayOptionKeys,
   TyroPayGooglePayOptionKeys,

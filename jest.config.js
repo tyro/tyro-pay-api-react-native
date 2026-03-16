@@ -24,5 +24,5 @@ module.exports = {
   },
   globalSetup: './src/tests/global-setup.ts',
   setupFiles: ['./src/tests/__mocks__/NativeModules.ts', './src/tests/__mocks__/Animation.ts'],
-  setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
+  setupFilesAfterEnv: [],
 };
