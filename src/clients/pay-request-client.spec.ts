@@ -25,7 +25,7 @@ describe('pay-request-client', () => {
 
       const getPayRequestResponse = await getPayRequest(paySecret);
       expect(getPayRequestResponse).toEqual({ status: 'SUCCESS' });
-      expect(fetch).toBeCalledWith(url, headers);
+      expect(fetch).toHaveBeenCalledWith(url, headers);
     });
 
     it('should throw error when fetch pay request api returns non 200', async () => {
@@ -41,7 +41,7 @@ describe('pay-request-client', () => {
         expect(error).toHaveProperty('status', '403');
         expect(error.message).toBe('Http Status Error');
       }
-      expect(fetch).toBeCalledWith(url, headers);
+      expect(fetch).toHaveBeenCalledWith(url, headers);
     });
   });
 
@@ -66,7 +66,7 @@ describe('pay-request-client', () => {
         })
       ) as jest.Mock;
 
-      await expect(() => submitPayRequest(paySecret, {} as CardDetails, false)).not.toThrowError();
+      await expect(() => submitPayRequest(paySecret, {} as CardDetails, false)).not.toThrow();
       expect(fetch).toHaveBeenCalledWith(fetchUrlSandbox, fetchPayload);
     });
 
@@ -77,7 +77,7 @@ describe('pay-request-client', () => {
         })
       ) as jest.Mock;
 
-      await expect(() => submitPayRequest(paySecret, {} as CardDetails, true)).not.toThrowError();
+      await expect(() => submitPayRequest(paySecret, {} as CardDetails, true)).not.toThrow();
       expect(fetch).toHaveBeenCalledWith(fetchUrlPrd, fetchPayload);
     });
 

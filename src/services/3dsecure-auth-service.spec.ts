@@ -30,7 +30,7 @@ describe('invoke3DSecureAuth', () => {
       })
     ) as jest.Mock;
     await invoke3DSecureAuth('secret');
-    await expect(fetch).toBeCalledWith(url, { ...authRequest, body: androidBody });
+    await expect(fetch).toHaveBeenCalledWith(url, { ...authRequest, body: androidBody });
   });
 
   it('fetches with correct params on iOS', async () => {
@@ -42,6 +42,6 @@ describe('invoke3DSecureAuth', () => {
       })
     ) as jest.Mock;
     await invoke3DSecureAuth('secret');
-    await expect(fetch).toBeCalledWith(url, { ...authRequest, body: iosBody });
+    await expect(fetch).toHaveBeenCalledWith(url, { ...authRequest, body: iosBody });
   });
 });

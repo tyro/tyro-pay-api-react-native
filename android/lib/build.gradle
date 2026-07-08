@@ -36,8 +36,10 @@ android {
     ndkVersion rootProject.ext.ndkVersion
 
     buildToolsVersion rootProject.ext.buildToolsVersion
-    def csdk = (rootProject.ext.has("compileSdkVersion") ? rootProject.ext.compileSdkVersion : 36)
-    compileSdk 36
+    def csdk = rootProject.ext.has("compileSdkVersion")
+        ? rootProject.ext.compileSdkVersion
+        : 36
+    compileSdk csdk
 
     namespace "com.tyropayapireactnative"
     useLibrary 'android.test.mock'

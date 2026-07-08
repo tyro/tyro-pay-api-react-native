@@ -1,5 +1,5 @@
 module.exports = {
-  preset: 'react-native',
+  preset: '@react-native/jest-preset',
   testEnvironment: 'node',
   coverageReporters: ['html', 'text'],
   collectCoverageFrom: ['src/**/*.{js,ts,tsx}'],

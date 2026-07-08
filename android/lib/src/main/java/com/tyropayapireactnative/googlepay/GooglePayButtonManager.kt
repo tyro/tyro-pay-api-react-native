@@ -9,27 +9,31 @@ class GooglePayButtonManager : SimpleViewManager<GooglePayButtonView>() {
         return "GooglePayButton"
     }
 
-    override fun onAfterUpdateTransaction(view: GooglePayButtonView) {
-        super.onAfterUpdateTransaction(view)
-        view.initialize()
+    public override fun createViewInstance(reactContext: ThemedReactContext): GooglePayButtonView {
+        return GooglePayButtonView(reactContext).also {
+            it.initialize()
+        }
     }
 
-    public override fun createViewInstance(reactContext: ThemedReactContext): GooglePayButtonView {
-        return GooglePayButtonView(reactContext)
+    private fun updateView(view: GooglePayButtonView) {
+        view.initialize()
     }
 
     @ReactProp(name = "buttonType")
     fun setButtonType(button: GooglePayButtonView, buttonType: String) {
         button.setButtonType(buttonType)
+        updateView(button)
     }
 
     @ReactProp(name = "buttonColor")
     fun setButtonColor(button: GooglePayButtonView, buttonColor: String) {
         button.setButtonColor(buttonColor)
+        updateView(button)
     }
 
     @ReactProp(name = "buttonBorderRadius")
     fun setBorderRadius(button: GooglePayButtonView, borderRadius: Int) {
         button.setBorderRadius(borderRadius)
+        updateView(button)
     }
 }
