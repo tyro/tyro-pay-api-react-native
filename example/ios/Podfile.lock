@@ -1962,7 +1962,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - RNSVG (15.15.3):
+  - RNSVG (15.15.5):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -1983,9 +1983,9 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
-    - RNSVG/common (= 15.15.3)
+    - RNSVG/common (= 15.15.5)
     - Yoga
-  - RNSVG/common (15.15.3):
+  - RNSVG/common (15.15.5):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -2368,7 +2368,7 @@ SPEC CHECKSUMS:
   ReactCommon: d5c1bb4427bf51c443de5926aac332c89ddd9363
   ReactNativeDependencies: fa0a54b3f5319ae0e3b9aff32bfee7a424b88e66
   RNScreens: 01b065ded2dfe7987bcce770ff3a196be417ff41
-  RNSVG: 1acc2e091cf71d91586daeb24a1fa34d13727bcb
+  RNSVG: 6cae8d4082913be2eb43eaec2a456222c42195ed
   SwiftyBeaver: ade157e4f857812e7d7f15f2e3396bb8733f8a1c
   tyro-pay-api-react-native: 289b0a3f7653636d190cef729cb7482a999f1b4e
   TyroApplePay: 51f8b12e3e7fe39cb5eeb31ba27eb40cef904ed8
