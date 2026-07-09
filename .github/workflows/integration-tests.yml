@@ -17,9 +17,9 @@ jobs:
 
     steps:
       - name: Setup Node.js env
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v4
         with:
-          node-version: 22.18.0
+          node-version: 24
 
       - name: Checkout code
         uses: actions/checkout@v3
@@ -77,17 +77,18 @@ jobs:
     steps:
 
       - name: Setup Node.js env
-        uses: actions/setup-node@v2.1.5
+        uses: actions/setup-node@v4
         with:
-          node-version: v2.18.0
+          node-version: 24
           
-      - name: setup-cocoapods
-        uses: maxim-lobanov/setup-cocoapods@v1
-        with:
-          version: 1.14.3
-
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '.ruby-version'
+          bundler-cache: true
 
       - name: Get npm cache directory
         id: npm-cache-dir

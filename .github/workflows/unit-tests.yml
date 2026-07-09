@@ -18,6 +18,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '.ruby-version'
+          bundler-cache: true
+
       - name: Cache Tyro Pay API React Native
         uses: actions/cache@v3
         with:
@@ -27,9 +33,6 @@ jobs:
           key: ${{ runner.os }}-tyro-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-tyro-
-
-      - name: Install Bundler gems (CocoaPods etc.)
-        run: bundle install
 
       - name: Pod clear cache
         run: |
@@ -48,13 +51,14 @@ jobs:
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
 
-      - name: setup-cocoapods
-        uses: maxim-lobanov/setup-cocoapods@v1
-        with:
-          version: 1.15.2
-
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '.ruby-version'
+          bundler-cache: true
 
       - name: Cache Tyro Pay API React Native
         uses: actions/cache@v3
@@ -65,9 +69,6 @@ jobs:
           key: ${{ runner.os }}-tyro-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-tyro-
-
-      - name: Install Bundler gems (CocoaPods etc.)
-        run: bundle install
 
       - name: Pod clear cache
         run: |
