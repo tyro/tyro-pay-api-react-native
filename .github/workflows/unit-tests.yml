@@ -28,9 +28,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-tyro-
 
+      - name: Install Bundler gems (CocoaPods etc.)
+        run: bundle install
+
       - name: Pod clear cache
         run: |
-          pod cache clean --all
+          bundle exec pod cache clean --all
 
       - name: Install dependencies, lint and jest test
         run: | 
@@ -63,9 +66,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-tyro-
 
+      - name: Install Bundler gems (CocoaPods etc.)
+        run: bundle install
+
       - name: Pod clear cache
         run: |
-          pod cache clean --all
+          bundle exec pod cache clean --all
 
       - name: Install React Native CLI
         run: npm install react-native-cli

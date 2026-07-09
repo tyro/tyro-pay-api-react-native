@@ -3,14 +3,14 @@
   "compileOnSave": false,
   "compilerOptions": {
     "paths": {},
-    "types": ["jest"],
+    "types": ["jest", "react"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "inlineSources": true,
     "sourceMap": true,
     "target": "es2017",
     "checkJs": false,
-    "moduleResolution": "node",
-    "module": "commonjs",
+    "moduleResolution": "bundler",
+    "module": "esnext",
     "declaration": false,
     "diagnostics": true,
     "noImplicitAny": false,
@@ -26,5 +26,13 @@
     "resolveJsonModule": true
   },
   "include": ["./src/**/*.tsx", "./src/**/*.ts", "./src/*.tsx"],
-  "exclude": ["node_modules", "lib", "./src/**/__test__", "./src/**/*.test.*", "./src/**/*.spec.*", "**/Pods"]
+  "exclude": [
+    "node_modules",
+    "lib",
+    "./src/tests",
+    "./src/**/__test__",
+    "./src/**/*.test.*",
+    "./src/**/*.spec.*",
+    "**/Pods"
+  ]
 }

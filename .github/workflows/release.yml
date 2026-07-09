@@ -19,6 +19,9 @@ jobs:
           node-version: 22.18.0
           registry-url: 'https://npm.pkg.github.com'
 
+      - name: Install Bundler gems (CocoaPods etc.)
+        run: bundle install
+
       - name: Install dependencies, lint and jest test
         run: | 
           chmod +x ./.ci_steps/test.sh
