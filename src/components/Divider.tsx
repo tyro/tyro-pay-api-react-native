@@ -1,4 +1,4 @@
-import React, { JSX } from 'react';
+import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { getDividerStyles } from '../services/style-drawer';
 import { TyroPayOptionsKeys } from '../@types/definitions';

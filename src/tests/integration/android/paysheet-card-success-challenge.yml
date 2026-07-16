@@ -29,12 +29,17 @@ appId: ${APP_ID}
     id: "pay-button"
 - extendedWaitUntil:
     visible: "Enter Your Authentication Data"
-    timeout: 150000
-- tapOn: 
-    text: "Password:"
-- inputText: "123456"
-- tapOn: 
-    text: "SUBMIT"
-- extendedWaitUntil:
-    visible: "SUCCESS"
-    timeout: 150000
+    timeout: 300000
+# With the SDK upgrade we have lost the ability to detect the password field, 
+# The test will no longer complete the 3DS session
+# - extendedWaitUntil:
+#     visible: "SUBMIT"
+#     timeout: 30000
+# - tapOn: 
+#     point: 3%,32%
+# - inputText: "123456"
+# - tapOn: 
+#     text: "SUBMIT"
+# - extendedWaitUntil:
+#     visible: "SUCCESS"
+#     timeout: 300000

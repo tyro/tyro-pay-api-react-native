@@ -29,13 +29,13 @@ case $MODE in
 esac
 
 if [ "$PLATFORM" == "ios" ]; then
-  APPID="com.tyro.example-pay-api-app"
+  APPID="com.tyro.tyro-pay-api-sample-app"
   allTestFiles=$(ls ./src/tests/integration/*.yml ./src/tests/integration/ios/*.yml)
   allDevices=$(xcrun simctl list devices booted | grep -o '[0-9A-Z]\{8\}-[0-9A-Z]\{4\}-[0-9A-Z]\{4\}-[0-9A-Z]\{4\}-[0-9A-Z]\{12\}')
 else
   APPID="com.example"
   allTestFiles=$(ls ./src/tests/integration/*.yml ./src/tests/integration/android/*.yml)
-  allDevices=$(adb devices | grep -o 'emulator-[0-9]\{4\}') 
+  allDevices=$(adb devices | grep 'device$' | awk '{print $1}')
 fi
 
 run_tests(){

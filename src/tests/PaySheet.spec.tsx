@@ -47,12 +47,12 @@ const merchantName = 'merName';
 const cardDeclined = 'Card Declined';
 const appleTotalLabel = 'Total Label';
 
-const renderWithProvider = async (component, options: TyroPayOptionsProps): Promise<any> => {
+const renderWithProvider = async (component: React.ReactElement, options: TyroPayOptionsProps): Promise<ReturnType<typeof render>> => {
   return render(<TyroProvider options={options}>{component}</TyroProvider>);
 };
 
 // Common confirmation functions
-const checkInitializedCorrectly = async (wrapper): Promise<void> => {
+const checkInitializedCorrectly = async (wrapper: ReturnType<typeof render>): Promise<void> => {
   // check initial components have rendered, click checkout
   expect(wrapper.queryByText('Pay')).toBeNull();
   expect(wrapper.queryByText('Or pay with card')).toBeNull();
@@ -60,14 +60,14 @@ const checkInitializedCorrectly = async (wrapper): Promise<void> => {
   await fireEvent.press(checkOutButton);
   expect(await wrapper.findByText('Pay')).not.toBeNull();
 };
-const checkForPaySheetRenders = async (wrapper: any): Promise<void> => {
+const checkForPaySheetRenders = async (wrapper: ReturnType<typeof render>): Promise<void> => {
   expect(await wrapper.findByPlaceholderText('Card number')).not.toBeNull();
   expect(await wrapper.findByPlaceholderText('Name on card')).not.toBeNull();
   expect(await wrapper.findByPlaceholderText('MM/YY')).not.toBeNull();
   expect(await wrapper.findByPlaceholderText('CVV')).not.toBeNull();
 };
 const fillOutForm = async (
-  wrapper,
+  wrapper: ReturnType<typeof render>,
   cardString: string,
   nameString: string,
   expiryString: string,
@@ -90,13 +90,13 @@ const fillOutForm = async (
     await fireEvent.changeText(cvvInputField, cvvString);
   }
 };
-const pressButton = async (wrapper, buttonId: string): Promise<void> => {
+const pressButton = async (wrapper: ReturnType<typeof render>, buttonId: string): Promise<void> => {
   const payButton = await wrapper.findByTestId(buttonId);
   await fireEvent.press(payButton);
 };
 
 describe('PaySheet', () => {
-  let wrapper;
+  let wrapper: ReturnType<typeof render>;
   beforeEach(() => {
     global.fetch = jest.fn();
   });

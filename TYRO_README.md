@@ -4,7 +4,7 @@ Must have:
 
 - Xcode
 - Android Studio
-- Ruby v3.0.0+ (use rbenv to manage ruby versions)
+- Ruby v3.3.x (use rbenv to manage ruby versions — project pins `3.3.11` via `.ruby-version`)
 - react-native-cli (npm install react-native-cli)
 
 # Getting Started

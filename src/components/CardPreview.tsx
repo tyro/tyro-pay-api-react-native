@@ -1,4 +1,4 @@
-import React, { JSX, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated, View } from 'react-native';
 import { ImageSources } from '../@types/images';
 import { SupportedNetworks } from '../@types/network-types';

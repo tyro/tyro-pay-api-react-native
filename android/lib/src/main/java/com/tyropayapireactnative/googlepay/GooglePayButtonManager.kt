@@ -15,25 +15,25 @@ class GooglePayButtonManager : SimpleViewManager<GooglePayButtonView>() {
         }
     }
 
-    private fun updateView(view: GooglePayButtonView) {
+    private fun reinitializeButton(view: GooglePayButtonView) {
         view.initialize()
     }
 
     @ReactProp(name = "buttonType")
     fun setButtonType(button: GooglePayButtonView, buttonType: String) {
         button.setButtonType(buttonType)
-        updateView(button)
+        reinitializeButton(button)
     }
 
     @ReactProp(name = "buttonColor")
     fun setButtonColor(button: GooglePayButtonView, buttonColor: String) {
         button.setButtonColor(buttonColor)
-        updateView(button)
+        reinitializeButton(button)
     }
 
     @ReactProp(name = "buttonBorderRadius")
     fun setBorderRadius(button: GooglePayButtonView, borderRadius: Int) {
         button.setBorderRadius(borderRadius)
-        updateView(button)
+        reinitializeButton(button)
     }
 }

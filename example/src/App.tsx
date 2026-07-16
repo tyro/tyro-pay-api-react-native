@@ -5,7 +5,7 @@
  * @format
  */
 
-import React, { JSX } from 'react';
+import React from 'react';
 import { ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
@@ -15,6 +15,7 @@ import CheckOut from './Checkout';
 import Store from './Store';
 import { RootStackParamList } from './@types/navigation';
 import { TyroProvider } from '@tyro/tyro-pay-api-react-native';
+import { Colors } from './colors';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -23,7 +24,7 @@ function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? '#000' : '#fff',
+    backgroundColor: isDarkMode ? Colors.dark : Colors.light,
     flex: 1,
   };
 

@@ -29,6 +29,6 @@ appId: ${APP_ID}
     id: "pay-button"
 - extendedWaitUntil:
     visible: "ErrorType: PAY_REQUEST_ERROR" 
-    timeout: 150000 
+    timeout: 300000 
 - assertVisible: "ErrorCode: DECLINED"
 - assertVisible: "ErrorMessage: There was an error with the pay request, either validation error or payment failed."

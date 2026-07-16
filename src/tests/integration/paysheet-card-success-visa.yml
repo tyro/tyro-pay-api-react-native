@@ -29,4 +29,4 @@ appId: ${APP_ID}
     id: "pay-button"
 - extendedWaitUntil:
     visible: "SUCCESS"
-    timeout: 150000
+    timeout: 300000

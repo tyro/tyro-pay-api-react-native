@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createContext, JSX, useContext } from 'react';
+import { createContext, useContext } from 'react';
 import { TyroPayOptions } from './@types/definitions';
 import { ErrorMessage } from './@types/error-message-types';
 import { ClientPayRequestResponse } from './@types/pay-request-types';

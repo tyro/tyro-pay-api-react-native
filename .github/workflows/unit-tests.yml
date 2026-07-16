@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: ['**']
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs: 
   react-unit: 
     runs-on: macos-latest
@@ -44,7 +48,7 @@ jobs:
           ./.ci_steps/test.sh
   
   ios-unit:
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
@@ -77,9 +81,18 @@ jobs:
       - name: Install React Native CLI
         run: npm install react-native-cli
 
+      - name: Install example Ruby dependencies
+        working-directory: example
+        run: bundle install
+
       - name: Install dependencies
         run: | 
           npm run install:all
+
+      - name: Prepare iOS Simulator
+        run: |
+          xcrun simctl list devices | grep "iPhone 16 Pro" | grep -oE '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}' | xargs -r xcrun simctl delete 2>/dev/null || true
+          xcrun simctl create "iPhone 16 Pro" "iPhone 16 Pro"
 
       - name: Run iOS tests
         run: npm run test:unit:ios

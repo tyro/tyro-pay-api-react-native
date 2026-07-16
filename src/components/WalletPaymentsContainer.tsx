@@ -1,6 +1,6 @@
 import GooglePayButton from '../wallets/google-pay/GooglePayButton';
 import ApplePayButton from '../wallets/apple-pay/ApplePayButton';
-import React, { JSX } from 'react';
+import React from 'react';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import { WalletPaymentResult } from '../@types/wallet-payment-result';
 import TyroSDK from '../TyroSDK';

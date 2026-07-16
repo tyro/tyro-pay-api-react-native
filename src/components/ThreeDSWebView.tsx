@@ -1,4 +1,4 @@
-import React, { JSX } from 'react';
+import React from 'react';
 import { Modal, Dimensions } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';

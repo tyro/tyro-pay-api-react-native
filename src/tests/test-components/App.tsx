@@ -7,6 +7,7 @@
 
 import TyroProvider from '../../TyroSharedContext';
 import CheckOut from './checkout';
+import { Colors } from './colors';
 import React, { JSX } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
@@ -16,7 +17,7 @@ function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? '#000' : '#fff',
+    backgroundColor: isDarkMode ? Colors.dark : Colors.light,
   };
 
   return (

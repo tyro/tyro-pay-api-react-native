@@ -10,7 +10,6 @@ import SwiftUI
 import PassKit
 
 @available(iOS 16, *)
-@available(iOS 16, *)
 extension PayWithApplePayButtonStyle {
 	static func stringToPayWithApplePayButtonStyle(rawValue: String) -> Self {
 		switch rawValue {
@@ -23,7 +22,6 @@ extension PayWithApplePayButtonStyle {
 	}
 }
 
-@available(iOS 16, *)
 @available(iOS 16, *)
 extension PayWithApplePayButtonLabel {
 	static func stringToPayWithApplePayButtonLabel(rawValue: String) -> Self {

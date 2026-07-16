@@ -30,8 +30,11 @@ appId: ${APP_ID}
 - extendedWaitUntil:
     visible: "Enter Your Authentication Data"
     timeout: 150000
+- extendedWaitUntil:
+    visible: "Password:"
+    timeout: 30000
 - tapOn: 
-    text: "Password:"
+    text: "Password"
 - inputText: "123456"
 - tapOn: 
     text: "SUBMIT"

@@ -9,7 +9,7 @@ import { InitTestComponent } from './test-components/tests';
 import { TyroPayOptionsProps } from '../@types/definitions';
 import { TyroErrorMessages } from '../@types/error-message-types';
 
-const renderWithProvider = async (component: any, options: TyroPayOptionsProps): Promise<any> => {
+const renderWithProvider = async (component: React.ReactElement, options: TyroPayOptionsProps): Promise<ReturnType<typeof render>> => {
   return render(<TyroProvider options={options}>{component}</TyroProvider>);
 };
 
@@ -41,7 +41,7 @@ const merchantName = 'merName';
 const totalLabel = 'Total Label';
 
 describe('WalletPaymentsContainer', () => {
-  let wrapper: any;
+  let wrapper: ReturnType<typeof render>;
 
   afterEach(() => {
     jest.clearAllMocks();

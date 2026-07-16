@@ -86,13 +86,16 @@ android {
             includeAndroidResources = true
             all {
                 maxHeapSize = "1024m"
+                if (it.hasProperty("failOnNoDiscoveredTests")) {
+                    it.failOnNoDiscoveredTests = false
+                }
             }
             returnDefaultValues = true
         }
+    }
 
-        kotlinOptions {
-            freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
-        }
+    kotlinOptions {
+        freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
     }
 }
 
@@ -121,14 +124,12 @@ dependencies {
     androidTestImplementation 'junit:junit:4.13.2'
     androidTestImplementation "androidx.test:core:1.5.0"
     androidTestImplementation "androidx.test:core-ktx:1.5.0"
-    androidTestImplementation "org.mockito:mockito-core:5.4.0"
-    androidTestImplementation "org.mockito.kotlin:mockito-kotlin:5.0.0"
-    androidTestImplementation 'org.robolectric:robolectric:4.9'
-    androidTestImplementation "androidx.test:core:1.5.0"
+    androidTestImplementation "org.mockito:mockito-core:5.23.0"
+    androidTestImplementation "org.mockito.kotlin:mockito-kotlin:6.3.0"
+    androidTestImplementation 'org.robolectric:robolectric:4.16.1'
     androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation "org.mockito:mockito-core:5.4.0"
     testImplementation "androidx.test:core:1.5.0"
     testImplementation 'androidx.test:runner:1.5.2'
-    testImplementation "org.mockito:mockito-core:5.4.0"
-    testImplementation 'org.robolectric:robolectric:4.9'
+    testImplementation "org.mockito:mockito-core:5.23.0"
+    testImplementation 'org.robolectric:robolectric:4.16.1'
 }
