@@ -2370,10 +2370,10 @@ SPEC CHECKSUMS:
   RNScreens: 01b065ded2dfe7987bcce770ff3a196be417ff41
   RNSVG: 6cae8d4082913be2eb43eaec2a456222c42195ed
   SwiftyBeaver: ade157e4f857812e7d7f15f2e3396bb8733f8a1c
-  tyro-pay-api-react-native: 60ea3359160733ff90e7dd3a885c55f691494a73
+  tyro-pay-api-react-native: c3140043ed969b66bb9c9c046530610d48145d47
   TyroApplePay: 51f8b12e3e7fe39cb5eeb31ba27eb40cef904ed8
   Yoga: fe50ab299e578f397fef753cf309c6703a4db29b
 
-PODFILE CHECKSUM: 0490a404cd3f41ec8dceeeb2eefb9b3c42ac1b5f
+PODFILE CHECKSUM: bc9f9595ed1b2d30072ad1918ece622c184c79ee
 
 COCOAPODS: 1.17.0

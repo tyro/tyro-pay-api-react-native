@@ -8,7 +8,9 @@ require Pod::Executable.execute_command('node', ['-p',
 source 'https://github.com/tyro/connect-cocoapods.git'
 source 'https://cdn.cocoapods.org/'
 
-platform :ios, '16.0'
+package = JSON.parse(File.read(File.join(__dir__, '../../package.json')))
+MIN_IOS_VERSION = package['minIosVersion']
+platform :ios, MIN_IOS_VERSION
 prepare_react_native_project!
 
 linkage = ENV['USE_FRAMEWORKS']

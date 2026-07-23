@@ -15,12 +15,12 @@ import CheckOut from './Checkout';
 import Store from './Store';
 import { RootStackParamList } from './@types/navigation';
 import { TyroProvider } from '@tyro/tyro-pay-api-react-native';
-import { Colors } from './colors';
+import { Colors } from '../../src/tests/test-components/colors';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 // Demo App
-function App(): JSX.Element {
+function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {

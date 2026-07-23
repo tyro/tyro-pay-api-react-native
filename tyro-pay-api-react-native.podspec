@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.license      = { :type => 'Conditions of Use', :file => 'LICENSE.md' }
   s.authors      = package["author"]
 
-  s.platforms    = { :ios => "16.0" }
+  s.platforms    = { :ios => package["minIosVersion"] }
   s.source       = { :git => "https://github.com/tyro/tyro-pay-api-react-native.git", :tag => "#{s.version}" }
 
   s.source_files = "ios/**/*.{h,m,mm,swift}"

@@ -48,6 +48,7 @@ local.properties
 !debug.keystore
 .java-version
 .kotlin/
+example/android/gradle/gradle-daemon-jvm.properties
 
 # node.js
 #

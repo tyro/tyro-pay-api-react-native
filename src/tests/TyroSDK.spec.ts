@@ -111,9 +111,10 @@ describe('TyroSDK', () => {
       try {
         await tyroSdk.initPaySheet('secret', false);
       } catch (error) {
+        const err = error as Error;
         expect(error).toBeInstanceOf(Error);
         expect(error).toHaveProperty('status', '403');
-        expect(error.message).toBe('Http Status Error');
+        expect(err.message).toBe('Http Status Error');
       }
     });
 
@@ -124,9 +125,10 @@ describe('TyroSDK', () => {
       try {
         await tyroSdk.initPaySheet('secret', false);
       } catch (error) {
+        const err = error as Error;
         expect(error).toBeInstanceOf(Error);
         expect(error).toHaveProperty('status', '500');
-        expect(error.message).toBe('Http Status Error');
+        expect(err.message).toBe('Http Status Error');
       }
     });
 

@@ -30,15 +30,15 @@ jest.mock('../clients/config/three-d-secure-client-config.ts', () => {
 jest.mock('../@types/images.tsx', () => {
   const images = ['card-unknown', 'card-cvv', 'card-error', 'visa', 'mastercard'];
   return {
-    ImageSources: images.reduce((acc, name) => {
+    ImageSources: images.reduce((acc: Record<string, () => React.JSX.Element>, name: string) => {
       const attributes = { testID: `${name}-image` };
-      acc[name] = (): JSX.Element => (
+      acc[name] = (): React.JSX.Element => (
         <>
           <div {...attributes}>{name}-image</div>
         </>
       );
       return acc;
-    }, {}),
+    }, {} as Record<string, () => React.JSX.Element>),
   };
 });
 
@@ -47,7 +47,10 @@ const merchantName = 'merName';
 const cardDeclined = 'Card Declined';
 const appleTotalLabel = 'Total Label';
 
-const renderWithProvider = async (component: React.ReactElement, options: TyroPayOptionsProps): Promise<ReturnType<typeof render>> => {
+const renderWithProvider = async (
+  component: React.ReactElement,
+  options: TyroPayOptionsProps
+): Promise<ReturnType<typeof render>> => {
   return render(<TyroProvider options={options}>{component}</TyroProvider>);
 };
 
@@ -1476,9 +1479,9 @@ describe('PaySheet', () => {
       await checkForPaySheetRenders(wrapper);
       const cardInputField = wrapper.getByPlaceholderText('Card number');
       await fireEvent(cardInputField, 'focus');
-      expect(wrapper.getByPlaceholderText('Card number')).toBeSelected();
+      (expect(wrapper.getByPlaceholderText('Card number')) as any).toBeSelected();
       await fireEvent(cardInputField, 'blur');
-      expect(wrapper.getByPlaceholderText('Card number')).not.toBeSelected();
+      (expect(wrapper.getByPlaceholderText('Card number')) as any).not.toBeSelected();
     });
   });
 });

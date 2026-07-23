@@ -11,8 +11,8 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		C0894D3AC6CABB762B77CCCC /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		9BDC11452B9ADE4D003033F6 /* tyroPayApiReactNativeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDC11442B9ADE4D003033F6 /* tyroPayApiReactNativeTests.swift */; };
+		C0894D3AC6CABB762B77CCCC /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,9 +26,9 @@
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = example/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = example/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9B6FCF563005ACCB00118896 /* example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = example.entitlements; path = example/example.entitlements; sourceTree = "<group>"; };
-		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		9BDC11432B9ADE4D003033F6 /* tyroPayApiReactNativeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = tyroPayApiReactNativeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9BDC11442B9ADE4D003033F6 /* tyroPayApiReactNativeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = tyroPayApiReactNativeTests.swift; path = tyroPayApiReactNativeTests/tyroPayApiReactNativeTests.swift; sourceTree = "<group>"; };
+		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +96,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		9BDC11462B9ADE4D003033F6 /* tyroPayApiReactNativeTests */ = {
+			isa = PBXGroup;
+			children = (
+				9BDC11442B9ADE4D003033F6 /* tyroPayApiReactNativeTests.swift */,
+			);
+			name = tyroPayApiReactNativeTests;
+			sourceTree = "<group>";
+		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,14 +111,6 @@
 				5709B34CF0A7D63546082F79 /* Pods-example.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		9BDC11462B9ADE4D003033F6 /* tyroPayApiReactNativeTests */ = {
-			isa = PBXGroup;
-			children = (
-				9BDC11442B9ADE4D003033F6 /* tyroPayApiReactNativeTests.swift */,
-			);
-			name = tyroPayApiReactNativeTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -523,7 +523,7 @@
 			buildSettings = {
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tyro.tyroPayApiReactNativeTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tyro.tyroPayApiReactNativeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -537,7 +537,7 @@
 			buildSettings = {
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tyro.tyroPayApiReactNativeTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tyro.tyroPayApiReactNativeTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

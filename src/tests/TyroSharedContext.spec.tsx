@@ -15,7 +15,10 @@ jest.mock('../utils/helpers', () => ({
   isiOS: jest.fn(),
 }));
 
-const renderWithProvider = async (component: React.ReactElement, options: TyroPayOptionsProps): Promise<ReturnType<typeof render>> => {
+const renderWithProvider = async (
+  component: React.ReactElement,
+  options: TyroPayOptionsProps
+): Promise<ReturnType<typeof render>> => {
   return render(<TyroProvider options={options}>{component}</TyroProvider>);
 };
 

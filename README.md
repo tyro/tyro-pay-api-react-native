@@ -16,13 +16,13 @@ installing the Tyro React Native SDK in your app
 
 This SDK requires the following peer dependencies:
 
-| Dependency | Version |
-|---|---|
-| `react` | `>= 19.0.0 < 20.0.0` |
-| `react-native` | `>= 0.78.0 < 0.87.0` |
-| `react-native-safe-area-context` | `>= 5` |
-| `react-native-svg` | `>= 15` |
-| `react-native-webview` | `>= 13` |
+| Dependency                       | Version              |
+| -------------------------------- | -------------------- |
+| `react`                          | `>= 19.0.0 < 20.0.0` |
+| `react-native`                   | `>= 0.78.0 < 0.87.0` |
+| `react-native-safe-area-context` | `>= 5`               |
+| `react-native-svg`               | `>= 15`              |
+| `react-native-webview`           | `>= 13`              |
 
 > **Note:** Version 3.0.0 of this SDK dropped support for React 18 and React Native < 0.78
 

@@ -9,7 +9,10 @@ import { InitTestComponent } from './test-components/tests';
 import { TyroPayOptionsProps } from '../@types/definitions';
 import { TyroErrorMessages } from '../@types/error-message-types';
 
-const renderWithProvider = async (component: React.ReactElement, options: TyroPayOptionsProps): Promise<ReturnType<typeof render>> => {
+const renderWithProvider = async (
+  component: React.ReactElement,
+  options: TyroPayOptionsProps
+): Promise<ReturnType<typeof render>> => {
   return render(<TyroProvider options={options}>{component}</TyroProvider>);
 };
 
