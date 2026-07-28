@@ -28,3 +28,6 @@ jobs:
         with:
           # Possible values: "critical", "high", "moderate", "low"
           fail-on-severity: moderate
+          # Allow known dev-only vulnerabilities that cannot be fixed without major version breaks
+          allow-ghsas: |
+            GHSA-mh99-v99m-4gvg

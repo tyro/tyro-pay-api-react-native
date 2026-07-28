@@ -79,3 +79,12 @@ Releasing:
 
 - If still prerelease check 'Set as pre-release' box, then write a description of the release and click 'Publish Release' when ready to release.
 - Check the GitHub Action ran to publish the release to GitHub Packages
+
+# Github Secrets
+
+GITHUB_PACKAGES_USER: ${{ github.actor }}
+GITHUB_PACKAGES_TOKEN: ${{ secrets.PACKAGE_READ_PAT }}
+
+These are managed by App Platform. When they expire they will need to create and upload new classic token for us.
+
+We can tell it has expired by the build failing to fetch our native SDKs

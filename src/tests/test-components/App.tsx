@@ -7,7 +7,7 @@
 
 import TyroProvider from '../../TyroSharedContext';
 import CheckOut from './checkout';
-import { Colors } from './colors';
+import { Colors } from '../../@types/colors';
 import React, { JSX } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';

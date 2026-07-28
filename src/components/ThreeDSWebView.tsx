@@ -3,6 +3,7 @@ import { Modal, Dimensions } from 'react-native';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { WebView } from 'react-native-webview';
 import { useSDK } from '../SDKSharedContext';
+import { Colors } from '../@types/colors';
 
 const { height, width } = Dimensions.get('window');
 
@@ -12,7 +13,7 @@ export const ThreeDSWebview = (): JSX.Element => {
   return (
     <Modal visible={threeDSCheck.isTrue}>
       <SafeAreaProvider>
-        <SafeAreaView style={{ flex: 1, backgroundColor: 'transparent' }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: Colors.transparent }}>
           <WebView
             source={{
               uri: threeDSCheck.url,

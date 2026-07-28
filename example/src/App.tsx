@@ -15,7 +15,7 @@ import CheckOut from './Checkout';
 import Store from './Store';
 import { RootStackParamList } from './@types/navigation';
 import { TyroProvider } from '@tyro/tyro-pay-api-react-native';
-import { Colors } from '../../src/tests/test-components/colors';
+import { Colors } from '../../src/@types/colors';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
