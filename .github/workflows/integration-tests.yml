@@ -15,7 +15,7 @@ concurrency:
 jobs:
   android-e2e:
     runs-on: ubuntu-latest
-    timeout-minutes: 120          # <-- was unbounded (default 360 = your "hours")
+    timeout-minutes: 60
     strategy:
       matrix:
         api-level: [33]
@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: npm             # <-- Android had no npm cache at all
+          cache: npm             
 
       - name: Setup Java env
         uses: actions/setup-java@v4
@@ -121,7 +121,7 @@ jobs:
           if-no-files-found: warn
 
   ios-e2e:
-    runs-on: macos-15            # 3 cores / 7 GB - tight, nothing you can do on a standard runner
+    runs-on: macos-latest-xlarge
     timeout-minutes: 60
     steps:
       - name: Checkout code
