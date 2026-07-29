@@ -1,6 +1,11 @@
 name: Publish Package to GitHub Packages
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'NPM tag to publish with (alpha, beta, rc, or leave empty for latest)'
+        required: false
+        default: ''
   release:
     types: [published]
 jobs:
@@ -36,8 +41,11 @@ jobs:
       - name: Publish
         run: |
           VERSION=$(node -p "require('./package.json').version")
+          TAG="${{ github.event.inputs.tag }}"
 
-          if [[ "$VERSION" == *"-alpha."* ]]; then
+          if [[ -n "$TAG" ]]; then
+            npm publish --tag "$TAG"
+          elif [[ "$VERSION" == *"-alpha."* ]]; then
             npm publish --tag alpha
           elif [[ "$VERSION" == *"-beta."* ]]; then
             npm publish --tag beta
