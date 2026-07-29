@@ -34,6 +34,17 @@ jobs:
         run: npm run prepack
 
       - name: Publish
-        run: npm publish
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+
+          if [[ "$VERSION" == *"-alpha."* ]]; then
+            npm publish --tag alpha
+          elif [[ "$VERSION" == *"-beta."* ]]; then
+            npm publish --tag beta
+          elif [[ "$VERSION" == *"-rc."* ]]; then
+            npm publish --tag rc
+          else
+            npm publish
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
