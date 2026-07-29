@@ -16,8 +16,14 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18.0.0
+          node-version: 24
           registry-url: 'https://npm.pkg.github.com'
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '.ruby-version'
+          bundler-cache: true
 
       - name: Install dependencies, lint and jest test
         run: | 

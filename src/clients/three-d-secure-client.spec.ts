@@ -22,7 +22,7 @@ describe('three-d-secure-client', () => {
       ) as jest.Mock;
       const result = await pollFor3DSecureMethodResult(paySecret);
       expect(result?.status).toEqual(payStatus.status);
-      expect(fetch).toBeCalledWith(url, headers);
+      expect(fetch).toHaveBeenCalledWith(url, headers);
     });
 
     it('returns null if there is an error polling', async () => {
@@ -31,7 +31,7 @@ describe('three-d-secure-client', () => {
       }) as jest.Mock;
       const result = await pollFor3DSecureMethodResult(paySecret);
       expect(result).toEqual(null);
-      expect(fetch).toBeCalledWith(url, headers);
+      expect(fetch).toHaveBeenCalledWith(url, headers);
     });
 
     it('returns null if the paySecret is incorrect', async () => {
@@ -42,7 +42,7 @@ describe('three-d-secure-client', () => {
       ) as jest.Mock;
       const result = await pollFor3DSecureMethodResult(paySecret);
       expect(result).toEqual(null);
-      expect(fetch).toBeCalledWith(url, headers);
+      expect(fetch).toHaveBeenCalledWith(url, headers);
     });
   });
 
@@ -57,7 +57,7 @@ describe('three-d-secure-client', () => {
       ) as jest.Mock;
       const result = await pollFor3DSecureAuthResult(paySecret);
       expect(result?.status).toEqual('AWAITING_AUTHENTICATION');
-      expect(fetch).toBeCalledWith(url, headers);
+      expect(fetch).toHaveBeenCalledWith(url, headers);
     });
 
     it('returns null if there is an error polling', async () => {
@@ -66,7 +66,7 @@ describe('three-d-secure-client', () => {
       }) as jest.Mock;
       const result = await pollFor3DSecureAuthResult(paySecret);
       expect(result).toEqual(null);
-      expect(fetch).toBeCalledWith(url, headers);
+      expect(fetch).toHaveBeenCalledWith(url, headers);
     });
 
     it('returns null if the paySecret is incorrect', async () => {
@@ -77,7 +77,7 @@ describe('three-d-secure-client', () => {
       ) as jest.Mock;
       const result = await pollFor3DSecureAuthResult(paySecret);
       expect(result).toEqual(null);
-      expect(fetch).toBeCalledWith(url, headers);
+      expect(fetch).toHaveBeenCalledWith(url, headers);
     });
   });
 
@@ -92,7 +92,7 @@ describe('three-d-secure-client', () => {
       ) as jest.Mock;
       const result = await pollFor3DSecureChallengeAndFinalResult(paySecret);
       expect(result?.status).toEqual(payStatus.status);
-      expect(fetch).toBeCalledWith(url, headers);
+      expect(fetch).toHaveBeenCalledWith(url, headers);
     });
 
     it('polls for FAILED result', async () => {
@@ -105,7 +105,7 @@ describe('three-d-secure-client', () => {
       ) as jest.Mock;
       const result = await pollFor3DSecureChallengeAndFinalResult(paySecret);
       expect(result?.status).toEqual(payStatus.status);
-      expect(fetch).toBeCalledWith(url, headers);
+      expect(fetch).toHaveBeenCalledWith(url, headers);
     });
 
     it('returns null if there is an error polling', async () => {
@@ -114,7 +114,7 @@ describe('three-d-secure-client', () => {
       }) as jest.Mock;
       const result = await pollFor3DSecureChallengeAndFinalResult(paySecret);
       expect(result).toEqual(null);
-      expect(fetch).toBeCalledWith(url, headers);
+      expect(fetch).toHaveBeenCalledWith(url, headers);
     });
 
     it('returns null if the paySecret is incorrect', async () => {
@@ -125,7 +125,7 @@ describe('three-d-secure-client', () => {
       ) as jest.Mock;
       const result = await pollFor3DSecureChallengeAndFinalResult(paySecret);
       expect(result).toEqual(null);
-      expect(fetch).toBeCalledWith(url, headers);
+      expect(fetch).toHaveBeenCalledWith(url, headers);
     });
   });
 });

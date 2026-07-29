@@ -16,8 +16,12 @@ struct ApplePayButton: View {
 	var body: some View {
 		VStack {
 			if #available(iOS 16, *) {
-				PayWithApplePayButton(self.modernDataStore.buttonLabel) {}
-					.payWithApplePayButtonStyle(self.modernDataStore.buttonStyle)
+				PayWithApplePayButton(
+					PayWithApplePayButtonLabel.stringToPayWithApplePayButtonLabel(rawValue: modernDataStore.buttonLabel)
+				) {}
+					.payWithApplePayButtonStyle(
+						PayWithApplePayButtonStyle.stringToPayWithApplePayButtonStyle(rawValue: modernDataStore.buttonStyle)
+					)
 			} else {
 				PaymentButtonView(type: self.oldDataStore.buttonLabel, style: self.oldDataStore.buttonStyle)
 			}

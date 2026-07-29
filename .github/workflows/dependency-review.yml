@@ -10,6 +10,10 @@ on:
   pull_request:
     branches: ['**']
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
@@ -20,7 +24,10 @@ jobs:
       - name: 'Checkout Repository'
         uses: actions/checkout@v3
       - name: 'Dependency Review'
-        uses: actions/dependency-review-action@v3
+        uses: actions/dependency-review-action@v4
         with:
           # Possible values: "critical", "high", "moderate", "low"
           fail-on-severity: moderate
+          # Allow known dev-only vulnerabilities that cannot be fixed without major version breaks
+          allow-ghsas: |
+            GHSA-mh99-v99m-4gvg

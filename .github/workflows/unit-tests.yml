@@ -7,6 +7,10 @@ on:
   pull_request:
     branches: ['**']
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs: 
   react-unit: 
     runs-on: macos-latest
@@ -18,6 +22,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '.ruby-version'
+          bundler-cache: true
+
       - name: Cache Tyro Pay API React Native
         uses: actions/cache@v3
         with:
@@ -30,7 +40,7 @@ jobs:
 
       - name: Pod clear cache
         run: |
-          pod cache clean --all
+          bundle exec pod cache clean --all
 
       - name: Install dependencies, lint and jest test
         run: | 
@@ -38,20 +48,21 @@ jobs:
           ./.ci_steps/test.sh
   
   ios-unit:
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
 
-      - name: setup-cocoapods
-        uses: maxim-lobanov/setup-cocoapods@v1
-        with:
-          version: 1.15.2
-
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '.ruby-version'
+          bundler-cache: true
 
       - name: Cache Tyro Pay API React Native
         uses: actions/cache@v3
@@ -65,14 +76,23 @@ jobs:
 
       - name: Pod clear cache
         run: |
-          pod cache clean --all
+          bundle exec pod cache clean --all
 
       - name: Install React Native CLI
         run: npm install react-native-cli
 
+      - name: Install example Ruby dependencies
+        working-directory: example
+        run: bundle install
+
       - name: Install dependencies
         run: | 
           npm run install:all
+
+      - name: Prepare iOS Simulator
+        run: |
+          xcrun simctl list devices | grep "iPhone 16 Pro" | grep -oE '[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}' | xargs -r xcrun simctl delete 2>/dev/null || true
+          xcrun simctl create "iPhone 16 Pro" "iPhone 16 Pro"
 
       - name: Run iOS tests
         run: npm run test:unit:ios

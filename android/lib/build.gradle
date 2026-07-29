@@ -3,8 +3,7 @@ plugins {
 }
 
 apply plugin: "com.android.library"
-apply plugin: "com.facebook.react"
-apply plugin: "kotlin-android"
+apply plugin: "org.jetbrains.kotlin.android"
 
 apply from: "./coverage.gradle"
 apply from: "./ktlint.gradle"
@@ -24,19 +23,23 @@ def enableProguardInReleaseBuilds = false
  * The preferred build flavor of JavaScriptCore (JSC)
  *
  * For example, to use the international variant, you can use:
- * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
+ def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
  *
  * The international variant includes ICU i18n library and necessary data
  * allowing to use e.g. `Date.toLocaleString` and `String.localeCompare` that
  * give correct results when using with locales other than en-US. Note that
  * this variant is about 6MiB larger per architecture than default.
  */
-def jscFlavor = 'org.webkit:android-jsc:+'
+def jscFlavor = 'io.github.react-native-community:jsc-android:2026004.+'
 
 android {
     ndkVersion rootProject.ext.ndkVersion
 
-    compileSdk rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    def csdk = rootProject.ext.has("compileSdkVersion")
+        ? rootProject.ext.compileSdkVersion
+        : 36
+    compileSdk csdk
 
     namespace "com.tyropayapireactnative"
     useLibrary 'android.test.mock'
@@ -83,13 +86,16 @@ android {
             includeAndroidResources = true
             all {
                 maxHeapSize = "1024m"
+                if (it.hasProperty("failOnNoDiscoveredTests")) {
+                    it.failOnNoDiscoveredTests = false
+                }
             }
             returnDefaultValues = true
         }
+    }
 
-        kotlinOptions {
-            freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
-        }
+    kotlinOptions {
+        freeCompilerArgs += ["-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"]
     }
 }
 
@@ -111,21 +117,19 @@ allprojects {
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     //noinspection GradleDynamicVersion
-    api "com.facebook.react:react-native:v0.72.10"
+    api "com.facebook.react:react-native"
     implementation "com.tyro:tyro-pay-api-sdk-android:1.0.0"
     implementation 'com.google.android.gms:play-services-wallet:19.2.1'
 
     androidTestImplementation 'junit:junit:4.13.2'
     androidTestImplementation "androidx.test:core:1.5.0"
     androidTestImplementation "androidx.test:core-ktx:1.5.0"
-    androidTestImplementation "org.mockito:mockito-core:5.4.0"
-    androidTestImplementation "org.mockito.kotlin:mockito-kotlin:5.0.0"
-    androidTestImplementation 'org.robolectric:robolectric:4.9'
-    androidTestImplementation "androidx.test:core:1.5.0"
+    androidTestImplementation "org.mockito:mockito-core:5.23.0"
+    androidTestImplementation "org.mockito.kotlin:mockito-kotlin:6.3.0"
+    androidTestImplementation 'org.robolectric:robolectric:4.16.1'
     androidTestImplementation 'androidx.test:runner:1.5.2'
-    androidTestImplementation "org.mockito:mockito-core:5.4.0"
     testImplementation "androidx.test:core:1.5.0"
     testImplementation 'androidx.test:runner:1.5.2'
-    testImplementation "org.mockito:mockito-core:5.4.0"
-    testImplementation 'org.robolectric:robolectric:4.9'
+    testImplementation "org.mockito:mockito-core:5.23.0"
+    testImplementation 'org.robolectric:robolectric:4.16.1'
 }

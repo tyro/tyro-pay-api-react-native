@@ -1,5 +1,5 @@
 module.exports = {
-  preset: 'react-native',
+  preset: '@react-native/jest-preset',
   testEnvironment: 'node',
   coverageReporters: ['html', 'text'],
   collectCoverageFrom: ['src/**/*.{js,ts,tsx}'],
@@ -24,5 +24,5 @@ module.exports = {
   },
   globalSetup: './src/tests/global-setup.ts',
   setupFiles: ['./src/tests/__mocks__/NativeModules.ts', './src/tests/__mocks__/Animation.ts'],
-  setupFilesAfterEnv: ['<rootDir>/jest-setup.js'],
+  setupFilesAfterEnv: [],
 };

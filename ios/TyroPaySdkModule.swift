@@ -17,10 +17,10 @@ enum TyroApplePayErrors: Error {
 }
 
 @objc(TyroPaySdkModule)
-class TyroPaySdkModule: RCTEventEmitter {
+class TyroPaySdkModule: NSObject {
 
 	@objc(requiresMainQueueSetup)
-	static override func requiresMainQueueSetup() -> Bool {
+	static func requiresMainQueueSetup() -> Bool {
 		return true
 	}
 

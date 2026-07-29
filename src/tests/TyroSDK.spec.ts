@@ -92,14 +92,14 @@ describe('TyroSDK', () => {
     });
 
     it('throws an error if there was an environment mismatch', async () => {
-      await expect(tyroSdk.initPaySheet('secret', true)).rejects.toThrowError(
+      await expect(tyroSdk.initPaySheet('secret', true)).rejects.toThrow(
         new PaySheetInitError(ErrorCodes.ENVIRONMENT_MISMATCH)
       );
     });
 
     it('throws an error if the pay request was already submitted successfully', async () => {
       global.fetch = jest.fn(() => mockFetch(200, { status: 'SUCCESS', isLive: false } as ClientPayRequestResponse));
-      await expect(tyroSdk.initPaySheet('secret', false)).rejects.toThrowError(
+      await expect(tyroSdk.initPaySheet('secret', false)).rejects.toThrow(
         new PaySheetInitError(ErrorCodes.PAY_REQUEST_INVALID_STATUS)
       );
     });
@@ -111,9 +111,10 @@ describe('TyroSDK', () => {
       try {
         await tyroSdk.initPaySheet('secret', false);
       } catch (error) {
+        const err = error as Error;
         expect(error).toBeInstanceOf(Error);
         expect(error).toHaveProperty('status', '403');
-        expect(error.message).toBe('Http Status Error');
+        expect(err.message).toBe('Http Status Error');
       }
     });
 
@@ -124,16 +125,15 @@ describe('TyroSDK', () => {
       try {
         await tyroSdk.initPaySheet('secret', false);
       } catch (error) {
+        const err = error as Error;
         expect(error).toBeInstanceOf(Error);
         expect(error).toHaveProperty('status', '500');
-        expect(error.message).toBe('Http Status Error');
+        expect(err.message).toBe('Http Status Error');
       }
     });
 
     it('throws an error if the pay secret is an empty string', async () => {
-      await expect(tyroSdk.initPaySheet('', false)).rejects.toThrowError(
-        new PaySheetInitError(ErrorCodes.NO_PAY_SECRET)
-      );
+      await expect(tyroSdk.initPaySheet('', false)).rejects.toThrow(new PaySheetInitError(ErrorCodes.NO_PAY_SECRET));
     });
   });
 
@@ -227,7 +227,7 @@ describe('TyroSDK', () => {
         },
         liveMode: false,
       } as unknown as TyroPayOptions;
-      await expect(tyroSdk.initWalletPay(options)).rejects.toThrowError(
+      await expect(tyroSdk.initWalletPay(options)).rejects.toThrow(
         new PaySheetInitError(ErrorCodes.WALLET_INIT_FAILED)
       );
       expect(NativeModules.TyroPaySdkModule.initWalletPay).toHaveBeenCalled();

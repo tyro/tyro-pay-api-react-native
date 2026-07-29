@@ -5,30 +5,31 @@
  * @format
  */
 
-import { TyroProvider } from '@tyro/tyro-pay-api-react-native';
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import CheckOut from './Checkout';
 import Store from './Store';
 import { RootStackParamList } from './@types/navigation';
+import { TyroProvider } from '@tyro/tyro-pay-api-react-native';
+import { Colors } from '../../src/@types/colors';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 // Demo App
-function App(): JSX.Element {
+function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: isDarkMode ? Colors.dark : Colors.light,
     flex: 1,
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
+    <SafeAreaProvider style={backgroundStyle}>
       <ScrollView contentContainerStyle={{ flex: 1 }}>
         <View style={styles.container}>
           <View style={styles.titleContainer}>
@@ -72,7 +73,7 @@ function App(): JSX.Element {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

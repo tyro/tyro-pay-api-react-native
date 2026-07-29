@@ -1,7 +1,15 @@
 source 'https://rubygems.org'
 
 # You may use http://rbenv.org/ or https://rvm.io/ to install and use this version
-ruby ">= 2.6.10"
+ruby "~> 3.3"
 
-gem 'cocoapods', '~> 1.13'
-gem 'activesupport', '>= 6.1.7.3', '< 7.1.0'
+# Require patched activesupport (fixes ReDoS/XSS/DoS advisories GHSA-cg4j, GHSA-89vf, GHSA-2j26).
+gem 'cocoapods', '>= 1.16'
+gem 'activesupport', '>= 7.2.2.1', '< 8'
+gem 'concurrent-ruby', '>= 1.3.5'
+
+# Ruby 3.4.0 has removed some libraries from the standard library.
+gem 'bigdecimal'
+gem 'logger'
+gem 'benchmark'
+gem 'mutex_m'

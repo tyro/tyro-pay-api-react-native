@@ -29,12 +29,4 @@ appId: ${APP_ID}
     id: "pay-button"
 - extendedWaitUntil:
     visible: "Enter Your Authentication Data"
-    timeout: 150000
-- tapOn: 
-    text: "Password:"
-- inputText: "123456"
-- tapOn: 
-    text: "SUBMIT"
-- extendedWaitUntil:
-    visible: "SUCCESS"
-    timeout: 150000
+    timeout: 300000

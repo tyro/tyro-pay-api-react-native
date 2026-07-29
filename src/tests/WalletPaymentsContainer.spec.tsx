@@ -1,7 +1,6 @@
 import React from 'react';
 import { NativeModules, Platform } from 'react-native';
-import { fireEvent, render, waitFor } from '@testing-library/react-native';
-import { act } from 'react-test-renderer';
+import { fireEvent, render } from '@testing-library/react-native';
 import TyroProvider from '../TyroSharedContext';
 import { WalletPaymentResult, WalletPaymentStatus } from '../@types/wallet-payment-result';
 import { mockFetch } from './utils/mocks';
@@ -10,7 +9,10 @@ import { InitTestComponent } from './test-components/tests';
 import { TyroPayOptionsProps } from '../@types/definitions';
 import { TyroErrorMessages } from '../@types/error-message-types';
 
-const renderWithProvider = async (component, options: TyroPayOptionsProps): Promise<any> => {
+const renderWithProvider = async (
+  component: React.ReactElement,
+  options: TyroPayOptionsProps
+): Promise<ReturnType<typeof render>> => {
   return render(<TyroProvider options={options}>{component}</TyroProvider>);
 };
 
@@ -42,7 +44,7 @@ const merchantName = 'merName';
 const totalLabel = 'Total Label';
 
 describe('WalletPaymentsContainer', () => {
-  let wrapper;
+  let wrapper: ReturnType<typeof render>;
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -64,69 +66,54 @@ describe('WalletPaymentsContainer', () => {
         jest.clearAllMocks();
       });
       test('googlePay defaults to be disabled', async () => {
-        await act(async () => {
-          await waitFor(
-            async () => {
-              wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-                liveMode: false,
-                styleProps: { showSupportedCards: false, googlePayButton: { buttonBorderRadius: 8 } },
-              });
-            },
-            { timeout: 10000 }
-          );
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          styleProps: { showSupportedCards: false, googlePayButton: { buttonBorderRadius: 8 } },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
         // check google pay button
         expect(wrapper.queryByTestId('google-pay-button')).toBeNull();
       });
 
       test('should render google-pay button when google pay is supported', async () => {
-        await act(async () => {
-          await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-              liveMode: false,
-              options: {
-                googlePay: {
-                  enabled: true,
-                  merchantName,
-                },
-              },
-              styleProps: { showSupportedCards: false, googlePayButton: { buttonBorderRadius: 8 } },
-            });
-          });
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            googlePay: {
+              enabled: true,
+              merchantName,
+            },
+          },
+          styleProps: { showSupportedCards: false, googlePayButton: { buttonBorderRadius: 8 } },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
         // check google pay button
-        expect(wrapper.queryByTestId('google-pay-button')).not.toBeNull();
+        expect(await wrapper.findByTestId('google-pay-button')).not.toBeNull();
         // check google pay button style
         const button = await wrapper.findByTestId('google-pay-button');
         expect(button._fiber.memoizedProps.buttonBorderRadius).toEqual(8);
       }, 15000);
 
       test('should render google-pay button with default styleProps', async () => {
-        await act(async () => {
-          await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-              liveMode: false,
-              options: {
-                googlePay: {
-                  enabled: true,
-                  merchantName,
-                },
-              },
-              styleProps: { showSupportedCards: false },
-            });
-          });
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            googlePay: {
+              enabled: true,
+              merchantName,
+            },
+          },
+          styleProps: { showSupportedCards: false },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
         // check google pay button
-        expect(wrapper.queryByTestId('google-pay-button')).not.toBeNull();
+        expect(await wrapper.findByTestId('google-pay-button')).not.toBeNull();
         // check google pay button style
         const button = await wrapper.findByTestId('google-pay-button');
         expect(button._fiber.memoizedProps.buttonBorderRadius).toEqual(4);
@@ -134,51 +121,43 @@ describe('WalletPaymentsContainer', () => {
         expect(button._fiber.memoizedProps.buttonColor).toEqual('default');
       }, 15000);
       test('should accept custom styleProps, even if the number is a string', async () => {
-        await act(async () => {
-          await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-              liveMode: false,
-              options: {
-                googlePay: {
-                  enabled: true,
-                  merchantName,
-                },
-              },
-              styleProps: {
-                showSupportedCards: false,
-                googlePayButton: { buttonBorderRadius: '6' as unknown as number },
-              },
-            });
-          });
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            googlePay: {
+              enabled: true,
+              merchantName,
+            },
+          },
+          styleProps: {
+            showSupportedCards: false,
+            googlePayButton: { buttonBorderRadius: '6' as unknown as number },
+          },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
         // check google pay button style
         const button = await wrapper.findByTestId('google-pay-button');
         expect(button._fiber.memoizedProps.buttonBorderRadius).toEqual(6);
       }, 15000);
       test('should ignore/revert to default, on invalid styleProps', async () => {
-        await act(async () => {
-          await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-              liveMode: false,
-              options: {
-                googlePay: {
-                  enabled: true,
-                  merchantName,
-                },
-              },
-              styleProps: {
-                showSupportedCards: false,
-                googlePayButton: { buttonBorderRadius: 'monkey' as unknown as number },
-              },
-            });
-          });
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            googlePay: {
+              enabled: true,
+              merchantName,
+            },
+          },
+          styleProps: {
+            showSupportedCards: false,
+            googlePayButton: { buttonBorderRadius: 'monkey' as unknown as number },
+          },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
         // check google pay button style
         const button = await wrapper.findByTestId('google-pay-button');
         expect(button._fiber.memoizedProps.buttonBorderRadius).toEqual(4);
@@ -186,26 +165,22 @@ describe('WalletPaymentsContainer', () => {
       test('should do nothing when googlePay is cancelled', async () => {
         NativeModules.TyroPaySdkModule.startWalletPay.mockResolvedValue(mockedCancelledResult);
         mockedFetchPayRequestOnCompletion(PayRequestStatus.AWAITING_PAYMENT_INPUT);
-        await act(async () => {
-          await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-              liveMode: false,
-              options: {
-                googlePay: {
-                  enabled: true,
-                  merchantName,
-                },
-              },
-              styleProps: { showSupportedCards: false },
-            });
-          });
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
-          // check google pay button
-          const googlePay = await wrapper.findByTestId('google-pay-button');
-          await fireEvent.press(googlePay);
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            googlePay: {
+              enabled: true,
+              merchantName,
+            },
+          },
+          styleProps: { showSupportedCards: false },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
+        // check google pay button
+        const googlePay = await wrapper.findByTestId('google-pay-button');
+        await fireEvent.press(googlePay);
         expect(wrapper.queryByText('ErrorCode', { exact: false })).toBeNull();
         expect(wrapper.queryByText('GatewayCode', { exact: false })).toBeNull();
         expect(wrapper.queryByText('ErrorMessage', { exact: false })).toBeNull();
@@ -215,69 +190,51 @@ describe('WalletPaymentsContainer', () => {
         NativeModules.TyroPaySdkModule.startWalletPay.mockResolvedValue(mockedFailedResult);
         mockedFetchPayRequestOnCompletion(PayRequestStatus.FAILED);
 
-        await act(async () => {
-          await waitFor(
-            async () => {
-              wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-                liveMode: false,
-                options: {
-                  googlePay: {
-                    enabled: true,
-                    merchantName,
-                  },
-                },
-                styleProps: { showSupportedCards: false },
-              });
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            googlePay: {
+              enabled: true,
+              merchantName,
             },
-            { timeout: 10000 }
-          );
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
-          // check google pay button
-          const googlePay = await wrapper.findByTestId('google-pay-button');
-          await fireEvent.press(googlePay);
+          },
+          styleProps: { showSupportedCards: false },
         });
-        wrapper.getByText('ErrorCode: Error-Code');
-        wrapper.getByText('GatewayCode: Gateway-Code');
-        wrapper.getByText(`ErrorMessage: ${TyroErrorMessages.PAY_REQUEST_ERROR.message}`);
-        wrapper.getByText(`ErrorType: ${TyroErrorMessages.PAY_REQUEST_ERROR.type}`);
-        await waitFor(async () => {
-          await wrapper.findByText(`Pay Request Status: ${WalletPaymentStatus.FAILED}`);
-        });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
+        // check google pay button
+        const googlePay = await wrapper.findByTestId('google-pay-button');
+        await fireEvent.press(googlePay);
+        await wrapper.findByText('ErrorCode: Error-Code');
+        await wrapper.findByText('GatewayCode: Gateway-Code');
+        await wrapper.findByText(`ErrorMessage: ${TyroErrorMessages.PAY_REQUEST_ERROR.message}`);
+        await wrapper.findByText(`ErrorType: ${TyroErrorMessages.PAY_REQUEST_ERROR.type}`);
+        await wrapper.findByText(`Pay Request Status: ${WalletPaymentStatus.FAILED}`);
       }, 15000);
       test('should update payRequest when googlePay is successful', async () => {
         NativeModules.TyroPaySdkModule.startWalletPay.mockResolvedValue(mockedSuccessResult);
         mockedFetchPayRequestOnCompletion(PayRequestStatus.SUCCESS);
-        await act(async () => {
-          await waitFor(
-            async () => {
-              wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-                liveMode: false,
-                options: {
-                  googlePay: {
-                    enabled: true,
-                    merchantName,
-                  },
-                },
-                styleProps: { showSupportedCards: false },
-              });
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            googlePay: {
+              enabled: true,
+              merchantName,
             },
-            { timeout: 10000 }
-          );
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
-          // check google pay button
-          const googlePay = await wrapper.findByTestId('google-pay-button');
-          await fireEvent.press(googlePay);
+          },
+          styleProps: { showSupportedCards: false },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
+        // check google pay button
+        const googlePay = await wrapper.findByTestId('google-pay-button');
+        await fireEvent.press(googlePay);
         expect(wrapper.queryByText('ErrorCode', { exact: false })).toBeNull();
         expect(wrapper.queryByText('GatewayCode', { exact: false })).toBeNull();
         expect(wrapper.queryByText('ErrorMessage', { exact: false })).toBeNull();
-        await waitFor(async () => {
-          await wrapper.findByText('Pay Request Status: SUCCESS');
-        });
+        await wrapper.findByText('Pay Request Status: SUCCESS');
       }, 15000);
     });
 
@@ -287,25 +244,21 @@ describe('WalletPaymentsContainer', () => {
         NativeModules.TyroPaySdkModule.initWalletPay.mockResolvedValue(false);
       });
       it('should hide google-pay button when google pay is not supported', async () => {
-        await act(async () => {
-          await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-              liveMode: false,
-              options: {
-                googlePay: {
-                  enabled: true,
-                  merchantName,
-                },
-              },
-              styleProps: { showSupportedCards: false },
-            });
-          });
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
-          // check google pay button
-          expect(wrapper.queryByTestId('google-pay-button')).toBeNull();
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            googlePay: {
+              enabled: true,
+              merchantName,
+            },
+          },
+          styleProps: { showSupportedCards: false },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
+        // check google pay button
+        expect(wrapper.queryByTestId('google-pay-button')).toBeNull();
       });
     });
   });
@@ -328,43 +281,32 @@ describe('WalletPaymentsContainer', () => {
       });
 
       test('applePay defaults to be disabled', async () => {
-        await act(async () => {
-          await waitFor(
-            async () => {
-              wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-                liveMode: false,
-                styleProps: { showSupportedCards: false },
-              });
-            },
-            { timeout: 10000 }
-          );
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          styleProps: { showSupportedCards: false },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
         // check google pay button
         expect(wrapper.queryByTestId('apple-pay-button')).toBeNull();
       });
 
       test('should render apple-pay button and default styles', async () => {
-        await act(async () => {
-          await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-              liveMode: false,
-              options: {
-                applePay: {
-                  enabled: true,
-                  merchantIdentifier,
-                  totalLabel,
-                },
-              },
-              styleProps: { showSupportedCards: false },
-            });
-          });
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            applePay: {
+              enabled: true,
+              merchantIdentifier,
+              totalLabel,
+            },
+          },
+          styleProps: { showSupportedCards: false },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
         // check apple pay button
         const button = await wrapper.findByTestId('apple-pay-button');
         expect(button._fiber.memoizedProps.buttonStyle).toEqual('black');
@@ -386,25 +328,21 @@ describe('WalletPaymentsContainer', () => {
       }, 15000);
 
       test('should pass supportedNetworks to native module when defined in apple pay options', async () => {
-        await act(async () => {
-          await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-              liveMode: false,
-              options: {
-                applePay: {
-                  enabled: true,
-                  merchantIdentifier,
-                  totalLabel,
-                  supportedNetworks: ['visa', 'mastercard'],
-                },
-              },
-              styleProps: { showSupportedCards: false },
-            });
-          });
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            applePay: {
+              enabled: true,
+              merchantIdentifier,
+              totalLabel,
+              supportedNetworks: ['visa', 'mastercard'],
+            },
+          },
+          styleProps: { showSupportedCards: false },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
         // check apple pay button
         const button = await wrapper.findByTestId('apple-pay-button');
         expect(button._fiber.memoizedProps.buttonStyle).toEqual('black');
@@ -427,27 +365,23 @@ describe('WalletPaymentsContainer', () => {
       test('should do nothing when applePay is cancelled', async () => {
         NativeModules.TyroPaySdkModule.startWalletPay.mockResolvedValue(mockedCancelledResult);
         mockedFetchPayRequestOnCompletion(PayRequestStatus.AWAITING_PAYMENT_INPUT);
-        await act(async () => {
-          await waitFor(async () => {
-            wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-              liveMode: false,
-              options: {
-                applePay: {
-                  enabled: true,
-                  merchantIdentifier,
-                  totalLabel,
-                },
-              },
-              styleProps: { showSupportedCards: false },
-            });
-          });
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
-          // check apple pay button
-          const applePay = await wrapper.findByTestId('apple-pay-button');
-          await fireEvent.press(applePay);
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            applePay: {
+              enabled: true,
+              merchantIdentifier,
+              totalLabel,
+            },
+          },
+          styleProps: { showSupportedCards: false },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
+        // check apple pay button
+        const applePay = await wrapper.findByTestId('apple-pay-button');
+        await fireEvent.press(applePay);
         expect(wrapper.queryByText('ErrorCode', { exact: false })).toBeNull();
         expect(wrapper.queryByText('GatewayCode', { exact: false })).toBeNull();
         expect(wrapper.queryByText('ErrorMessage', { exact: false })).toBeNull();
@@ -457,71 +391,53 @@ describe('WalletPaymentsContainer', () => {
         NativeModules.TyroPaySdkModule.startWalletPay.mockResolvedValue(mockedFailedResult);
         mockedFetchPayRequestOnCompletion(PayRequestStatus.FAILED);
 
-        await act(async () => {
-          await waitFor(
-            async () => {
-              wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-                liveMode: false,
-                options: {
-                  applePay: {
-                    enabled: true,
-                    merchantIdentifier,
-                    totalLabel,
-                  },
-                },
-                styleProps: { showSupportedCards: false },
-              });
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            applePay: {
+              enabled: true,
+              merchantIdentifier,
+              totalLabel,
             },
-            { timeout: 10000 }
-          );
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
-          // check apple pay button
-          const applePay = await wrapper.findByTestId('apple-pay-button');
-          await fireEvent.press(applePay);
+          },
+          styleProps: { showSupportedCards: false },
         });
-        wrapper.getByText('ErrorCode: Error-Code');
-        wrapper.getByText('GatewayCode: Gateway-Code');
-        wrapper.getByText(`ErrorMessage: ${TyroErrorMessages.PAY_REQUEST_ERROR.message}`);
-        wrapper.getByText(`ErrorType: ${TyroErrorMessages.PAY_REQUEST_ERROR.type}`);
-        await waitFor(async () => {
-          await wrapper.findByText('Pay Request Status: FAILED');
-        });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
+        // check apple pay button
+        const applePay = await wrapper.findByTestId('apple-pay-button');
+        await fireEvent.press(applePay);
+        await wrapper.findByText('ErrorCode: Error-Code');
+        await wrapper.findByText('GatewayCode: Gateway-Code');
+        await wrapper.findByText(`ErrorMessage: ${TyroErrorMessages.PAY_REQUEST_ERROR.message}`);
+        await wrapper.findByText(`ErrorType: ${TyroErrorMessages.PAY_REQUEST_ERROR.type}`);
+        await wrapper.findByText('Pay Request Status: FAILED');
       }, 15000);
       test('should update payRequest when applePay is successful', async () => {
         NativeModules.TyroPaySdkModule.startWalletPay.mockResolvedValue(mockedSuccessResult);
         mockedFetchPayRequestOnCompletion(PayRequestStatus.SUCCESS);
-        await act(async () => {
-          await waitFor(
-            async () => {
-              wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
-                liveMode: false,
-                options: {
-                  applePay: {
-                    enabled: true,
-                    merchantIdentifier,
-                    totalLabel,
-                  },
-                },
-                styleProps: { showSupportedCards: false },
-              });
+        wrapper = await renderWithProvider(<InitTestComponent passPaySecret={true} />, {
+          liveMode: false,
+          options: {
+            applePay: {
+              enabled: true,
+              merchantIdentifier,
+              totalLabel,
             },
-            { timeout: 10000 }
-          );
-          // check initial components have rendered, click checkout
-          const checkOutButton = await wrapper.findByTestId('test-button');
-          await fireEvent.press(checkOutButton);
-          // check apple pay button
-          const applePay = await wrapper.findByTestId('apple-pay-button');
-          await fireEvent.press(applePay);
+          },
+          styleProps: { showSupportedCards: false },
         });
+        // check initial components have rendered, click checkout
+        const checkOutButton = await wrapper.findByTestId('test-button');
+        await fireEvent.press(checkOutButton);
+        // check apple pay button
+        const applePay = await wrapper.findByTestId('apple-pay-button');
+        await fireEvent.press(applePay);
         expect(wrapper.queryByText('ErrorCode', { exact: false })).toBeNull();
         expect(wrapper.queryByText('GatewayCode', { exact: false })).toBeNull();
         expect(wrapper.queryByText('ErrorMessage', { exact: false })).toBeNull();
-        await waitFor(async () => {
-          await wrapper.findByText('Pay Request Status: SUCCESS');
-        });
+        await wrapper.findByText('Pay Request Status: SUCCESS');
       }, 15000);
     });
   });

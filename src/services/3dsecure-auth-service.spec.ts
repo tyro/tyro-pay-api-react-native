@@ -23,25 +23,25 @@ describe('invoke3DSecureAuth', () => {
   };
   it('fetches with correct params on Android', async () => {
     mockedHelpers.isAndroid.mockReturnValue(true);
-    global.fetch = jest.fn(() =>
+    globalThis.fetch = jest.fn(() =>
       Promise.resolve({
         status: 200,
         json: () => Promise.resolve({ status: 'SUCCESS' }),
       })
     ) as jest.Mock;
     await invoke3DSecureAuth('secret');
-    await expect(fetch).toBeCalledWith(url, { ...authRequest, body: androidBody });
+    await expect(fetch).toHaveBeenCalledWith(url, { ...authRequest, body: androidBody });
   });
 
   it('fetches with correct params on iOS', async () => {
     mockedHelpers.isAndroid.mockReturnValue(false);
-    global.fetch = jest.fn(() =>
+    globalThis.fetch = jest.fn(() =>
       Promise.resolve({
         status: 200,
         json: () => Promise.resolve({ status: 'SUCCESS' }),
       })
     ) as jest.Mock;
     await invoke3DSecureAuth('secret');
-    await expect(fetch).toBeCalledWith(url, { ...authRequest, body: iosBody });
+    await expect(fetch).toHaveBeenCalledWith(url, { ...authRequest, body: iosBody });
   });
 });

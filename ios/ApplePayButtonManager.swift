@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import PassKit
 
+@available(iOS 16, *)
 extension PayWithApplePayButtonStyle {
 	static func stringToPayWithApplePayButtonStyle(rawValue: String) -> Self {
 		switch rawValue {
@@ -21,6 +22,7 @@ extension PayWithApplePayButtonStyle {
 	}
 }
 
+@available(iOS 16, *)
 extension PayWithApplePayButtonLabel {
 	static func stringToPayWithApplePayButtonLabel(rawValue: String) -> Self {
 		switch rawValue {
@@ -59,8 +61,8 @@ class ApplePayButtonManager: RCTViewManager {
 }
 
 class ModernDataStore: ObservableObject {
-	@Published var buttonLabel: PayWithApplePayButtonLabel = .plain
-	@Published var buttonStyle: PayWithApplePayButtonStyle = .automatic
+	@Published var buttonLabel: String = "plain"
+	@Published var buttonStyle: String = "automatic"
 }
 
 class OldDataStore: ObservableObject {
@@ -97,22 +99,16 @@ class ApplePayButtonProxy: UIView {
 	@objc
 	var buttonStyle: String = "" {
 		didSet {
-			if #available(iOS 16, *) {
-				modernDataStore.buttonStyle = PayWithApplePayButtonStyle.stringToPayWithApplePayButtonStyle(rawValue: buttonStyle)
-			} else {
-				oldDataStore.buttonStyle = PKPaymentButtonStyle.stringToPKPaymentButtonStyle(rawValue: buttonStyle)
-			}
+			modernDataStore.buttonStyle = buttonStyle
+			oldDataStore.buttonStyle = PKPaymentButtonStyle.stringToPKPaymentButtonStyle(rawValue: buttonStyle)
 		}
 	}
 
 	@objc
 	var buttonLabel: String = "" {
 		didSet {
-			if #available(iOS 16, *) {
-				modernDataStore.buttonLabel = PayWithApplePayButtonLabel.stringToPayWithApplePayButtonLabel(rawValue: buttonLabel)
-			} else {
-				oldDataStore.buttonLabel = PKPaymentButtonType.stringToPKPaymentButtonType(rawValue: buttonLabel)
-			}
+			modernDataStore.buttonLabel = buttonLabel
+			oldDataStore.buttonLabel = PKPaymentButtonType.stringToPKPaymentButtonType(rawValue: buttonLabel)
 		}
 	}
 }

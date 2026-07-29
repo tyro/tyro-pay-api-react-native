@@ -7,16 +7,17 @@
 
 import TyroProvider from '../../TyroSharedContext';
 import CheckOut from './checkout';
-import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Colors } from '../../@types/colors';
+import React, { JSX } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ScrollView, StyleSheet, Text, useColorScheme, View } from 'react-native';
 
 // Demo App
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: isDarkMode ? Colors.dark : Colors.light,
   };
 
   return (
