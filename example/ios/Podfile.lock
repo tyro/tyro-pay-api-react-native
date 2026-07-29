@@ -2008,7 +2008,7 @@ PODS:
     - ReactNativeDependencies
     - Yoga
   - SwiftyBeaver (2.1.1)
-  - tyro-pay-api-react-native (3.0.0):
+  - tyro-pay-api-react-native (3.0.0-alpha.0):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -2370,7 +2370,7 @@ SPEC CHECKSUMS:
   RNScreens: 01b065ded2dfe7987bcce770ff3a196be417ff41
   RNSVG: 6cae8d4082913be2eb43eaec2a456222c42195ed
   SwiftyBeaver: ade157e4f857812e7d7f15f2e3396bb8733f8a1c
-  tyro-pay-api-react-native: c3140043ed969b66bb9c9c046530610d48145d47
+  tyro-pay-api-react-native: e60fecece089c38a77f5f2637d7cefff16095c38
   TyroApplePay: 51f8b12e3e7fe39cb5eeb31ba27eb40cef904ed8
   Yoga: fe50ab299e578f397fef753cf309c6703a4db29b
 
